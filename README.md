@@ -1,36 +1,25 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### ⚠️ УВАГА!
 
-## Getting Started
+**FILL ТА STROKE ПО ДЕФОЛТУ ОБНУЛЕНІ!**
 
-First, run the development server:
+## Список іконок:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Icon Name                | Preview                                               |
+| ------------------------ | ----------------------------------------------------- |
+| **icon-account_circle**  | ![icon-account_circle](./assets/account_circle.svg)   |
+| **icon-add_circle**      | ![icon-add_circle](./assets/add_circle.svg)           |
+| **icon-book**            | ![icon-book](./assets/book.svg)                       |
+| **icon-chair**           | ![icon-chair](./assets/chair.svg)                     |
+| **icon-chevron_down**    | ![icon-chevron_down](./assets/chevron_down.svg)       |
+| **icon-chevron_up**      | ![icon-chevron_up](./assets/chevron_up.svg)           |
+| **icon-close**           | ![icon-close](./assets/close.svg)                     |
+| **icon-conversion_path** | ![icon-conversion_path](./assets/conversion_path.svg) |
+| **icon-delete**          | ![icon-delete](./assets/delete.svg)                   |
+| **icon-edit**            | ![icon-edit](./assets/edit.svg)                       |
+| **icon-fitness_center**  | ![icon-fitness_center](./assets/fitness_center.svg)   |
+| **icon-fork_spoon**      | ![icon-fork_spoon](./assets/fork_spoon.svg)           |
+| **icon-google**          | ![icon-google](./assets/google.svg)                   |
+| **icon-logout**          | ![icon-logout](./assets/logout.svg)                   |
+| **icon-menu**            | ![icon-menu](./assets/menu.svg)                       |
+| **icon-tag_square**      | ![icon-tag_square](./assets/tag_square.svg)           |
+| **icon-today**           | ![icon-today](./assets/today.svg)                     |
