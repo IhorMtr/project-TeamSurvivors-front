@@ -4,6 +4,8 @@ import { Lato, Comfortaa } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
+import Header from '@/components/Header/Header';
+import LayoutClient from './LayoutClient';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -30,11 +32,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${lato.variable} ${comfortaa.variable}`}>
         <TanStackProvider>
-          <Sidebar />
-          <main>
-            <Breadcrumbs />
+          <LayoutClient>
             {children}
-          </main>
+          </LayoutClient>
         </TanStackProvider>
       </body>
     </html>
