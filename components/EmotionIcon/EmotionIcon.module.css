@@ -1,0 +1,14 @@
+.emotionCard {
+  display: inline;
+  border-radius: 100px;
+  /* background-color: var(--emotion-card-bg, #fff4f6); */
+  background-color: var(--emotion-card-bg, var(--color-pastel-pink-lighter));
+  padding: 2px 12px;
+}
+
+.emotionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}

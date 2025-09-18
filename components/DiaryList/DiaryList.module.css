@@ -1,0 +1,31 @@
+.title {
+  font-size: 18px;
+}
+.btn_name {
+  font-size: 14px;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* background-color: #fff4f6; */
+  background-color: var(--color-pastel-pink-lighter);
+  padding: 16px;
+  border-radius: 32px;
+  margin: 32px 0;
+  height: 100vh;
+}
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.btnSection {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.logo {
+  margin-top: 6px;
+}

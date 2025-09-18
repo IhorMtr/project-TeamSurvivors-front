@@ -1,0 +1,20 @@
+import EmotionIcon from '../EmotionIcon/EmotionIcon';
+import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
+import css from './DiaryEntryCard.module.css';
+export default function DiaryEntryCard() {
+  return (
+    // TODO: add date
+    <div className={css.card}>
+      <div className={css.headerCard}>
+        <div>Дивне бажання</div>
+        <div> 9 липня 2025</div>
+      </div>
+      <div>
+        <EmotionIconContainer>
+          <EmotionIcon />
+          <EmotionIcon />
+        </EmotionIconContainer>
+      </div>
+    </div>
+  );
+}

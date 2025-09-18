@@ -1,0 +1,14 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  /* background-color: #ffdae0; */
+  background-color: var(--color-pastel-pink-light);
+  border-radius: 16px;
+  gap: 8px;
+}
+.headerCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
