@@ -2,9 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Lato, Comfortaa } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
-import Sidebar from '@/components/Sidebar/Sidebar';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
-import Header from '@/components/Header/Header';
 import LayoutClient from './LayoutClient';
 
 const lato = Lato({
@@ -29,12 +26,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="uk">
       <body className={`${lato.variable} ${comfortaa.variable}`}>
         <TanStackProvider>
-          <LayoutClient>
-            {children}
-          </LayoutClient>
+          <LayoutClient>{children}</LayoutClient>
         </TanStackProvider>
       </body>
     </html>
