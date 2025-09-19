@@ -45,8 +45,10 @@ export function Modal({
       onMouseDown={onBackdrop}
     >
       <div className={s.modal}>
-        <button aria-label="Закрити" className={s.close} onClick={onClose}>
-          ×
+        <button type="button" aria-label="Закрити" className={s.close} onClick={onClose}>
+          <svg className={s.closeIcon} aria-hidden="true" focusable="false">
+            <use href="/icons.svg#icon-close" xlinkHref="/icons.svg#icon-close" />
+          </svg>
         </button>
         {children}
       </div>

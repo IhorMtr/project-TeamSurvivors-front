@@ -1,12 +1,11 @@
 /* --- title --- */
 .title {
-  font-family: var(--font-comfortaa), "Comfortaa", sans-serif;
+  /* font-family убран — задаётся глобально */
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.01em;
   text-align: center;
   margin: 0;
-  color: #000;
 
   /* mobile */
   font-size: 36px;
@@ -18,8 +17,8 @@
   display: inline;
 }
 
-/* на десктопе — принудительно в 2 строки (последнее слово на второй) */
-@media (min-width: 1200px) {
+/* на десктопе — принудительно 2 строки (последнее слово на второй) */
+@media (min-width: 1440px) {
   .title {
     font-size: 48px;
   }
@@ -56,16 +55,16 @@
   height: 46px;
   padding: 10px 24px;
 
-  border-radius: 100px;
   border: none;
+  border-radius: 100px;
   cursor: pointer;
 
-  font-family: var(--font-fallback-sans), var(--font-lato), "Lato", system-ui, sans-serif;
+  /* font-family убран — берётся из глобальных стилей */
   font-weight: 500;
   font-size: 16px;
   line-height: 1.6;
-  color: #000;
 
+  color: #000;
   background: rgba(0, 0, 0, 0.05);
   border-bottom: 4px solid rgba(0, 0, 0, 0.15);
 
@@ -96,7 +95,7 @@
   box-shadow: none;
 }
 
-/* семантические маркеры класса — для селекторов или тестов */
+/* семантические маркеры для e2e/тестов (без стилей) */
 .confirm {}
 
 .cancel {}

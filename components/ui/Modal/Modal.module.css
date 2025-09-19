@@ -30,7 +30,6 @@
     0 20px 60px rgba(0, 0, 0, 0.08),
     0 6px 24px rgba(0, 0, 0, 0.06);
 
-  /* никаких внутренних скроллов */
   max-height: none;
   overflow: visible;
 }
@@ -46,10 +45,10 @@
   border: none;
   background: transparent;
   color: #000;
-  font-size: 20px;
-  line-height: 1;
+  /* иконка берёт currentColor */
   cursor: pointer;
   outline: none;
+  transition: background-color .15s ease, color .15s ease;
 }
 
 .close:hover {
@@ -62,6 +61,19 @@
   box-shadow: none;
 }
 
+/* иконка из спрайта */
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  pointer-events: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* --- tablet ≥768px --- */
 @media (min-width: 768px) {
   .modal {
@@ -69,12 +81,11 @@
     height: 261px;
     padding: 64px 32px;
     gap: 32px;
-    /* чтобы комфортно влезало */
   }
 }
 
-/* --- desktop ≥1200px --- */
-@media (min-width: 1200px) {
+/* --- desktop ≥1440px --- */
+@media (min-width: 1440px) {
   .modal {
     width: 768px;
     height: 338px;
