@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import css from './Sidebar.module.css';
 import Image from 'next/image';
-import { useState } from 'react';
 
 
 type SideBarProps = {
