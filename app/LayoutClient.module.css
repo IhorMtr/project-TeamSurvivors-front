@@ -57,3 +57,30 @@
     margin-left: 312px;
   }
 }
+
+.section {
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.header_wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  background-color: #fff;
+}
+
+.breadcrumbs_wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  margin-top: 24px;
+  margin-left: 20px;
+}
+
+@media only screen and (min-width: 768px) {
+  .breadcrumbs_wrapper {
+    margin-left: 32px;
+  }
+}

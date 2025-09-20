@@ -27,7 +27,9 @@ export default function LayoutClient({ children }: LayoutClientProps) {
 
   return (
     <div className={css.layout_wrapper}>
-      <aside className={`${css.sidebar} ${sidebarOpen ? css.sidebar_open : ''}`}>
+      <aside
+        className={`${css.sidebar} ${sidebarOpen ? css.sidebar_open : ''}`}
+      >
         <Sidebar onClose={() => setSidebarOpen(false)} />
       </aside>
       <div
@@ -36,10 +38,16 @@ export default function LayoutClient({ children }: LayoutClientProps) {
         aria-hidden={!sidebarOpen}
       />
       <div className={css.main_wrapper}>
-        {!isDesktop && <Header onOpenSidebar={() => setSidebarOpen(true)} />}
+        {!isDesktop && (
+          <div className={css.header_wrapper}>
+            <Header onOpenSidebar={() => setSidebarOpen(true)} />
+          </div>
+        )}
         <main className={css.container}>
           <section className={css.section}>
-            <Breadcrumbs />
+            <div className={css.breadcrumbs_wrapper}>
+              <Breadcrumbs />
+            </div>
             {children}
           </section>
         </main>
