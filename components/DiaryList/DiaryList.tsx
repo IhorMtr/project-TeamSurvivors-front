@@ -5,15 +5,14 @@ import { ReactNode } from 'react';
 
 export default function DiaryList({ children }: { children?: ReactNode }) {
   return (
-    <section>
+    <section className={css.diarySection}>
       <div className={css.container}>
         <div className={css.listHeader}>
           <h3 className={css.title}>Ваші записи</h3>
           <div className={css.btnSection}>
             <p className={css.btn_name}>Новий запис</p>
-            <Link href="/diary/add">
+            <Link href="/diary/add" className={css.btn}>
               <Image
-                className={css.logo}
                 src="/add_circle.svg"
                 alt="add_btn"
                 width={24}

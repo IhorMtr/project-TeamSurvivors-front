@@ -7,22 +7,29 @@ export default function DiaryEntryDetails() {
   return (
     // TODO: add path
     <section className={css.container}>
-      <div className={css.detailTitle}>
-        <h3>Перший привіт</h3>
-        <Link className={css.btn} href="/diary/edit">
-          <Image src="/edit_square.svg" alt="edit_btn" width={24} height={24} />
-        </Link>
-      </div>
-      <div className={css.detailDate}>
-        <div>15 липня 2025</div>
-        <Link className={css.btn} href="/diary/edit">
-          <Image
-            src="/delete_forever.svg"
-            alt="delete_btn"
-            width={24}
-            height={24}
-          />
-        </Link>
+      <div className={css.detailHeader}>
+        <div className={css.detailTitle}>
+          <h3 className={css.title}>Перший привіт</h3>
+          <Link className={css.btn} href="/diary/edit">
+            <Image
+              src="/edit_square.svg"
+              alt="edit_btn"
+              width={24}
+              height={24}
+            />
+          </Link>
+        </div>
+        <div className={css.detailDate}>
+          <div>15 липня 2025</div>
+          <Link className={css.btn} href="/diary/edit">
+            <Image
+              src="/delete_forever.svg"
+              alt="delete_btn"
+              width={24}
+              height={24}
+            />
+          </Link>
+        </div>
       </div>
       <p className={css.text}>
         Це сталося! Сьогодні ввечері, коли я спокійно дивилася фільм, я це
@@ -35,8 +42,8 @@ export default function DiaryEntryDetails() {
         Там справді хтось є, росте і спілкується зі мною. Неймовірне відчуття.
       </p>
       <EmotionIconContainer>
-        <EmotionIcon />
-        <EmotionIcon />
+        <EmotionIcon emotion="Натхнення" />
+        <EmotionIcon emotion="Радість" />
       </EmotionIconContainer>
     </section>
   );

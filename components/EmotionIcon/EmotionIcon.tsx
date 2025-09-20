@@ -1,4 +1,4 @@
 import css from './EmotionIcon.module.css';
-export default function EmotionIcon() {
-  return <div className={css.emotionCard}>Натхнення</div>;
+export default function EmotionIcon({ emotion }: { emotion: string }) {
+  return <div className={css.emotionCard}>{emotion}</div>;
 }

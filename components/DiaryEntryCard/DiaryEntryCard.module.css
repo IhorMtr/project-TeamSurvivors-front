@@ -6,9 +6,27 @@
   background-color: var(--color-pastel-pink-light);
   border-radius: 16px;
   gap: 8px;
+  /* height: 26px; */
 }
 .headerCard {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  /* gap: 77px; */
+}
+.headerDate {
+  font-size: 12px;
+}
+.headerTitle {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+@media (min-width: 1440px) {
+  .headerTitle {
+    font-size: 18px;
+  }
+  .headerDate {
+    font-size: 14px;
+  }
 }
