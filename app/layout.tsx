@@ -15,6 +15,7 @@ const comfortaa = Comfortaa({
   weight: ['400'],
   variable: '--second-family',
 });
+
 export const metadata: Metadata = {
   title: 'Lehleka App',
   description: 'Pregnancy tracker',
