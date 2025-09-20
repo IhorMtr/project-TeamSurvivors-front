@@ -3,28 +3,20 @@ import css from './Sidebar.module.css';
 import Image from 'next/image';
 import { useState } from 'react';
 
+
 type SideBarProps = {
   onClose: () => void;
+  onLogout: () => void;
+  user: {
+    userPhotoUrl: string;
+    userName: string;
+    userEmail: string;
+  } | null;
 };
 
-type User = {
-  userPhotoUrl: string;
-  userName: string;
-  userEmail: string;
-};
 
-export default function Sidebar({ onClose }: SideBarProps) {
-  const [isUser, setIsUser] = useState(true);
-  const user: User = {
-    userPhotoUrl: '/avatar-test.png',
-    userName: 'Ганна',
-    userEmail: 'hanna@gmail.com',
-  };
-  const handleLogout = () => {
-    return null;
-  };
-
-  return (
+export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
+    return (
     <div className={css.wrapper}>
       <div className={css.sidebar_top}>
         <div className={css.logo_container}>
@@ -34,7 +26,7 @@ export default function Sidebar({ onClose }: SideBarProps) {
             height="29"
             src="/logo-header-sidebar.png"
           />
-          <button className={css.btn} type="button" onClick={() => onClose()}>
+          <button className={`${css.btn} ${css.btn_close}`} type="button" onClick={() => onClose()}>
             <svg className={css.btn_icon} width="32" height="32">
               <use href="/icons.svg#icon-close"></use>
             </svg>
@@ -76,7 +68,7 @@ export default function Sidebar({ onClose }: SideBarProps) {
         </ul>
       </div>
       <div className={css.sidebar_bottom}>
-        {isUser ? (
+        {user ? (
           <div className={css.user_wrapper}>
             <Link className={css.profile_link} href="/profile">
               <div className={css.user_photo_wrapper}>
@@ -93,7 +85,7 @@ export default function Sidebar({ onClose }: SideBarProps) {
                 <p className={css.user_email}>{user.userEmail}</p>
               </div>
             </Link>
-            <button onClick={() => handleLogout()} className={css.btn}>
+            <button onClick={() => onLogout()} className={css.btn}>
               <svg className={css.btn_icon} width="24" height="24">
                 <use href="/icons.svg#icon-logout"></use>
               </svg>
@@ -102,11 +94,11 @@ export default function Sidebar({ onClose }: SideBarProps) {
         ) : (
           <div className={css.user_wrapper}>
             <div className={css.login_register_wrapper}>
-              <Link href="/login" className={css.login_register}>
+              <Link href="/auth/login" className={css.login_register}>
                 Увійти
               </Link>
               <span>|</span>
-              <Link href="/register" className={css.login_register}>
+              <Link href="/auth/register" className={css.login_register}>
                 Зареєструватись
               </Link>
             </div>
