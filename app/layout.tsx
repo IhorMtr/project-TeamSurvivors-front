@@ -3,7 +3,6 @@ import './globals.css';
 import { Lato, Comfortaa } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import Sidebar from '@/components/Sidebar/Sidebar';
-import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -32,7 +31,6 @@ export default function RootLayout({
         <TanStackProvider>
           <Sidebar />
           <main>
-            {/* <Breadcrumbs /> */}
             {children}
           </main>
         </TanStackProvider>
