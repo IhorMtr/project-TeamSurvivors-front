@@ -3,6 +3,9 @@ import css from './DiaryEntryDetails.module.css';
 import Link from 'next/link';
 import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import EmotionIcon from '../EmotionIcon/EmotionIcon';
+import editIcon from '../../assets/edit.svg';
+import deleteIcon from '../../assets/delete.svg';
+
 export default function DiaryEntryDetails() {
   return (
     // TODO: add path
@@ -12,7 +15,7 @@ export default function DiaryEntryDetails() {
           <h3 className={css.title}>Перший привіт</h3>
           <Link className={css.btn} href="/diary/edit">
             <Image
-              src="/edit_square.svg"
+              src={editIcon}
               alt="edit_btn"
               width={24}
               height={24}
@@ -23,7 +26,7 @@ export default function DiaryEntryDetails() {
           <div>15 липня 2025</div>
           <Link className={css.btn} href="/diary/edit">
             <Image
-              src="/delete_forever.svg"
+              src={deleteIcon}
               alt="delete_btn"
               width={24}
               height={24}

@@ -1,6 +1,7 @@
 import EmotionIcon from '../EmotionIcon/EmotionIcon';
 import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import css from './DiaryEntryCard.module.css';
+
 export default function DiaryEntryCard() {
   return (
     // TODO: add date
