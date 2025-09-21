@@ -1,0 +1,10 @@
+.titleDashboard {
+  font-size: 24px;
+  text-align: left;
+}
+
+@media (min-width: 1440px) {
+  .titleDashboard {
+    font-size: 32px;
+  }
+}

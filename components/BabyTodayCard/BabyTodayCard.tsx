@@ -1,3 +1,5 @@
+import css from './BabyTodayCard.module.css';
+
 interface BabyTodayCardProps {
   image: string;
   babySize: number;
@@ -14,26 +16,28 @@ const BabyTodayCard = ({
   babyDevelopment,
 }: BabyTodayCardProps) => {
   return (
-    <div>
+    <div className={css.babyTodayCard}>
       <h2>Малюк сьогодні</h2>
-      <div>
-        <div>
-          <img src={image} alt="Малюк" />
+      <div className={css.babyTodayCardContent}>
+        <div className={css.babyTodayCardBlockImg}>
+          <img className={css.babyTodayCardImg} src={image} alt="Малюк" />
         </div>
-        <div>
-          <p>
-            <span>Розмір:</span>Приблизно {babySize} см.
-          </p>
-          <p>
-            <span>Вага:</span>Близько {babyWeight} грамів.
-          </p>
-          <p>
-            <span>Активність:</span>
+        <ul className={css.babyTodayCardBlockList}>
+          <li>
+            <span className={css.babyTodayCardBlockInfoBold}>Розмір: </span>
+            Приблизно {babySize} см.
+          </li>
+          <li>
+            <span className={css.babyTodayCardBlockInfoBold}>Вага: </span>
+            Близько {babyWeight} грамів.
+          </li>
+          <li>
+            <span className={css.babyTodayCardBlockInfoBold}>Активність: </span>
             {babyActivity}
-          </p>
-        </div>
+          </li>
+        </ul>
       </div>
-      <p>{babyDevelopment}</p>
+      <p className={css.babyTodayCardDescription}>{babyDevelopment}</p>
     </div>
   );
 };

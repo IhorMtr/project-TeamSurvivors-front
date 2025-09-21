@@ -1,10 +1,12 @@
+import css from './MomTipCard.module.css';
+
 interface MomTipCardProps {
   dailyTip: string;
 }
 
 const MomTipCard = ({ dailyTip }: MomTipCardProps) => {
   return (
-    <div>
+    <div className={css.momTipCardBlock}>
       <h2>Порада для мами</h2>
       <p>{dailyTip}</p>
     </div>

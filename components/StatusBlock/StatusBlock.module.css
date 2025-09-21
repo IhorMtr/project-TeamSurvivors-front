@@ -1,0 +1,49 @@
+.statusBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.statusBlockInfo {
+  width: 100%;
+  min-width: 159px;
+  border: 0px solid rgba(0, 0, 0, 0.15);
+  border-radius: 32px;
+  padding: 16px;
+  background-color: #fff4f6;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.statusBlockInfoWeekDay {
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+.statusBlockInfoNumber {
+  font-family: var(--second-family);
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .statusBlock {
+    gap: 32px;
+  }
+  .statusBlockInfo {
+    max-width: 305px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .statusBlockInfoWeekDay {
+    font-size: 16px;
+  }
+  .statusBlockInfoNumber {
+    font-size: 56px;
+  }
+}
