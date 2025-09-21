@@ -32,7 +32,7 @@ export default function RootLayout({
         <TanStackProvider>
           <Sidebar />
           <main>
-            <Breadcrumbs />
+            {/* <Breadcrumbs /> */}
             {children}
           </main>
         </TanStackProvider>

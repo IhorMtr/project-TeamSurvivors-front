@@ -1,0 +1,59 @@
+.journeyPage {
+    min-height: 100vh;
+    background-color: #f9fafb;
+    min-height: 1314px;
+    background-color: var(--color-scheme-background);
+    margin: 0;
+  }
+  
+  .journeyPage__content {
+    padding: 16px;
+  }
+  
+  .weekSelector {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 16px 0;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .weekSelector::-webkit-scrollbar {
+    display: none;
+  }
+  
+  
+  @media only screen and (min-width: 768px) {
+    .journeyPage {
+      width: 768px;
+      height: auto;
+      min-height: 1104px;
+      margin: 0;
+    }
+    
+    .journeyPage__content {
+      width: 768px;
+      min-height: 1006px;
+      padding: 24px 32px;
+      box-sizing: border-box;
+    }
+  }
+  
+  @media only screen and (min-width: 1280px) {
+    .journeyPage {
+      width: 1128px;
+      height: 900px;
+      min-height: 900px; 
+      margin-left: 312px; 
+      background: var(--color-scheme-background);
+    }
+    
+    .journeyPage__content {
+      width: 1128px;
+      height: auto; 
+      min-height: 791px; 
+      padding: 24px 32px;
+      box-sizing: border-box;
+    }
+  }
