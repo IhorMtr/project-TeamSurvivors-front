@@ -22,13 +22,12 @@ type LayoutClientProps = {
   children: React.ReactNode;
 };
 
-// Тимчасовий юзер, треба передати з глобального стану
+// Тимчасовий юзер, треба передати з глобального стану, а також видалити тестове зображення з /public/avatar-test.png
 const user = {
   userPhotoUrl: '/avatar-test.png',
   userName: 'Ганна',
   userEmail: 'hanna@gmail.com',
 };
-
 
 export default function LayoutClient({ children }: LayoutClientProps) {
   const isDesktop = useIsDesktop();

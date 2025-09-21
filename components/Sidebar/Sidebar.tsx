@@ -41,7 +41,7 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
             </Link>
           </li>
           <li className={css.nav_item}>
-            <Link className={css.link} href="/">
+            <Link className={css.link} href="/journey">
               <svg className={css.nav_icon} width="24" height="24">
                 <use href="/icons.svg#icon-conversion_path"></use>
               </svg>
@@ -49,7 +49,7 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
             </Link>
           </li>
           <li className={css.nav_item}>
-            <Link className={css.link} href="/">
+            <Link className={css.link} href="/diary">
               <svg className={css.nav_icon} width="24" height="24">
                 <use href="/icons.svg#icon-book"></use>
               </svg>
@@ -57,7 +57,7 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
             </Link>
           </li>
           <li className={css.nav_item}>
-            <Link className={css.link} href="/">
+            <Link className={css.link} href="/profile">
               <svg className={css.nav_icon} width="24" height="24">
                 <use href="/icons.svg#icon-account_circle"></use>
               </svg>
