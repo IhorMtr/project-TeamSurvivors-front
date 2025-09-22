@@ -29,6 +29,7 @@ const user = {
   userEmail: 'hanna@gmail.com',
 };
 
+
 export default function LayoutClient({ children }: LayoutClientProps) {
   const isDesktop = useIsDesktop();
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
@@ -37,7 +38,7 @@ export default function LayoutClient({ children }: LayoutClientProps) {
     setIsModalLogoutOpen(true);
   };
   const cancelLogout = () => {
-    setSidebarOpen(false);
+    setIsModalLogoutOpen(false);
   };
 
   // підключити реальний логаут
@@ -79,8 +80,8 @@ export default function LayoutClient({ children }: LayoutClientProps) {
       <ConfirmationModal
         isOpen={isModalLogoutOpen}
         title="Ви впевнені що хочете вийти?"
-        onConfirm={() => logout()}
-        onCancel={() => cancelLogout()}
+        onConfirm={logout}
+        onCancel={cancelLogout}
       />
     </div>
   );
