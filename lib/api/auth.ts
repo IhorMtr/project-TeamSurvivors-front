@@ -1,8 +1,8 @@
-import axios  from 'axios';
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: "https://project-teamsurvivors.onrender.com/api", 
-  withCredentials: true,               // обов'язково для httpOnly cookie
+  baseURL: '/api',
+  withCredentials: true, // обов'язково для httpOnly cookie
 });
 
 // interface LogoutResponse {
@@ -16,42 +16,45 @@ const api = axios.create({
 //   token?: string;
 // }
 
-export const registerUser = async (data: { name: string; email: string; password: string }) => {
-  return api.post("/auth/register", data);
+export const registerUser = async (data: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
+  return api.post('/auth/register', data);
 };
 
 export const loginUser = async (data: { email: string; password: string }) => {
-  return api.post("/auth/login", data);
+  return api.post('/auth/login', data);
 };
 
-export const logoutUser = () => api.post("/auth/logout");
+export const logoutUser = () => api.post('/auth/logout');
 
-export const refreshSession = () => api.post("/auth/refresh");
-
+export const refreshSession = () => api.post('/auth/refresh');
 
 api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
+  response => response,
+  async error => {
     const originalRequest = error.config;
 
     // якщо токен протух (401) і ще не пробували рефреш
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        await api.post("/auth/refresh");
+        await api.post('/auth/refresh');
         return api(originalRequest); // повторюємо запит
       } catch (refreshError) {
-        console.error("Refresh session failed", refreshError);
+        console.error('Refresh session failed', refreshError);
 
         // робимо логаут на фронті (опціонально викликати logoutUser())
         try {
-          await api.post("/auth/logout");
+          await api.post('/auth/logout');
         } catch (_) {
           // ігноруємо, якщо сервер вже видалив сесію
         }
 
         // редірект на логін
-        window.location.href = "/auth/login";
+        window.location.href = '/auth/login';
       }
     }
 
@@ -65,7 +68,6 @@ api.interceptors.response.use(
 // export const refreshSession = () => {
 //   return api.post<AxiosResponse<RefreshResponse>>("/auth/refresh");
 // };
-
 
 // import axios, { AxiosResponse } from 'axios';
 
