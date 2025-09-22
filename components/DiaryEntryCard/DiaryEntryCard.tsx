@@ -6,6 +6,7 @@ import css from './DiaryEntryCard.module.css';
 import { useDiaryStore } from '@/lib/store/diaryStore';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useRouter } from 'next/navigation';
+import { formatDate } from '@/lib/utils';
 
 export default function DiaryEntryCard({ diaryData }: { diaryData: DiaryData }) {
   const setSelectedDiary = useDiaryStore(state => state.setSelectedDiary);
@@ -24,7 +25,7 @@ export default function DiaryEntryCard({ diaryData }: { diaryData: DiaryData }) 
     <button onClick={handleClick} className={css.card}>
       <div className={css.headerCard}>
         <div className={css.headerTitle}>{diaryData.title}</div>
-        <div className={css.headerDate}>{diaryData.date}</div>
+        <div className={css.headerDate}>{formatDate(diaryData.date)}</div>
       </div>
       <div>
         <EmotionIconContainer>

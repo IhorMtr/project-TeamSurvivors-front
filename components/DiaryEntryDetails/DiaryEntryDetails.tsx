@@ -6,6 +6,7 @@ import EmotionIcon from '../EmotionIcon/EmotionIcon';
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/delete.svg';
 import { DiaryData } from '@/lib/types';
+import { formatDate } from '@/lib/utils';
 
 export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
   return (
@@ -29,7 +30,7 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
         </div>
 
         <div className={css.detailDate}>
-          <div>{diary?.date}</div>
+          <div>{diary?.date ? formatDate(diary.date) : ''}</div>
           {diary && (
             <button
               className={css.btn}
