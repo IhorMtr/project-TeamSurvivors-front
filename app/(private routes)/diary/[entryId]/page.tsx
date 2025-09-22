@@ -1,5 +1,12 @@
-import DiaryEntryDetails from '@/components/DiaryEntryDetails/DiaryEntryDetails';
+import DiaryEntryClientPage from './DiaryEntryClientPage';
 
-export default function Page() {
-  return <DiaryEntryDetails />;
+// This is now a Server Component
+export default async function Page({
+  params,
+}: {
+  params: { entryId: string };
+}) {
+  const { entryId } = await params;
+
+  return <DiaryEntryClientPage entryId={entryId} />;
 }

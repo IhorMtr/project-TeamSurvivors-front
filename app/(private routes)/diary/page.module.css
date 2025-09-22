@@ -2,6 +2,19 @@
   display: none;
 }
 
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--diary-details-width, 100%);
+  height: var(--diary-details-height, 100%);
+  background-color: #fff4f6;
+  border-radius: 32px;
+  padding: 24px;
+  font-size: 18px;
+  color: #555;
+}
+
 @media (min-width: 1440px) {
   .mobileOnly {
     display: none;

@@ -1,19 +1,21 @@
+import { DiaryData } from '@/lib/types';
 import EmotionIcon from '../EmotionIcon/EmotionIcon';
 import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import css from './DiaryEntryCard.module.css';
 
-export default function DiaryEntryCard() {
+export default function DiaryEntryCard({ diaryData }: { diaryData: DiaryData }) {
+  console.log(diaryData);
   return (
-    // TODO: add date
     <div className={css.card}>
       <div className={css.headerCard}>
-        <div className={css.headerTitle}>Дивне бажання</div>
-        <div className={css.headerDate}> 9 липня 2025</div>
+        <div className={css.headerTitle}>{diaryData.title}</div>
+        <div className={css.headerDate}>{diaryData.date}</div>
       </div>
       <div>
         <EmotionIconContainer>
-          <EmotionIcon emotion="Натхнення" />
-          <EmotionIcon emotion="дивні бажання" />
+          {diaryData.emotions.map(emotion => (
+            <EmotionIcon key={emotion._id} emotion={emotion.title} />
+          ))}
         </EmotionIconContainer>
       </div>
     </div>
