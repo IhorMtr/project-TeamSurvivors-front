@@ -1,0 +1,95 @@
+/* --- backdrop --- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  display: grid;
+  place-items: center;
+  padding: 16px;
+  z-index: 1000;
+}
+
+/* --- card (mobile-first) --- */
+.modal {
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 40px;
+
+  /* mobile */
+  width: 335px;
+  height: 413px;
+  padding: 64px 20px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 48px;
+  position: relative;
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.08),
+    0 6px 24px rgba(0, 0, 0, 0.06);
+
+  max-height: none;
+  overflow: visible;
+}
+
+/* --- close (крестик) --- */
+.close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: #000;
+  /* иконка берёт currentColor */
+  cursor: pointer;
+  outline: none;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+.close:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.close:focus,
+.close:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+/* иконка из спрайта */
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  pointer-events: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* --- tablet ≥768px --- */
+@media (min-width: 768px) {
+  .modal {
+    width: 704px;
+    height: 261px;
+    padding: 64px 32px;
+    gap: 32px;
+  }
+}
+
+/* --- desktop ≥1440px --- */
+@media (min-width: 1440px) {
+  .modal {
+    width: 768px;
+    height: 338px;
+    padding: 64px;
+    gap: 48px;
+  }
+}
