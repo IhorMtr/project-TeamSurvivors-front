@@ -7,30 +7,47 @@ import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/delete.svg';
 import { DiaryData } from '@/lib/types';
 
-export default function DiaryEntryDetails({ diary }: { diary: DiaryData }) {
+export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
   return (
     <section className={css.container}>
       <div className={css.detailHeader}>
         <div className={css.detailTitle}>
-          <h3 className={css.title}>{diary.title}</h3>
-          <Link className={css.btn} href={`/diary/edit/${diary._id}`}>
-            <Image src={editIcon} alt="edit_btn" width={24} height={24} />
-          </Link>
+          <h3 className={css.title}>{diary?.title || ''}</h3>
+          {diary && (
+            <Link
+              className={css.btn}
+              href={'/diary'}
+              onClick={() =>
+                alert(
+                  'Клік по кнопці "Редагувати" відкриває сторінку редагування'
+                )
+              }
+            >
+              <Image src={editIcon} alt="edit_btn" width={24} height={24} />
+            </Link>
+          )}
         </div>
+
         <div className={css.detailDate}>
-          <div>{diary.date}</div>
-          {/* TODO: Implement delete functionality, likely with a mutation */}
-          <button
-            className={css.btn}
-            onClick={() => alert('Delete not implemented')}
-          >
-            <Image src={deleteIcon} alt="delete_btn" width={24} height={24} />
-          </button>
+          <div>{diary?.date}</div>
+          {diary && (
+            <button
+              className={css.btn}
+              onClick={() =>
+                alert(
+                  'Клік по кнопці "Видалити" відкриває модальне вікно ConfirmationModal'
+                )
+              }
+            >
+              <Image src={deleteIcon} alt="delete_btn" width={24} height={24} />
+            </button>
+            //TODO: додати функціонал відкриття модалки для редагування та видалення
+          )}
         </div>
       </div>
-      <p className={css.text}>{diary.description}</p>
+      <p className={css.text}>{diary?.description}</p>
       <EmotionIconContainer>
-        {diary.emotions.map(emotion => (
+        {diary?.emotions?.map(emotion => (
           <EmotionIcon key={emotion._id} emotion={emotion.title} />
         ))}
       </EmotionIconContainer>

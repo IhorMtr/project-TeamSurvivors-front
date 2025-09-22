@@ -5,6 +5,7 @@ import { getDiariesById } from '@/lib/api';
 import { DiaryData } from '@/lib/types';
 import { useQuery } from '@tanstack/react-query';
 import { PuffLoader } from 'react-spinners';
+import css from './DiaryEntryClientPage.module.css';
 
 type DiariesResponse = {
   data: DiaryData;
@@ -20,9 +21,7 @@ export default function DiaryEntryClientPage({ entryId }: { entryId: string }) {
 
   if (isLoading) {
     return (
-      <div
-        style={{ display: 'flex', justifyContent: 'center', marginTop: '50px' }}
-      >
+      <div className={css.loaderContainer}>
         <PuffLoader />
       </div>
     );
@@ -35,7 +34,7 @@ export default function DiaryEntryClientPage({ entryId }: { entryId: string }) {
   const diary = data?.data;
 
   if (!diary) {
-    return <div>Diary entry not found.</div>;
+    return <div>Diary entry not found.</div>; //Скорее все не нужно, но пусть пока будет
   }
 
   return <DiaryEntryDetails diary={diary} />;

@@ -1,45 +1,62 @@
 'use client';
-import DiaryEntryCard from '@/components/DiaryEntryCard/DiaryEntryCard';
-import DiaryEntryDetails from '@/components/DiaryEntryDetails/DiaryEntryDetails';
 import DiaryList from '@/components/DiaryList/DiaryList';
+import DiaryEntryDetails from '@/components/DiaryEntryDetails/DiaryEntryDetails';
 import css from './page.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { getDiaries } from '@/lib/api';
 import { DiaryData } from '@/lib/types';
+import { PuffLoader } from 'react-spinners';
+import { useDiaryStore } from '@/lib/store/diaryStore';
+import { useEffect } from 'react';
 
 type DiariesResponse = {
   data: DiaryData[];
 };
 
 export default function DiaryPage() {
-  const { data } = useQuery<DiariesResponse>({
+  const { selectedDiary, setSelectedDiary } = useDiaryStore();
+
+  const { data, isLoading } = useQuery<DiariesResponse>({
     queryKey: ['diaries'],
     queryFn: getDiaries,
   });
 
+  const diaries = data?.data || [];
+
+  useEffect(() => {
+    if (data) {
+      const currentDiaries = data.data || [];
+      const currentSelected = useDiaryStore.getState().selectedDiary;
+
+      if (currentDiaries.length > 0) {
+        if (
+          !currentSelected ||
+          !currentDiaries.some(d => d._id === currentSelected._id)
+        ) {
+          setSelectedDiary(currentDiaries[0]);
+        }
+      } else {
+        setSelectedDiary(null);
+      }
+    }
+  }, [data, setSelectedDiary]);
+
+  if (isLoading) {
+    return (
+      <div className={css.loaderContainer}>
+        <PuffLoader />
+      </div>
+    );
+  }
+
   return (
-    //TODO:У разі відсутності записів, в блоці зі змістом запису щоденника повинен відображатись плесхолдер з текстом: "Наразі записи у щоденнику відстні"
     <>
       <div className={css.mobileOnly}>
-        <DiaryList>
-          {data?.data?.map(diary => (
-            <DiaryEntryCard key={diary._id} diaryData={diary} />
-          ))}
-        </DiaryList>
+        <DiaryList diaries={diaries} />
       </div>
       <div className={css.desktopOnly}>
-        <DiaryList>
-          {data?.data?.map(diary => (
-            <DiaryEntryCard key={diary._id} diaryData={diary} />
-          ))}
-        </DiaryList>
-        {data?.data && data.data.length > 0 ? (
-          <DiaryEntryDetails diary={data.data[0]} />
-        ) : (
-          <div className={css.placeholder}>
-            Наразі записи у щоденнику відсутні
-          </div>
-        )}
+        <DiaryList diaries={diaries} />
+        {selectedDiary && <DiaryEntryDetails diary={selectedDiary} />}
       </div>
     </>
   );

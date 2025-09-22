@@ -40,6 +40,12 @@
   padding: 0 20px; /* Mobile padding */
 }
 
+.listPlaceholder {
+  text-align: center;
+  color: #555;
+  margin-top: 20px;
+}
+
 @media (min-width: 768px) {
   .diarySection {
     padding: 0 32px; /* Tablet padding */

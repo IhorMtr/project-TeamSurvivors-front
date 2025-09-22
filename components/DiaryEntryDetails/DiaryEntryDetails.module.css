@@ -20,6 +20,9 @@
   width: 40px;
   height: 40px;
   padding: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
 .container {
   background-color: #fff4f6;
