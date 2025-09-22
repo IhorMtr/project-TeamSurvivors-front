@@ -1,0 +1,21 @@
+.emotionCard {
+  display: inline;
+  border-radius: 100px;
+  background-color: var(--emotion-card-bg, #fff4f6);
+  padding: 2px 12px;
+  line-height: 1.5;
+  font-size: var(--emotion-font-size, 14px);
+  font-weight: var(--emotion-font-weight, 400);
+}
+
+.emotionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+/* @media screen and (min-width: 1440px) {
+  .emotionCard {
+    font-size: 14px;
+  }
+} */
