@@ -1,0 +1,269 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.label {
+  font-weight: 500;
+  font-size: 16px;
+  color: var(--color-neutral-darkest);
+}
+
+.input,
+.textarea,
+.selectTrigger {
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  background: var(--color-white);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-neutral-darkest);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input,
+.selectTrigger {
+  min-height: 52px;
+  padding: 16px 18px;
+}
+
+.textarea {
+  min-height: 160px;
+  padding: 16px 18px;
+  resize: vertical;
+  line-height: 1.5;
+  font-family: inherit;
+}
+
+.input::placeholder,
+.textarea::placeholder,
+.placeholder {
+  color: var(--color-neutral);
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--color-pastel-pink);
+  box-shadow: 0 0 0 3px rgba(255, 203, 211, 0.35);
+}
+
+.selectWrapper {
+  position: relative;
+}
+
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.selectTrigger:focus {
+  outline: none;
+  border-color: var(--color-pastel-pink);
+  box-shadow: 0 0 0 3px rgba(255, 203, 211, 0.35);
+}
+
+.selectContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.placeholder {
+  white-space: nowrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--color-pastel-pink-light);
+  color: var(--color-pastel-pink-darkest);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.chevron {
+  position: relative;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.chevron::before,
+.chevron::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-neutral-darkest);
+  transition: transform 0.2s ease;
+}
+
+.chevron::before {
+  top: 4px;
+  transform: rotate(45deg);
+}
+
+.chevron::after {
+  bottom: 4px;
+  transform: rotate(-45deg);
+}
+
+.selectWrapper[data-open] .chevron::before {
+  transform: translateY(2px) rotate(-45deg);
+}
+
+.selectWrapper[data-open] .chevron::after {
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.dropdown {
+  position: absolute;
+  z-index: 10;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  max-height: 220px;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  background: var(--color-white);
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.08);
+  padding: 8px 0;
+}
+
+.options {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 204px;
+  overflow-y: auto;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 15px;
+  color: var(--color-neutral-darkest);
+  position: relative;
+}
+
+.option:hover {
+  background: var(--color-pastel-pink-lightest);
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.checkboxBox {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 1px solid var(--opacity-neutral-darkest-20);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-white);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.checkboxMark {
+  width: 10px;
+  height: 10px;
+  background: var(--color-white);
+  border-radius: 3px;
+}
+
+.checkbox:checked + .checkboxBox {
+  background: var(--color-pastel-pink);
+  border-color: var(--color-pastel-pink);
+}
+
+.optionLabel {
+  flex: 1;
+}
+
+.empty {
+  margin: 0;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: var(--color-neutral);
+}
+
+.error {
+  font-size: 14px;
+  color: var(--color-red);
+}
+
+.invalid {
+  border-color: var(--color-red);
+  box-shadow: none;
+}
+
+.field[data-invalid] .label {
+  color: var(--color-red);
+}
+
+.submit {
+  align-self: center;
+  min-width: 200px;
+  min-height: 56px;
+  padding: 0 32px;
+  border: none;
+  border-radius: 28px;
+  background: linear-gradient(101deg, #ffcbd3 0%, #ffdae0 100%);
+  color: var(--color-neutral-darkest);
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.submit:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 24px rgba(255, 203, 211, 0.4);
+}
+
+.submit:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+@media (max-width: 767px) {
+  .form {
+    gap: 20px;
+  }
+
+  .input,
+  .textarea,
+  .selectTrigger {
+    font-size: 15px;
+  }
+
+  .submit {
+    width: 100%;
+    min-width: 0;
+  }
+}
