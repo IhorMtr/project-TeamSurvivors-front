@@ -44,13 +44,13 @@ export default function LoginForm() {
   };
 
   return (
-    <Formik
-      initialValues={{ email: '', password: '' }}
-      validationSchema={LoginFormSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ errors, touched, isSubmitting }) => (
-        <div className={css.authContainer}>
+    <div className={css.authContainer}>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={LoginFormSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ errors, touched, isSubmitting }) => (
           <div className={css.formWrapper}>
             <Form className={css.form}>
               <fieldset className={css.fieldset}>
@@ -109,21 +109,17 @@ export default function LoginForm() {
               </p>
             </Form>
           </div>
-
-          {/* Бічний малюнок для десктопу */}
-          <div className={css.sideImageWrapper}>
-            <Image
-              src="/nest-login.png"
-              alt="Login Illustration"
-              width={720}
-              height={900}
-              // fill
-              // style={{ objectFit: "contain" }}
-              priority
-            />
-          </div>
-        </div>
-      )}
-    </Formik>
+        )}
+      </Formik>
+      <div className={css.imageWrapper}>
+        <Image
+          src="/nest-login.png"
+          alt="Login Illustration"
+          fill
+          priority
+          className={css.img}
+        />
+      </div>
+    </div>
   );
 }
