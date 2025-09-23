@@ -51,15 +51,6 @@ export default function LoginForm() {
     >
       {({ errors, touched, isSubmitting }) => (
         <div className={css.authContainer}>
-          <div className={css.logoWrapper}>
-            <Image
-              src="/logo.png"
-              alt="Leleka Logo"
-              width={95}
-              height={29}
-              className={css.logo}
-            />
-          </div>
           <div className={css.formWrapper}>
             <Form className={css.form}>
               <fieldset className={css.fieldset}>
