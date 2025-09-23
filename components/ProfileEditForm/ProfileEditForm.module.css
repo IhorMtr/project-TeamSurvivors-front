@@ -1,0 +1,129 @@
+.container {
+  background-color: white;
+  padding: 0 20px;
+  margin-bottom: 24px;
+}
+
+.title {
+  display: none; /* Hide title as it's not shown in Figma */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 400;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.input,
+.select {
+  padding: 16px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-family: inherit;
+  background-color: white;
+  color: #333;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: #ccc;
+}
+
+.input::placeholder {
+  color: #999;
+}
+
+.select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 12px center;
+  background-repeat: no-repeat;
+  background-size: 16px;
+  padding-right: 40px;
+}
+
+.select option {
+  background-color: white;
+  color: #333;
+}
+
+.error {
+  font-size: 12px;
+  color: #e74c3c;
+  margin-top: 4px;
+  min-height: 16px;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 0 20px;
+}
+
+.cancelButton,
+.saveButton {
+  flex: 1;
+  padding: 16px 24px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.cancelButton {
+  background-color: #f5f5f5;
+  color: #666;
+}
+
+.cancelButton:hover:not(:disabled) {
+  background-color: #e8e8e8;
+}
+
+.saveButton {
+  background-color: #ffb3ba; /* Light pink - will be updated with exact color */
+  color: #333;
+}
+
+.saveButton:hover:not(:disabled) {
+  background-color: #ff9aa1;
+}
+
+.cancelButton:disabled,
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Tablet and desktop */
+@media only screen and (min-width: 768px) {
+  .container {
+    padding: 0 32px;
+  }
+
+  .buttonGroup {
+    max-width: 400px;
+    padding: 0;
+  }
+}

@@ -109,6 +109,26 @@ section {
   padding: 0 20px;
 }
 
+/* Main layout improvements */
+main {
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Responsive layout adjustments */
+@media only screen and (min-width: 768px) {
+  section {
+    padding: 0 24px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  section {
+    padding: 0 28px;
+  }
+}
+
 @media only screen and (min-width: 1440px) {
   h1 {
     font-size: 48px;
@@ -121,5 +141,11 @@ section {
 
   section {
     padding: 0 32px;
+  }
+}
+
+@media only screen and (min-width: 1920px) {
+  section {
+    padding: 0 40px;
   }
 }
