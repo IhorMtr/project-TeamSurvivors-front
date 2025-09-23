@@ -48,19 +48,19 @@ export default function ProfileEditForm({
         onSubmit={onSubmit}
         enableReinitialize
       >
-        {({ isSubmitting, dirty, resetForm, submitForm, values }) => (
+        {({ isSubmitting, dirty, resetForm, submitForm }) => (
           <>
             <Form className={styles.form}>
               <div className={styles.fieldGroup}>
                 <label htmlFor="name" className={styles.label}>
-                  Ім'я
+                  Ім&apos;я
                 </label>
                 <Field
                   type="text"
                   id="name"
                   name="name"
                   className={styles.input}
-                  placeholder="Введіть ім'я"
+                  placeholder="Введіть ім&apos;я"
                 />
                 <ErrorMessage name="name" component="div" className={styles.error} />
               </div>
