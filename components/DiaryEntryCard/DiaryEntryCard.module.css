@@ -1,0 +1,38 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  background-color: var(--color-pastel-pink-light);
+  border-radius: 16px;
+  gap: 8px;
+  color: inherit;
+  text-decoration: none;
+  /* Reset button styles */
+  border: none;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+  width: 100%;
+}
+.headerCard {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* gap: 77px; */
+}
+.headerDate {
+  font-size: 12px;
+}
+.headerTitle {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+@media (min-width: 1440px) {
+  .headerTitle {
+    font-size: 18px;
+  }
+  .headerDate {
+    font-size: 14px;
+  }
+}
