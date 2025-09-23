@@ -49,7 +49,7 @@ api.interceptors.response.use(
         // робимо логаут на фронті (опціонально викликати logoutUser())
         try {
           await api.post('/auth/logout');
-        } catch (_) {
+        } catch {
           // ігноруємо, якщо сервер вже видалив сесію
         }
 

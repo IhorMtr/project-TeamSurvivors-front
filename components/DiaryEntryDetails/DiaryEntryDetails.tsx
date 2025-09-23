@@ -5,7 +5,7 @@ import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import EmotionIcon from '../EmotionIcon/EmotionIcon';
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/delete.svg';
-import { DiaryData } from '@/lib/types';
+import { DiaryData } from '@/types/types';
 
 export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
   return (

@@ -53,13 +53,13 @@ export default function RegistrationForm() {
   };
 
   return (
-    <Formik
-      initialValues={{ name: '', email: '', password: '' }}
-      validationSchema={RegistrationFormSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ errors, touched, isSubmitting }) => (
-        <div className={css.authContainer}>
+    <div className={css.authContainer}>
+      <Formik
+        initialValues={{ name: '', email: '', password: '' }}
+        validationSchema={RegistrationFormSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ errors, touched, isSubmitting }) => (
           <div className={css.formWrapper}>
             <Form className={css.form}>
               <fieldset className={css.fieldset}>
@@ -132,21 +132,17 @@ export default function RegistrationForm() {
               </p>
             </Form>
           </div>
-
-          {/* Бічний великий малюнок для десктопу */}
-          <div className={css.sideImageWrapper}>
-            <Image
-              src="/parent-register.png"
-              alt="Registration Illustration"
-              width={720}
-              height={900}
-              // fill
-              // style={{ objectFit: 'contain' }}
-              priority
-            />
-          </div>
-        </div>
-      )}
-    </Formik>
+        )}
+      </Formik>
+      <div className={css.imageWrapper}>
+        <Image
+          src="/parent-register.png"
+          alt="Registration Illustration"
+          fill
+          priority
+          className={css.img}
+        />
+      </div>
+    </div>
   );
 }
