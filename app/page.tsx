@@ -7,25 +7,27 @@ import TasksReminderCard from '@/components/TasksReminderCard/TasksReminderCard'
 import css from './dashboard.module.css';
 
 import LayoutClient from '../components/LayoutClient/LayoutClient';
-export default function DashboardPage({
+import { getMyDay } from '@/lib/api/dasboard';
+export default async function DashboardPage({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const resMyDay = await getMyDay();
+
+  const randomDailyTip = Math.random() * resMyDay.momDailyTips.length - 1;
+
   return (
     <LayoutClient>
       {children}
       <div className={css.dashboardpage}>
-        <GreetingBlock title="Ганна" />
-        <StatusBlock week={1} dayAll={5} />
-        <BabyTodayCard
-          image="/path/to/image.jpg"
-          babySize={50}
-          babyWeight={3000}
-          babyActivity="Активний"
-          babyDevelopment="Розвивається відповідно до віку"
+        <GreetingBlock />
+        <StatusBlock
+          week={resMyDay.weekNumber}
+          dayAll={resMyDay.daysLeftToBirth}
         />
-        <MomTipCard dailyTip="Не забувайте пити достатньо води!" />
+        <BabyTodayCard myDay={resMyDay} />
+        <MomTipCard dailyTip={resMyDay.momDailyTips.at(randomDailyTip) || ''} />
         <TasksReminderCard tasks={[]} />
         <FeelingCheckCard />
       </div>

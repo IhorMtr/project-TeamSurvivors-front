@@ -1,8 +1,7 @@
 import css from './GreetingBlock.module.css';
-interface GreetingBlockProps {
-  title: string;
-}
-const GreetingBlock = ({ title }: GreetingBlockProps) => {
+
+const GreetingBlock = () => {
+  const title = 'user';
   return <h1 className={css.titleDashboard}>Доброго ранку, {title}!</h1>;
 };
 

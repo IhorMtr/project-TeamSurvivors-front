@@ -13,3 +13,15 @@ export type DiaryData = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type MyDay = {
+  _id: string;
+  daysLeftToBirth: number;
+  weekNumber: number;
+  babySize: number;
+  babyWeight: number;
+  image: string;
+  babyActivity: string;
+  babyDevelopment: string;
+  momDailyTips: string[];
+};
