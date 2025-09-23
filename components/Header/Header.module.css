@@ -1,0 +1,27 @@
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 16px 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.burger {
+  fill: black;
+}
+
+@media only screen and (min-width: 768px) {
+  .wrapper {
+    padding: 16px 32px;
+  }
+}

@@ -1,0 +1,65 @@
+.title {
+  font-size: 18px;
+  margin: 0;
+  line-height: 1.4;
+}
+.btn_name {
+  font-size: 14px;
+  margin: 0;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* background-color: #fff4f6; */
+  background-color: var(--color-pastel-pink-lighter);
+  padding: 24px;
+  border-radius: 32px;
+  margin: 32px 0;
+  width: var(--diary-list-width, auto);
+  height: var(--diary-list-height, 100vh);
+  overflow-y: auto;
+}
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+.btnSection {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  line-height: 1.6;
+}
+.btn {
+  display: flex;
+}
+/* Override global section padding */
+.diarySection {
+  padding: 0 20px; /* Mobile padding */
+}
+
+.listPlaceholder {
+  text-align: center;
+  color: #555;
+  margin-top: 20px;
+}
+
+@media (min-width: 768px) {
+  .diarySection {
+    padding: 0 32px; /* Tablet padding */
+  }
+}
+@media (min-width: 1440px) {
+  .diarySection {
+    padding: 0; /* Desktop padding */
+  }
+  .title {
+    font-size: 20px;
+    letter-spacing: 0.01em;
+  }
+  .btn_name {
+    font-size: 16px;
+  }
+}
