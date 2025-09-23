@@ -33,8 +33,8 @@ export default function LoginForm() {
   const handleSubmit = async (values: LoginFormValues) => {
     try {
       const res = await loginUser(values);
-      console.log(res.data);
-      router.push('/myday');
+      console.log('data', res.data);
+      // router.push('/myday');
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       alert(

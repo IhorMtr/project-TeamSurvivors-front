@@ -1,18 +1,15 @@
 import axios from 'axios';
-import cookie from 'cookie';
 
 const api = axios.create({
   baseURL: 'https://project-teamsurvivors.onrender.com',
   withCredentials: true,
 });
 
-// Interceptor to add auth token to requests from cookies
+// Interceptor to add auth token to requests
 api.interceptors.request.use(
   config => {
     if (typeof window !== 'undefined') {
-      const cookies = cookie.parse(document.cookie);
-      //   const token = cookies.authToken;
-      const token = 'E3wbvlxiS7fLPp4MuAW6QIXmBc01hiR+LBtDYTM7';
+      const token = 'ac+3wOwHIqdtuaL3PqE+DpLXB60ddijHHZf4AGjt';
 
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
@@ -33,5 +30,8 @@ export const getDiaries = async () => {
 export const getDiariesById = async (id: string) => {
   const response = await api.get(`/api/diaries/${id}`);
   return response.data;
+};
+export const deleteDiaryById = async (id: string) => {
+  return await api.delete(`/api/diaries/${id}`);
 };
 export default api;
