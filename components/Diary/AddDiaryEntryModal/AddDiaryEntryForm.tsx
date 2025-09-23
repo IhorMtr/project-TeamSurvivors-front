@@ -1,9 +1,9 @@
-'use client';
+﻿"use client";
 
-import { Formik, Form, FormikHelpers, useField } from 'formik';
-import { ReactNode, useEffect, useMemo, useRef, useState } from 'react';
-import * as Yup from 'yup';
-import s from './AddDiaryEntryForm.module.css';
+import { Form, Formik, FormikHelpers, useField } from "formik";
+import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import * as Yup from "yup";
+import s from "./AddDiaryEntryForm.module.css";
 
 export type DiaryCategoryOption = {
   value: string;
@@ -16,41 +16,135 @@ export type AddDiaryEntryFormValues = {
   text: string;
 };
 
-type Props = {
-  initialValues: AddDiaryEntryFormValues;
-  categoryOptions: DiaryCategoryOption[];
-  onSubmit: (
-    values: AddDiaryEntryFormValues,
-    helpers: FormikHelpers<AddDiaryEntryFormValues>
-  ) => void | Promise<void>;
-  submitButtonLabel?: string;
+type Notify = (type: "success" | "error", message: string) => void;
+
+type AddDiaryEntryFormProps = {
+  mode?: "create" | "edit";
+  initialValues?: Partial<AddDiaryEntryFormValues & { id?: string | number }>;
+  categoryOptions?: DiaryCategoryOption[];
+  onSuccess?: (data: unknown) => void;
+  onError?: (error: unknown) => void;
+  notify?: Notify;
+  apiBase?: string;
+  apiPath?: string;
+  method?: "POST" | "PUT";
+  headers?: Record<string, string>;
+  successMessage?: string;
+  errorMessage?: string;
 };
+
+const DEFAULT_OPTIONS: DiaryCategoryOption[] = [
+  { value: "joy", label: "Радість" },
+  { value: "sadness", label: "Смуток" },
+  { value: "anger", label: "Злість" },
+  { value: "fear", label: "Страх" },
+  { value: "surprise", label: "Подив" },
+  { value: "calm", label: "Спокій" },
+];
 
 const validationSchema = Yup.object({
   title: Yup.string()
     .trim()
-    .min(2, 'Мінімум 2 символи')
-    .max(120, 'Максимум 120 символів')
-    .required('Заповніть поле'),
-  categories: Yup.array()
-    .of(Yup.string().trim())
-    .min(1, 'Оберіть мінімум одну категорію'),
-  text: Yup.string().trim().min(1, 'Заповніть поле').required('Заповніть поле'),
+    .min(2, "Назва має містити щонайменше 2 символи")
+    .max(120, "Назва не повинна перевищувати 120 символів")
+    .required("Обов'язкове поле"),
+  categories: Yup.array().of(Yup.string()).optional(),
+  text: Yup.string()
+    .trim()
+    .min(3, "Текст має містити щонайменше 3 символи")
+    .required("Обов'язкове поле"),
 });
 
-export function AddDiaryEntryForm({
+export default function AddDiaryEntryForm({
+  mode = "create",
   initialValues,
   categoryOptions,
-  onSubmit,
-  submitButtonLabel = 'Зберегти',
-}: Props) {
-  const formInitialValues = useMemo(() => initialValues, [initialValues]);
+  onSuccess,
+  onError,
+  notify,
+  apiBase,
+  apiPath = "/diary",
+  method,
+  headers,
+  successMessage,
+  errorMessage,
+}: AddDiaryEntryFormProps) {
+  const entryId = initialValues?.id;
+  const options = categoryOptions && categoryOptions.length > 0 ? categoryOptions : DEFAULT_OPTIONS;
+
+  const API_BASE = useMemo(
+    () => apiBase ?? process.env.NEXT_PUBLIC_API_BASE ?? process.env.API_BASE ?? "",
+    [apiBase]
+  );
+
+  const formInitialValues: AddDiaryEntryFormValues = useMemo(
+    () => ({
+      title: initialValues?.title ?? "",
+      categories: initialValues?.categories ?? [],
+      text: initialValues?.text ?? (initialValues as { content?: string } | undefined)?.content ?? "",
+    }),
+    [initialValues]
+  );
+
+  const computedMethod: "POST" | "PUT" = method ?? (mode === "edit" || entryId ? "PUT" : "POST");
+
+  async function handleSubmit(
+    values: AddDiaryEntryFormValues,
+    helpers: FormikHelpers<AddDiaryEntryFormValues>
+  ) {
+    const { setSubmitting } = helpers;
+    const payload = {
+      title: values.title.trim(),
+      categories: values.categories,
+      text: values.text.trim(),
+    };
+
+    const normalizedPath = `/${(apiPath || "/diary").replace(/^\/+/ , "")}`;
+    const resourcePath =
+      computedMethod === "PUT" && entryId != null
+        ? `${normalizedPath}/${entryId}`
+        : normalizedPath;
+    const endpoint = API_BASE
+      ? `${API_BASE.replace(/\/$/, "")}${resourcePath}`
+      : resourcePath;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: computedMethod,
+        headers: {
+          "Content-Type": "application/json",
+          ...(headers || {}),
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const fallbackError = errorMessage ?? "Помилка збереження запису";
+        const errorText = (await response.text().catch(() => "")).trim();
+        const message = errorText ? `${fallbackError}: ${errorText}` : fallbackError;
+        notify?.("error", message);
+        const error = new Error(message);
+        onError?.(error);
+        return;
+      }
+
+      const data = await response.json().catch(() => ({}));
+      notify?.("success", successMessage ?? (mode === "edit" ? "Запис оновлено" : "Запис створено"));
+      onSuccess?.(data);
+    } catch (error) {
+      const message = errorMessage ?? "Сталася помилка під час запиту";
+      notify?.("error", message);
+      onError?.(error);
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <Formik
       initialValues={formInitialValues}
       validationSchema={validationSchema}
-      onSubmit={onSubmit}
+      onSubmit={handleSubmit}
       enableReinitialize
     >
       {({ isSubmitting }) => (
@@ -58,25 +152,25 @@ export function AddDiaryEntryForm({
           <TextField
             name="title"
             label="Заголовок"
-            placeholder="Введіть заголовок запису"
+            placeholder="Введіть назву запису"
             autoFocus
           />
 
           <CategoriesField
             name="categories"
             label="Категорії"
-            options={categoryOptions}
-            placeholder="Оберіть категорію"
+            placeholder="Обрати категорії"
+            options={options}
           />
 
           <TextareaField
             name="text"
             label="Запис"
-            placeholder="Запишіть, як ви себе відчуваєте"
+            placeholder="Опишіть ваші думки або відчуття"
           />
 
           <button type="submit" className={s.submit} disabled={isSubmitting}>
-            {isSubmitting ? 'Збереження...' : submitButtonLabel}
+            {isSubmitting ? "Збереження..." : "Зберегти"}
           </button>
         </Form>
       )}
@@ -94,15 +188,15 @@ type FieldControlProps = {
 };
 
 function FieldControl({ label, htmlFor, labelId, error, touched, children }: FieldControlProps) {
-  const hasError = Boolean(touched && error);
+  const showError = Boolean(touched && error);
 
   return (
-    <div className={s.field} data-invalid={hasError || undefined}>
+    <div className={s.field} data-invalid={showError || undefined}>
       <label className={s.label} htmlFor={htmlFor} id={labelId}>
         {label}
       </label>
       {children}
-      {hasError && <span className={s.error}>{error}</span>}
+      {showError && <span className={s.error}>{error}</span>}
     </div>
   );
 }
@@ -116,18 +210,18 @@ type TextFieldProps = {
 
 function TextField({ name, label, placeholder, autoFocus }: TextFieldProps) {
   const [field, meta] = useField(name);
-  const hasError = Boolean(meta.touched && meta.error);
-  const id = name as string;
+  const inputId = name as string;
+  const className = meta.touched && meta.error ? `${s.input} ${s.invalid}` : s.input;
 
   return (
-    <FieldControl label={label} htmlFor={id} error={meta.error} touched={meta.touched}>
+    <FieldControl label={label} htmlFor={inputId} error={meta.error} touched={meta.touched}>
       <input
         {...field}
-        id={id}
-        autoFocus={autoFocus}
+        id={inputId}
         type="text"
+        className={className}
         placeholder={placeholder}
-        className={`${s.input} ${hasError ? s.invalid : ''}`}
+        autoFocus={autoFocus}
       />
     </FieldControl>
   );
@@ -141,16 +235,16 @@ type TextareaFieldProps = {
 
 function TextareaField({ name, label, placeholder }: TextareaFieldProps) {
   const [field, meta] = useField(name);
-  const hasError = Boolean(meta.touched && meta.error);
-  const id = name as string;
+  const inputId = name as string;
+  const className = meta.touched && meta.error ? `${s.textarea} ${s.invalid}` : s.textarea;
 
   return (
-    <FieldControl label={label} htmlFor={id} error={meta.error} touched={meta.touched}>
+    <FieldControl label={label} htmlFor={inputId} error={meta.error} touched={meta.touched}>
       <textarea
         {...field}
-        id={id}
+        id={inputId}
+        className={className}
         placeholder={placeholder}
-        className={`${s.textarea} ${hasError ? s.invalid : ''}`}
         rows={6}
       />
     </FieldControl>
@@ -160,54 +254,51 @@ function TextareaField({ name, label, placeholder }: TextareaFieldProps) {
 type CategoriesFieldProps = {
   name: keyof AddDiaryEntryFormValues;
   label: string;
-  options: DiaryCategoryOption[];
   placeholder: string;
+  options: DiaryCategoryOption[];
 };
 
-function CategoriesField({ name, label, options, placeholder }: CategoriesFieldProps) {
-  const [field, meta, helpers] = useField<string[]>({ name });
+function CategoriesField({ name, label, placeholder, options }: CategoriesFieldProps) {
+  const [field, meta, helpers] = useField<string[]>(name);
   const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const hasError = Boolean(meta.touched && meta.error);
-  const selectedValues = useMemo(
-    () => (Array.isArray(field.value) ? field.value : []),
-    [field.value]
-  );
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const selectedValues = useMemo(() => (Array.isArray(field.value) ? field.value : []), [field.value]);
   const labelId = `${name as string}-label`;
   const triggerId = `${name as string}-trigger`;
 
   useEffect(() => {
     if (!isOpen) return;
 
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsOpen(false);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
     };
-    const handleClick = (event: MouseEvent) => {
+
+    const handleClickOutside = (event: MouseEvent) => {
       if (!containerRef.current) return;
       if (containerRef.current.contains(event.target as Node)) return;
       setIsOpen(false);
     };
 
-    document.addEventListener('keydown', handleKey);
-    document.addEventListener('mousedown', handleClick);
+    document.addEventListener("keydown", handleKeyDown);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('keydown', handleKey);
-      document.removeEventListener('mousedown', handleClick);
+      document.removeEventListener("keydown", handleKeyDown);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
 
   const selectedOptions = useMemo(() => {
-    const map = new Map(options.map((item) => [item.value, item.label] as const));
+    const index = new Map(options.map((item) => [item.value, item.label] as const));
     return selectedValues
       .map((value) => {
-        const labelText = map.get(value);
-        return labelText ? { value, label: labelText } : null;
+        const optionLabel = index.get(value);
+        return optionLabel ? { value, label: optionLabel } : null;
       })
       .filter(Boolean) as Array<{ value: string; label: string }>;
   }, [selectedValues, options]);
 
-  const onOptionToggle = (value: string) => {
+  const toggleOption = (value: string) => {
     const next = selectedValues.includes(value)
       ? selectedValues.filter((item) => item !== value)
       : [...selectedValues, value];
@@ -215,11 +306,12 @@ function CategoriesField({ name, label, options, placeholder }: CategoriesFieldP
     helpers.setTouched(true, true);
   };
 
-  const handleToggle = () => {
+  const handleToggleOpen = () => {
     setIsOpen((prev) => !prev);
   };
 
   const dropdownId = `${name as string}-dropdown`;
+  const triggerClass = meta.touched && meta.error ? `${s.selectTrigger} ${s.invalid}` : s.selectTrigger;
 
   return (
     <FieldControl label={label} labelId={labelId} error={meta.error} touched={meta.touched}>
@@ -227,8 +319,8 @@ function CategoriesField({ name, label, options, placeholder }: CategoriesFieldP
         <button
           type="button"
           id={triggerId}
-          className={`${s.selectTrigger} ${hasError ? s.invalid : ''}`}
-          onClick={handleToggle}
+          className={triggerClass}
+          onClick={handleToggleOpen}
           aria-haspopup="listbox"
           aria-expanded={isOpen}
           aria-controls={dropdownId}
@@ -249,14 +341,9 @@ function CategoriesField({ name, label, options, placeholder }: CategoriesFieldP
         </button>
 
         {isOpen && (
-          <div
-            id={dropdownId}
-            className={s.dropdown}
-            role="listbox"
-            aria-labelledby={labelId}
-          >
+          <div id={dropdownId} className={s.dropdown} role="listbox" aria-labelledby={labelId}>
             {options.length === 0 ? (
-              <p className={s.empty}>Немає доступних категорій</p>
+              <p className={s.empty}>Категорії недоступні</p>
             ) : (
               <ul className={s.options}>
                 {options.map((option) => {
@@ -265,10 +352,10 @@ function CategoriesField({ name, label, options, placeholder }: CategoriesFieldP
                     <li key={option.value}>
                       <label className={s.option}>
                         <input
-                          className={s.checkbox}
                           type="checkbox"
+                          className={s.checkbox}
                           checked={checked}
-                          onChange={() => onOptionToggle(option.value)}
+                          onChange={() => toggleOption(option.value)}
                         />
                         <span className={s.checkboxBox} aria-hidden="true">
                           {checked && <span className={s.checkboxMark} />}

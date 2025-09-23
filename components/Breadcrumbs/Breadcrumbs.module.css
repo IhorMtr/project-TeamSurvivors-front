@@ -1,0 +1,48 @@
+.list {
+  list-style: none;
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  text-align: center;
+  color: #000;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+.icon {
+  fill: #000;
+  stroke-width: 1px;
+  stroke: #000;
+  rotate: 90deg;
+  margin-right: 8px;
+}
+
+.list li {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.list a {
+  text-decoration: none;
+  margin-right: 8px;
+  color: inherit;
+}
+
+.list span {
+  color: #7f7f7f;
+}
+
+@media only screen and (min-width: 1440px) {
+  .list {
+    font-size: 14px;
+  }
+
+  .list li {
+    align-items: flex-start;
+  }
+}

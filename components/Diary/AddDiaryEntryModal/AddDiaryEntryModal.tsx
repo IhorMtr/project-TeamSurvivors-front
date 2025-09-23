@@ -1,94 +1,96 @@
-'use client';
+"use client";
 
-import { FormikHelpers } from 'formik';
-import { toast } from 'react-hot-toast';
-import { Modal } from '@/components/ui/Modal';
-import {
-  AddDiaryEntryForm,
-  AddDiaryEntryFormValues,
-  DiaryCategoryOption,
-} from './AddDiaryEntryForm';
-import s from './AddDiaryEntryModal.module.css';
+import React, { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import AddDiaryEntryForm from "./AddDiaryEntryForm";
+import styles from "./AddDiaryEntryModal.module.css";
 
-export type AddDiaryEntryModalMode = 'create' | 'edit';
-
-type Props = {
+type AddDiaryEntryModalProps = {
   isOpen: boolean;
-  mode?: AddDiaryEntryModalMode;
-  initialValues?: Partial<AddDiaryEntryFormValues>;
-  categoryOptions: DiaryCategoryOption[];
   onClose: () => void;
-  onSubmit: (values: AddDiaryEntryFormValues) => Promise<void>;
-  titleOverride?: string;
-  submitButtonLabel?: string;
+  mode?: "create" | "edit";
+  title?: string;
+  className?: string;
+  backdropClassName?: string;
+  contentClassName?: string;
+  formProps?: Record<string, any>;
 };
 
-const DEFAULT_VALUES: AddDiaryEntryFormValues = {
-  title: '',
-  categories: [],
-  text: '',
-};
-
-export function AddDiaryEntryModal({
+export default function AddDiaryEntryModal({
   isOpen,
-  mode = 'create',
-  initialValues,
-  categoryOptions,
   onClose,
-  onSubmit,
-  titleOverride,
-  submitButtonLabel,
-}: Props) {
-  const heading = titleOverride ?? (mode === 'edit' ? 'Редагувати запис' : 'Новий запис');
+  mode = "create",
+  title,
+  className,
+  backdropClassName,
+  contentClassName,
+  formProps,
+}: AddDiaryEntryModalProps) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const dialogRef = useRef<HTMLDivElement | null>(null);
 
-  const safeCategories = Array.isArray(initialValues?.categories)
-    ? initialValues.categories.filter(Boolean)
-    : DEFAULT_VALUES.categories;
+  if (typeof window !== "undefined" && !containerRef.current) {
+    const el = document.createElement("div");
+    el.setAttribute("data-modal-root", "add-diary-entry-modal");
+    containerRef.current = el;
+  }
 
-  const formInitialValues: AddDiaryEntryFormValues = {
-    ...DEFAULT_VALUES,
-    ...initialValues,
-    title: initialValues?.title ?? DEFAULT_VALUES.title,
-    categories: safeCategories,
-    text: initialValues?.text ?? DEFAULT_VALUES.text,
-  };
-
-  const handleSubmit = async (
-    values: AddDiaryEntryFormValues,
-    helpers: FormikHelpers<AddDiaryEntryFormValues>
-  ) => {
-    const payload: AddDiaryEntryFormValues = {
-      title: values.title.trim(),
-      categories: values.categories,
-      text: values.text.trim(),
+  useEffect(() => {
+    if (!containerRef.current) return;
+    document.body.appendChild(containerRef.current);
+    return () => {
+      if (containerRef.current && containerRef.current.parentNode) {
+        containerRef.current.parentNode.removeChild(containerRef.current);
+      }
     };
+  }, []);
 
-    try {
-      await onSubmit(payload);
-      helpers.resetForm({ values: mode === 'edit' ? payload : DEFAULT_VALUES });
-      onClose();
-    } catch (error) {
-      const message =
-        error instanceof Error && error.message
-          ? error.message
-          : 'Не вдалося зберегти запис. Спробуйте ще раз.';
-      toast.error(message);
-      helpers.setSubmitting(false);
-    }
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen || !containerRef.current) return null;
+
+  const defaultTitle = title ?? (mode === "edit" ? "Редагувати запис" : "Новий запис");
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) onClose();
   };
 
-  return (
-    <Modal isOpen={isOpen} ariaLabel={heading} onClose={onClose}>
-      <div className={s.container}>
-        <h2 className={s.heading}>{heading}</h2>
-
-        <AddDiaryEntryForm
-          initialValues={formInitialValues}
-          categoryOptions={categoryOptions}
-          onSubmit={handleSubmit}
-          submitButtonLabel={submitButtonLabel}
-        />
+  const node = (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={defaultTitle}
+      onMouseDown={handleBackdropClick}
+      className={[styles.backdrop, backdropClassName].filter(Boolean).join(" ")}
+    >
+      <div
+        ref={dialogRef}
+        className={[styles.panel, className, contentClassName].filter(Boolean).join(" ")}
+      >
+        <div className={styles.header}>
+          <h3 className={styles.title}>{defaultTitle}</h3>
+          <button aria-label="Закрити" onClick={onClose} className={styles.closeBtn}>
+            ×
+          </button>
+        </div>
+        <div className={styles.content}>
+          <AddDiaryEntryForm {...(formProps || {})} />
+        </div>
       </div>
-    </Modal>
+    </div>
   );
+
+  return createPortal(node, containerRef.current);
 }
