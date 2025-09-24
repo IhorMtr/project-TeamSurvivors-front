@@ -3,7 +3,7 @@ import DiaryList from '@/components/DiaryList/DiaryList';
 import DiaryEntryDetails from '@/components/DiaryEntryDetails/DiaryEntryDetails';
 import css from './page.module.css';
 import { useQuery } from '@tanstack/react-query';
-import { getDiaries } from '@/lib/api';
+import { getDiaries } from '@/lib/clientApi';
 import { DiaryData } from '@/types/types';
 import { PuffLoader } from 'react-spinners';
 import { useDiaryStore } from '@/lib/store/diaryStore';
