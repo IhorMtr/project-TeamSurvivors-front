@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import AddDiaryEntryForm from "./AddDiaryEntryForm";
 import styles from "./AddDiaryEntryModal.module.css";
@@ -26,24 +26,29 @@ export default function AddDiaryEntryModal({
   contentClassName,
   formProps,
 }: AddDiaryEntryModalProps) {
+  const [isMounted, setIsMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const dialogRef = useRef<HTMLDivElement | null>(null);
 
-  if (typeof window !== "undefined" && !containerRef.current) {
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted || containerRef.current) return;
     const el = document.createElement("div");
     el.setAttribute("data-modal-root", "add-diary-entry-modal");
     containerRef.current = el;
-  }
-
-  useEffect(() => {
-    if (!containerRef.current) return;
-    document.body.appendChild(containerRef.current);
+    document.body.appendChild(el);
     return () => {
-      if (containerRef.current && containerRef.current.parentNode) {
-        containerRef.current.parentNode.removeChild(containerRef.current);
+      if (containerRef.current) {
+        containerRef.current.remove();
+        containerRef.current = null;
+      } else {
+        el.remove();
       }
     };
-  }, []);
+  }, [isMounted]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -59,7 +64,7 @@ export default function AddDiaryEntryModal({
     };
   }, [isOpen, onClose]);
 
-  if (!isOpen || !containerRef.current) return null;
+  if (!isMounted || !isOpen || !containerRef.current) return null;
 
   const defaultTitle = title ?? (mode === "edit" ? "Редагувати запис" : "Новий запис");
 

@@ -24,26 +24,30 @@
   }
 }
 /* Modal backdrop */
+
 .backdrop {
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 24px;
+  background: rgba(17, 24, 39, 0.55);
+  backdrop-filter: blur(3px);
   z-index: 1000;
 }
 
 /* Modal panel */
 .panel {
+  width: min(100%, 640px);
+  max-height: calc(100vh - 80px);
   background: #fff;
   color: inherit;
-  width: 100%;
-  max-width: 640px;
-  max-height: 90vh;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border-radius: 32px;
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.18);
   overflow: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Header */
@@ -51,34 +55,64 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 20px;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 32px 40px 0 40px;
 }
 
 .title {
   margin: 0;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--color-neutral-darkest);
 }
 
 /* Close button */
 .closeBtn {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 8px;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  background: transparent;
+  border-radius: 12px;
+  border: 1px solid var(--opacity-neutral-darkest-15);
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
   cursor: pointer;
 }
 
 .closeBtn:hover {
-  background: rgba(0, 0, 0, 0.03);
+  background: var(--color-pastel-pink-lightest);
 }
 
 /* Content */
 .content {
-  padding: 20px;
+  padding: 24px 40px 40px;
+}
+
+@media (max-width: 767px) {
+  .backdrop {
+    padding: 16px;
+  }
+
+  .panel {
+    border-radius: 24px;
+    max-height: calc(100vh - 48px);
+  }
+
+  .header {
+    padding: 24px 24px 0 24px;
+  }
+
+  .title {
+    font-size: 22px;
+  }
+
+  .closeBtn {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+  }
+
+  .content {
+    padding: 20px 24px 32px;
+  }
 }

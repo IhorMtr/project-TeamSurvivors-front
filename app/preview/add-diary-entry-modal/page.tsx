@@ -51,12 +51,13 @@ export default function AddDiaryEntryModalPreviewPage() {
                   text: "Це попередньо заповнений запис для режиму редагування.",
                 }
               : undefined,
-          notify: (type, message) => console.log(`[${type}]`, message),
-          onSuccess: (data) => {
+          notify: (type: "success" | "error", message: string) =>
+            console.log(`[${type}]`, message),
+          onSuccess: (data: unknown) => {
             console.log("Успішно збережено", data);
             setIsOpen(false);
           },
-          onError: (error) => {
+          onError: (error: unknown) => {
             console.error("Помилка збереження", error);
           },
           apiBase: "",
@@ -66,4 +67,3 @@ export default function AddDiaryEntryModalPreviewPage() {
     </div>
   );
 }
-
