@@ -1,0 +1,29 @@
+.desktopOnly {
+  display: none;
+}
+
+
+@media (min-width: 1440px) {
+  .mobileOnly {
+    display: none;
+  }
+
+  .desktopOnly {
+    display: flex;
+    justify-content: flex-end;
+    gap: 32px;
+    width: 1128px;
+
+    --diary-list-width: 387px;
+    --diary-list-height: 727px;
+    --diary-details-width: 643px;
+    --diary-details-height: 727px;
+    --emotion-font-size: 16px;
+  }
+}
+
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}

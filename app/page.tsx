@@ -1,13 +1,10 @@
-import Link from 'next/link';
+import LayoutClient from '../components/LayoutClient/LayoutClient';
 
-export default function DashboardPage() {
-  return (
-    <main>
-     
-        <Link href="/journey/16" className="text-blue-500 underline">
-          Подорожі
-        </Link>
-   
-    </main>
-  );
+export default function DashboardPage({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <LayoutClient>{children}</LayoutClient>;
 }
+

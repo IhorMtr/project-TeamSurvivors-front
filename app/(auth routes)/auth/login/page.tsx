@@ -1,68 +1,117 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { authApi } from '@/services/authApi';
 
-export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+
+import { useId } from 'react';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { loginUser } from '../../../../lib/api/auth';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { AxiosError } from 'axios';
+import css from '../AuthForm.module.css';
+import Image from 'next/image';
+import { LoginFormSchema } from '@/lib/schemas/auth';
+
+interface LoginFormValues {
+  email: string;
+  password: string;
+}
+
+export default function LoginForm() {
+  const fieldId = useId();
   const router = useRouter();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError('');
-
+  const handleSubmit = async (values: LoginFormValues) => {
     try {
-      const response = await authApi.login({ email, password });
-      
-      if (response.data.accessToken) {
-        localStorage.setItem('accessToken', response.data.accessToken);
-        router.push('/journey/1');
-      }
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Помилка входу');
-    } finally {
-      setIsLoading(false);
+      await loginUser(values);
+      router.push('/myday');
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      alert(
+        error.response?.data?.message || 'Невірно вказаний логін чи пароль'
+      );
+
     }
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
-      <h1>Вхід</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email:</label>
-          <input 
-            type="email" 
-            value={email} 
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            style={{ width: '100%', padding: '8px', margin: '5px 0' }}
-          />
-        </div>
-        <div>
-          <label>Пароль:</label>
-          <input 
-            type="password" 
-            value={password} 
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            style={{ width: '100%', padding: '8px', margin: '5px 0' }}
-          />
-        </div>
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <button 
-          type="submit" 
-          disabled={isLoading}
-          style={{ width: '100%', padding: '10px', margin: '10px 0' }}
-        >
-          {isLoading ? 'Вхід...' : 'Увійти'}
-        </button>
-      </form>
+
+       
+    <div className={css.authContainer}>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={LoginFormSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ errors, touched, isSubmitting }) => (
+          <div className={css.formWrapper}>
+            <Form className={css.form}>
+              <fieldset className={css.fieldset}>
+                <legend className={css.legend}>Вхід</legend>
+
+                <label
+                  className={css.label}
+                  htmlFor={`${fieldId}-email`}
+                ></label>
+                <Field
+                  className={`${css.input} ${errors.email && touched.email ? css.inputError : ''}`}
+                  type="email"
+                  name="email"
+                  id={`${fieldId}-email`}
+                  placeholder="Пошта"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className={css.error}
+                />
+
+                <label
+                  className={css.label}
+                  htmlFor={`${fieldId}-password`}
+                ></label>
+                <Field
+                  className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
+                  type="password"
+                  name="password"
+                  id={`${fieldId}-password`}
+                  placeholder="Пароль"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className={css.error}
+                />
+              </fieldset>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={css.button}
+              >
+                {isSubmitting ? 'Завантаження...' : 'Увійти'}
+              </button>
+
+              <p className={css.registerLink}>
+                Немає аккаунту?{' '}
+                <Link href="/auth/register" className={css.link}>
+                  Зареєструватися
+                </Link>
+              </p>
+            </Form>
+          </div>
+        )}
+      </Formik>
+      <div className={css.imageWrapper}>
+        <Image
+          src="/nest-login.png"
+          alt="Login Illustration"
+          fill
+          priority
+          className={css.img}
+        />
+      </div>
     </div>
   );
 }
+
