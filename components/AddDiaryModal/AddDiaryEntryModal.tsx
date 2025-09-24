@@ -2,8 +2,9 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import AddDiaryEntryForm from './AddDiaryEntryForm';
+import AddDiaryEntryForm from '../AddDiaryEntryForm/AddDiaryEntryForm';
 import styles from './AddDiaryEntryModal.module.css';
+import type { AddDiaryEntryFormProps } from '@/types/diaryEntry';
 
 type AddDiaryEntryModalProps = {
   isOpen: boolean;
@@ -13,7 +14,7 @@ type AddDiaryEntryModalProps = {
   className?: string;
   backdropClassName?: string;
   contentClassName?: string;
-  formProps?: Record<string, unknown>;
+  formProps?: Partial<AddDiaryEntryFormProps>;
 };
 
 export default function AddDiaryEntryModal({
@@ -83,6 +84,7 @@ export default function AddDiaryEntryModal({
         <div className={styles.header}>
           <h3 className={styles.title}>{defaultTitle}</h3>
           <button
+            type="button"
             aria-label="Закрити"
             onClick={onClose}
             className={styles.closeBtn}
