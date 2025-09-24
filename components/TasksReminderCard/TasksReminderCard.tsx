@@ -1,3 +1,5 @@
+import css from './TasksReminderCard.module.css';
+
 interface Task {
   _id: string;
   status: boolean;
@@ -14,7 +16,11 @@ const TasksReminderCard = ({ tasks }: TasksReminderCardProps) => {
     <div>
       <div>
         <h2>Важливі завдання</h2>
-        <button></button>
+        {/* <button> */}
+        <svg className={css.svg} width={18} height={18}>
+          <use href="/icons.svg#add_circle"></use>
+        </svg>
+        {/* </button> */}
       </div>
       {tasks.length === 0 && (
         <div>
