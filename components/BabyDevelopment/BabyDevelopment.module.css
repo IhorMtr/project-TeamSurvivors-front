@@ -3,11 +3,11 @@
     background: var(--color-scheme-foreground);
     border-radius: 32px;
     width: 335px;
-    height: auto; /* sdfgs */
+    height: auto;
     min-height: 983px;
     padding: 24px;
     box-sizing: border-box;
-    overflow: hidden; /* sdfgs */
+    overflow: hidden;
 }
 
 .sizeContainer {
@@ -50,12 +50,12 @@
 }
 
 .contentContainer {
-  /* width: 287px; */
-  height: auto; /* sdfgs */
-  min-height: 487px; /* sdfgs */
+  height: auto;
+  min-height: 487px;
   display: flex;
   flex-direction: column;
   gap: 16px;
+  justify-content: space-between;
 }
 
 .textContent {
@@ -109,6 +109,7 @@
   line-height: 150%;
   color: var(--color-scheme-text);
   margin: 0;
+  overflow: auto;
 }
 
 .textContent::-webkit-scrollbar {
@@ -129,13 +130,17 @@
   background: var(--color-scheme-text);
 }
 
+.starFact {
+  width: 24px;
+  height: 24px;
+}
+
 
 @media only screen and (min-width: 768px) {
   .babyDevelopment {
     width: 704px;
     height: auto;
     min-height: 773px;
-    /* padding: 24px; */
     margin: 0 auto;
   }
   
@@ -299,4 +304,71 @@
     line-height: 150%;
     color: var(--color-scheme-text);
   }
+
+  .starFact {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.loading, .error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  font-family: var(--font-family);
+  font-size: 16px;
+  color: var(--color-scheme-text);
+}
+
+.error {
+  color: var(--color-red);
+}
+
+.babyImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+
+.demoNotice {
+  background: var(--color-oasis-light);
+  padding: 8px 16px;
+  border-radius: 20px;
+  margin-bottom: 16px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--color-oasis-darker);
+  font-weight: 600;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.babyImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+.babyImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 24px;
+}
+
+.imagePlaceholder {
+  position: relative; 
+  border: 1px solid var(--color-scheme-border);
+  border-radius: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-scheme-foreground);
+  margin: 0;
+  overflow: hidden;
 }

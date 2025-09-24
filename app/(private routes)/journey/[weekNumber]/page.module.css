@@ -1,13 +1,18 @@
 .journeyPage {
-    min-height: 100vh;
-    background-color: #f9fafb;
-    min-height: 1314px;
+    width: 100%;
+    min-height: calc(100vh - 166px);
     background-color: var(--color-scheme-background);
     margin: 0;
+    padding: 16px;
+    box-sizing: border-box;
+    margin-top: 166px;
   }
   
   .journeyPage__content {
-    padding: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
   }
   
   .weekSelector {
@@ -26,34 +31,64 @@
   
   @media only screen and (min-width: 768px) {
     .journeyPage {
-      width: 768px;
-      height: auto;
-      min-height: 1104px;
-      margin: 0;
+      /* width: 100%;
+      min-height: 1006px;
+      padding: 24px 32px; */
+      width: 100%;
+      min-height: calc(100vh - 166px);
+      padding: 24px 32px;
+      margin-top: 166px;
     }
     
     .journeyPage__content {
-      width: 768px;
-      min-height: 1006px;
-      padding: 24px 32px;
-      box-sizing: border-box;
+      /* width: 100%;
+      min-height: 958px;
+      gap: 32px; */
+      width: 100%;
+      min-height: calc(100vh - 214px);
+      gap: 32px;
+
     }
   }
   
   @media only screen and (min-width: 1280px) {
     .journeyPage {
-      width: 1128px;
-      height: 900px;
-      min-height: 900px; 
-      margin-left: 312px; 
-      background: var(--color-scheme-background);
+      /* position: absolute;
+      top: 109px;
+      left: 312px;
+      width: calc(100% - 312px);
+      background-color: var(--color-scheme-background);
+      padding: 32px;
+      margin: 0;
+      box-sizing: border-box;
+      overflow-y: auto; */
+      position: absolute;
+      top: 109px;
+      left: 312px;
+      width: calc(100% - 312px);
+      height: calc(100vh - 109px);
+      background-color: var(--color-scheme-background);
+      padding: 32px;
+      margin: 0;
+      box-sizing: border-box;
+      overflow-y: auto;
+      min-height: auto;
     }
     
     .journeyPage__content {
-      width: 1128px;
-      height: auto; 
-      min-height: 791px; 
-      padding: 24px 32px;
-      box-sizing: border-box;
+      /* width: 100%;
+      max-width: 1128px;
+      min-height: auto;
+      gap: 32px;
+      padding: 0;
+      margin: 0 auto; */
+
+      width: 100%;
+      max-width: 1128px;
+      min-height: calc(100vh - 173px);
+      gap: 32px;
+      padding: 0;
+      margin: 0 auto;
+
     }
   }

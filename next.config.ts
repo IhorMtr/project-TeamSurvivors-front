@@ -5,17 +5,21 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'ac.goit.global',
-        pathname: '/**',
+        hostname: 'ftp.goit.study',
+        pathname: '/img/lehlehka/**',
       },
       {
         protocol: 'https',
         hostname: 'res.cloudinary.com',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'via.placeholder.com',
+        pathname: '/**',
+      },
     ],
   },
-  reactStrictMode: true,
 };
 
 export default nextConfig;

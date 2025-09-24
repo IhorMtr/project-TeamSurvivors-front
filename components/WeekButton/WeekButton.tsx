@@ -1,29 +1,35 @@
 'use client';
 
+import React from "react";
 import styles from "./WeekButton.module.css";
 
 interface WeekButtonProps {
   weekNumber: number;
   isCurrent?: boolean;
   isDisabled?: boolean;
+  onClick: () => void;
 }
 
-const WeekButton = ({
+const WeekButton: React.FC<WeekButtonProps> = ({
   weekNumber,
-  isCurrent = false,
-  isDisabled = false,
-}: WeekButtonProps) => {
+  isCurrent,
+  isDisabled,
+  onClick
+}) => {
   return (
-    <div className={`
+    <button className={`
       ${styles.weekButton} 
       ${isCurrent ? styles.weekButtonCurrent : ''}
       ${isDisabled ? styles.weekButtonDisabled : ''}
-    `}>
+    `}
+    onClick={onClick}
+    disabled={isDisabled}
+    >
       <div className={styles.weekButtonContent}>
-        <div className={styles.weekNumber}>{weekNumber}</div>
-        <div className={styles.weekLabel}>Тиждень</div>
+        <span className={styles.weekNumber}>{weekNumber}</span>
+        <span className={styles.weekLabel}>Тиждень</span>
       </div>
-    </div>
+    </button>
   );
 };
 

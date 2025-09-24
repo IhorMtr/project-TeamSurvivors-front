@@ -5,7 +5,11 @@ import styles from "./JourneyDetails.module.css";
 import BabyDevelopment from "../BabyDevelopment/BabyDevelopment";
 import MomDevelopment from "../MomDevelopment/MomDevelopment";
 
-export default function JourneyDetails() {
+interface JourneyDetailsProps {
+  weekNumber: number;
+}
+
+export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
   const [activeTab, setActiveTab] = useState<'baby' | 'mom'>('baby');
 
   return (
@@ -25,12 +29,11 @@ export default function JourneyDetails() {
         </button>
       </div>
 
-      
       <div className={styles.content}>
         {activeTab === 'baby' ? (
-          <BabyDevelopment />
+          <BabyDevelopment weekNumber={weekNumber} />
         ) : (
-          <MomDevelopment />
+          <MomDevelopment weekNumber={weekNumber} />
         )}
       </div>
     </div>
