@@ -1,51 +1,37 @@
 'use client';
 
-import { registerUser } from '../../../../lib/api/auth';
 import { useId, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import * as Yup from 'yup';
 import css from '../AuthForm.module.css';
-import { AxiosError } from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { AxiosError } from 'axios';
+import { registerUser, loginUser } from '@/lib/api/auth';
+import type { RegisterRequest } from '@/lib/api/auth';
+import { RegistrationFormSchema } from '@/lib/schemas/auth';
 
-const RegistrationFormSchema = Yup.object().shape({
-  name: Yup.string().max(32, 'Ім’я занадто довге').required('Ім’я обов’язкове'),
-  email: Yup.string()
-    .max(64, 'Email занадто довгий')
-    .email('Невірний формат email')
-    .required('Email обов’язковий'),
-  password: Yup.string()
-    .min(8, 'Пароль мінімум 8 символів')
-    .max(128, 'Пароль занадто довгий')
-    .required('Пароль обов’язковий'),
-});
-
-interface RegistrationFormValues {
-  name: string;
-  email: string;
-  password: string;
-}
+type RegistrationFormValues = RegisterRequest;
 
 export default function RegistrationForm() {
   const fieldId = useId();
   const router = useRouter();
-  const [user, setUser] = useState<{
-    id: string;
-    email: string;
-    name: string;
-  } | null>(null);
+
   const [error, setError] = useState<string>('');
 
   const handleSubmit = async (values: RegistrationFormValues) => {
     setError('');
     try {
-      const res = await registerUser(values);
-      setUser(res.data.data);
+      await registerUser(values);
+
+      await loginUser({
+        email: values.email,
+        password: values.password,
+      });
+
       router.push('/onboarding');
     } catch (err) {
-      const axiosError = err as AxiosError<{ message: string }>;
+      const axiosError = err as AxiosError<{ message?: string }>;
       setError(
         axiosError.response?.data?.message || 'Помилка під час реєстрації'
       );
@@ -134,6 +120,7 @@ export default function RegistrationForm() {
           </div>
         )}
       </Formik>
+
       <div className={css.imageWrapper}>
         <Image
           src="/parent-register.png"
