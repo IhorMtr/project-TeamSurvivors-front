@@ -18,6 +18,7 @@ export default function RegistrationForm() {
   const router = useRouter();
 
   const [error, setError] = useState<string>('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (values: RegistrationFormValues) => {
     setError('');
@@ -86,13 +87,27 @@ export default function RegistrationForm() {
                 <label className={css.label} htmlFor={`${fieldId}-password`}>
                   Пароль*
                 </label>
-                <Field
-                  className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
-                  type="password"
-                  name="password"
-                  id={`${fieldId}-password`}
-                  placeholder="********"
-                />
+                <div className={css.passwordWrapper}>
+                  <Field
+                    className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    id={`${fieldId}-password`}
+                    placeholder="********"
+                  />
+                  <button
+                    type="button"
+                    className={css.passwordToggle}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <Image
+                      src={showPassword ? '/eye-open.png' : '/eye-closed.png'}
+                      alt="Toggle password visibility"
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                </div>
                 <ErrorMessage
                   name="password"
                   component="div"
