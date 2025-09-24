@@ -1,4 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @import 'modern-normalize';
+
 :root {
   --color-scheme-background: var(--color-white);
   --color-neutral-darkest: #000;

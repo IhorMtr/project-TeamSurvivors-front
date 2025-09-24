@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css';
+import './globals.css'; // Глобальные стили и Tailwind
 import { Lato, Comfortaa } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import Sidebar from '@/components/Sidebar/Sidebar';
@@ -16,6 +16,7 @@ const comfortaa = Comfortaa({
   weight: ['400'],
   variable: '--second-family',
 });
+
 export const metadata: Metadata = {
   title: 'Lehleka App',
   description: 'Pregnancy tracker',
