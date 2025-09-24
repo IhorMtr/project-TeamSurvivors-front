@@ -13,7 +13,7 @@ type AddDiaryEntryModalProps = {
   className?: string;
   backdropClassName?: string;
   contentClassName?: string;
-  formProps?: Record<string, any>;
+  formProps?: Record<string, unknown>;
 };
 
 export default function AddDiaryEntryModal({

@@ -13,3 +13,10 @@ export type DiaryData = {
   createdAt: string;
   updatedAt: string;
 };
+
+export type NewDiary = {
+title: string;
+description: string;
+date: Date;
+emotions: Emotion[];
+};

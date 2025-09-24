@@ -4,6 +4,7 @@ import { Form, Formik, FormikHelpers, useField } from "formik";
 import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import * as Yup from "yup";
 import s from "./AddDiaryEntryForm.module.css";
+import { createDiary } from "@/lib/api";
 
 export type DiaryCategoryOption = {
   value: string;
@@ -93,46 +94,67 @@ export default function AddDiaryEntryForm({
     helpers: FormikHelpers<AddDiaryEntryFormValues>
   ) {
     const { setSubmitting } = helpers;
-    const payload = {
+    const requestPayload = {
       title: values.title.trim(),
-      categories: values.categories,
-      text: values.text.trim(),
+      emotions: values.categories,
+      description: values.text.trim(),
     };
 
-    const normalizedPath = `/${(apiPath || "/diary").replace(/^\/+/ , "")}`;
-    const resourcePath =
-      computedMethod === "PUT" && entryId != null
-        ? `${normalizedPath}/${entryId}`
-        : normalizedPath;
-    const endpoint = API_BASE
-      ? `${API_BASE.replace(/\/$/, "")}${resourcePath}`
-      : resourcePath;
-
     try {
-      const response = await fetch(endpoint, {
-        method: computedMethod,
-        headers: {
-          "Content-Type": "application/json",
-          ...(headers || {}),
-        },
-        body: JSON.stringify(payload),
-      });
+      let data: unknown;
 
-      if (!response.ok) {
-        const fallbackError = errorMessage ?? "Помилка збереження запису";
-        const errorText = (await response.text().catch(() => "")).trim();
-        const message = errorText ? `${fallbackError}: ${errorText}` : fallbackError;
-        notify?.("error", message);
-        const error = new Error(message);
-        onError?.(error);
-        return;
+      if (computedMethod === "POST" && entryId == null) {
+        data = await createDiary(requestPayload);
+      } else {
+        const normalizedPath = `/${(apiPath || "/diary").replace(/^\/+/, "")}`;
+        const resourcePath =
+          computedMethod === "PUT" && entryId != null
+            ? `${normalizedPath}/${entryId}`
+            : normalizedPath;
+        const endpoint = API_BASE
+          ? `${API_BASE.replace(/\/$/, "")}${resourcePath}`
+          : resourcePath;
+
+        const response = await fetch(endpoint, {
+          method: computedMethod,
+          headers: {
+            "Content-Type": "application/json",
+            ...(headers || {}),
+          },
+          body: JSON.stringify(requestPayload),
+        });
+
+        if (!response.ok) {
+          const fallbackError = errorMessage ?? "Помилка збереження запису";
+          const errorText = (await response.text().catch(() => "")).trim();
+          const message = errorText ? `${fallbackError}: ${errorText}` : fallbackError;
+          throw new Error(message);
+        }
+
+        data = await response.json().catch(() => ({}));
       }
 
-      const data = await response.json().catch(() => ({}));
-      notify?.("success", successMessage ?? (mode === "edit" ? "Запис оновлено" : "Запис створено"));
+      notify?.(
+        "success",
+        successMessage ?? (mode === "edit" ? "Запис оновлено" : "Запис створено")
+      );
       onSuccess?.(data);
     } catch (error) {
-      const message = errorMessage ?? "Сталася помилка під час запиту";
+      let message = errorMessage ?? "Сталася помилка під час запиту";
+
+      if (error && typeof error === "object") {
+        const maybeAxiosError = error as {
+          response?: { data?: { message?: string } };
+          message?: string;
+        };
+
+        if (typeof maybeAxiosError.response?.data?.message === "string") {
+          message = maybeAxiosError.response.data.message;
+        } else if (maybeAxiosError.message) {
+          message = maybeAxiosError.message;
+        }
+      }
+
       notify?.("error", message);
       onError?.(error);
     } finally {
