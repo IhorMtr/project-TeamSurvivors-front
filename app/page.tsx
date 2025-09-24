@@ -5,16 +5,15 @@ import MomTipCard from '@/components/MomTipCard/MomTipCard';
 import StatusBlock from '@/components/StatusBlock/StatusBlock';
 import TasksReminderCard from '@/components/TasksReminderCard/TasksReminderCard';
 import css from './dashboard.module.css';
-
 import LayoutClient from '../components/LayoutClient/LayoutClient';
 import { getMyDay } from '@/lib/api/dasboard';
+
 export default async function DashboardPage({
   children,
 }: {
   children: React.ReactNode;
 }) {
   const resMyDay = await getMyDay();
-
   const randomDailyTip = Math.random() * resMyDay.momDailyTips.length - 1;
 
   return (

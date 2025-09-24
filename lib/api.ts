@@ -12,7 +12,7 @@ api.interceptors.request.use(
     if (typeof window !== 'undefined') {
       const cookies = cookie.parse(document.cookie);
       //   const token = cookies.authToken;
-      const token = 'E3wbvlxiS7fLPp4MuAW6QIXmBc01hiR+LBtDYTM7';
+      const token = 'e0DpaBxrTsdbz4sI7tM8xUcz6/BTusm2cNKRIRp7';
 
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
