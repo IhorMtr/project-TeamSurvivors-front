@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { Lato, Comfortaa } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
-import LayoutClient from './LayoutClient';
-import { Toaster } from 'react-hot-toast';
 
 const lato = Lato({
   subsets: ['latin'],
@@ -30,12 +28,10 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={`${lato.variable} ${comfortaa.variable}`}>
-        <TanStackProvider>
-          <LayoutClient>{children}</LayoutClient>
-        </TanStackProvider>
-        <Toaster position="top-right" />
+
+        <TanStackProvider>{children}</TanStackProvider>
+
       </body>
     </html>
   );
 }
-

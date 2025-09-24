@@ -1,5 +1,5 @@
 'use client';
-import { DiaryData } from '@/lib/types';
+import { DiaryData } from '@/types/types';
 import EmotionIcon from '../EmotionIcon/EmotionIcon';
 import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import css from './DiaryEntryCard.module.css';
@@ -7,7 +7,11 @@ import { useDiaryStore } from '@/lib/store/diaryStore';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
 import { useRouter } from 'next/navigation';
 
-export default function DiaryEntryCard({ diaryData }: { diaryData: DiaryData }) {
+export default function DiaryEntryCard({
+  diaryData,
+}: {
+  diaryData: DiaryData;
+}) {
   const setSelectedDiary = useDiaryStore(state => state.setSelectedDiary);
   const isDesktop = useMediaQuery('(min-width: 1440px)');
   const router = useRouter();

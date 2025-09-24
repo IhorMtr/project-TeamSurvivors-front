@@ -4,7 +4,7 @@ import DiaryEntryDetails from '@/components/DiaryEntryDetails/DiaryEntryDetails'
 import css from './page.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { getDiaries } from '@/lib/api';
-import { DiaryData } from '@/lib/types';
+import { DiaryData } from '@/types/types';
 import { PuffLoader } from 'react-spinners';
 import { useDiaryStore } from '@/lib/store/diaryStore';
 import { useEffect } from 'react';

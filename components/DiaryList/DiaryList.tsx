@@ -2,7 +2,7 @@ import Image from 'next/image';
 import css from './DiaryList.module.css';
 import Link from 'next/link';
 import addIcon from '../../assets/add_circle.svg';
-import { DiaryData } from '@/lib/types';
+import { DiaryData } from '@/types/types';
 import DiaryEntryCard from '../DiaryEntryCard/DiaryEntryCard';
 import DiaryPlaceholder from '../DiaryPlaceholder/DiaryPlaceholder';
 
