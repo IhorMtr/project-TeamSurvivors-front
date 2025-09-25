@@ -57,28 +57,28 @@ export default function ProfileEditForm({
               </div>
 
               <div className={styles.fieldGroup}>
-                <label htmlFor="childGender" className={styles.label}>
+                <label htmlFor="gender" className={styles.label}>
                   Стать дитини
                 </label>
-                <Field as="select" id="childGender" name="childGender" className={styles.select}>
+                <Field as="select" id="gender" name="gender" className={styles.select}>
                   <option value="">Оберіть стать</option>
-                  <option value="male">Хлопчик</option>
-                  <option value="female">Дівчинка</option>
+                  <option value="boy">Хлопчик</option>
+                  <option value="girl">Дівчинка</option>
                 </Field>
-                <ErrorMessage name="childGender" component="div" className={styles.error} />
+                <ErrorMessage name="gender" component="div" className={styles.error} />
               </div>
 
               <div className={styles.fieldGroup}>
-                <label htmlFor="deliveryDate" className={styles.label}>
+                <label htmlFor="dueDate" className={styles.label}>
                   Планова дата пологів
                 </label>
                 <Field
                   type="date"
-                  id="deliveryDate"
-                  name="deliveryDate"
+                  id="dueDate"
+                  name="dueDate"
                   className={styles.input}
                 />
-                <ErrorMessage name="deliveryDate" component="div" className={styles.error} />
+                <ErrorMessage name="dueDate" component="div" className={styles.error} />
               </div>
             </Form>
 
