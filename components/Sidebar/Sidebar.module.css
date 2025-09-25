@@ -154,15 +154,13 @@
 @media only screen and (min-width: 1440px) {
   .wrapper {
     width: 312px;
-    padding: 8px 0 0;
   }
   .btn_close {
     display: none;
   }
 
   .logo_container {
-    padding: 17px 28px;
-    padding-bottom: 0;
+    padding: 24px 24px;
   }
 
   .link {
