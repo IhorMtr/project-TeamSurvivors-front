@@ -9,6 +9,9 @@ import { AxiosError } from 'axios';
 import css from '../AuthForm.module.css';
 import Image from 'next/image';
 import { LoginFormSchema } from '@/lib/schemas/auth';
+import { User } from '../../../../types/user'
+import { getCurrentUser } from '../../../../lib/api/auth';
+import { useAuthStore } from '../../../../lib/store/authStore'; 
 
 interface LoginFormValues {
   email: string;
@@ -19,17 +22,27 @@ export default function LoginForm() {
   const fieldId = useId();
   const router = useRouter();
 
+  const { setUser } = useAuthStore();
   const handleSubmit = async (values: LoginFormValues) => {
-    try {
-      await loginUser(values);
-      router.push('/myday');
-    } catch (err) {
-      const error = err as AxiosError<{ message: string }>;
-      alert(
-        error.response?.data?.message || 'Невірно вказаний логін чи пароль'
-      );
+   
+  try {
+    await loginUser(values);
+
+    const user: User = await getCurrentUser(); 
+     setUser(user); 
+      const estimateBirthDate = user.dueDate ?? '';
+
+   if (user.dueDate) {
+      router.push(`/weeks/my-day/${estimateBirthDate}`);
+    } else {
+      router.push('/weeks/my-day-demo');
     }
-  };
+
+  } catch (err) {
+    const error = err as AxiosError<{ message: string }>;
+    alert(error.response?.data?.message || 'Невірно вказаний логін чи пароль');
+  }
+};
 
   return (
     <div className={css.authContainer}>

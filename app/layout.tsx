@@ -4,6 +4,7 @@ import { Lato, Comfortaa } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
 
+
 const lato = Lato({
   subsets: ['latin'],
   weight: ['400', '700'],
