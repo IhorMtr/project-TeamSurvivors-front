@@ -10,11 +10,12 @@ type AuthStore = {
 };
 
 const initialUser: User = {
+  id: '',
   email: '',
   name: '',
-  photo: '',
-  gender: '',
-  dueDate: '',
+  avatar: null,
+  gender: null,
+  dueDate: null,
 };
 
 export const useAuthStore = create<AuthStore>()(
