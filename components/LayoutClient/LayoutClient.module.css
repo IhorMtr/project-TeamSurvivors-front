@@ -38,32 +38,11 @@
   pointer-events: auto;
 }
 
-.container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-}
-
-.section {
-  margin: 0;
-  padding: 0;
-  position: relative;
-}
-
 .header_wrapper {
   position: sticky;
   top: 0;
   z-index: 1100;
   background-color: #fff;
-}
-
-.breadcrumbs_wrapper {
-  position: fixed;
-  top: 92px;
-  left: 32px;
-  z-index: 10;
-  margin: 0;
-  padding: 0;
 }
 
 @media only screen and (min-width: 1440px) {
@@ -77,10 +56,5 @@
 
   .main_wrapper {
     margin-left: 312px;
-  }
-
-  .breadcrumbs_wrapper {
-    top: 24px;
-    left: 344px;
   }
 }
