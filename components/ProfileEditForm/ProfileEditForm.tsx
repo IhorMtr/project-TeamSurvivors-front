@@ -1,6 +1,7 @@
 'use client';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { PuffLoader } from 'react-spinners';
 import { profileSchema, ProfileFormData } from '@/utils/schemas/profile';
 import styles from './ProfileEditForm.module.css';
 
@@ -100,7 +101,7 @@ export default function ProfileEditForm({
                 disabled={formSubmitting || isSubmitting || !dirty}
                 onClick={submitForm}
               >
-                {formSubmitting || isSubmitting ? 'Збереження...' : 'Зберегти зміни'}
+                {formSubmitting || isSubmitting ? <PuffLoader /> : 'Зберегти зміни'}
               </button>
             </div>
           </>

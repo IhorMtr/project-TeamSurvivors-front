@@ -3,7 +3,6 @@ import { User } from '@/types/user';
 import { api, ApiResponse } from './auth';
 import { ProfileFormData } from '@/utils/schemas/profile';
 
-// Diary API
 export const getDiaries = async () => {
   const response = await api.get('/diaries');
   return response.data.data;
@@ -19,7 +18,6 @@ export const createDiary = async (data: NewDiary) => {
   return response.data.data;
 };
 
-// Profile API
 export const getCurrentUser = async (): Promise<User> => {
   const response = await api.get<ApiResponse<User>>('/users/me');
   return response.data.data;
@@ -34,10 +32,6 @@ export const uploadAvatar = async (file: File): Promise<User> => {
   const formData = new FormData();
   formData.append('photo', file);
   
-  const response = await api.patch<ApiResponse<User>>('/users/me/photo', formData, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
-  });
+  const response = await api.patch<ApiResponse<User>>('/users/me/photo', formData);
   return response.data.data;
 };

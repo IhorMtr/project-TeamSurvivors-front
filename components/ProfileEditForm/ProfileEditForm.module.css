@@ -133,7 +133,6 @@
   cursor: not-allowed;
 }
 
-/* Tablet */
 @media only screen and (min-width: 768px) {
   .container {
     max-width: 768px;
@@ -186,7 +185,6 @@
   }
 }
 
-/* Desktop */
 @media only screen and (min-width: 1024px) {
   .container {
     max-width: 1440px;
