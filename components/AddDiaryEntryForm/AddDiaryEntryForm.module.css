@@ -27,7 +27,9 @@
   font-size: 16px;
   line-height: 1.5;
   color: var(--color-neutral-darkest);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease,
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
     background-color 0.2s ease;
 }
 
@@ -113,7 +115,9 @@
   flex-shrink: 0;
   stroke: var(--color-neutral-darkest);
   fill: none;
-  transition: transform 0.2s ease, stroke 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    stroke 0.2s ease;
 }
 
 .selectWrapper[data-open] .chevron {
@@ -189,7 +193,9 @@
   align-items: center;
   justify-content: center;
   background: var(--color-white);
-  transition: border-color 0.2s ease, background-color 0.2s ease,
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
     box-shadow 0.2s ease;
 }
 
@@ -245,10 +251,11 @@
   border-radius: 28px;
   background: linear-gradient(101deg, #ffcbd3 0%, #ffdae0 100%);
   color: var(--color-neutral-darkest);
-  font-weight: 600;
   font-size: 16px;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .submit:hover:not(:disabled) {

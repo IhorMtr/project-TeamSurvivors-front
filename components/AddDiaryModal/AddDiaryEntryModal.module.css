@@ -14,8 +14,8 @@
 }
 
 .closeIcon {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   display: block;
   pointer-events: none;
   fill: none;
@@ -39,7 +39,6 @@
 
 .panel {
   width: min(100%, 640px);
-  max-height: calc(100vh - 48px);
   background: #fff;
   color: inherit;
   border-radius: 36px;
@@ -55,20 +54,21 @@
   align-items: center;
   justify-content: center;
   padding: 32px 32px 12px;
+  flex-direction: column;
 }
 
 .title {
+  order: 2;
   margin: 0;
-  font-size: 26px;
+  font-size: 36px;
   font-weight: 700;
   line-height: 1.3;
   color: var(--color-neutral-darkest);
 }
 
 .closeBtn {
-  position: absolute;
-  top: 24px;
-  right: 24px;
+  order: 1;
+  align-self: flex-end;
   width: 32px;
   height: 32px;
   display: inline-flex;
@@ -79,7 +79,9 @@
   background: transparent;
   color: var(--color-neutral-darkest);
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
 }
 .closeBtn:hover {
   background: rgba(255, 203, 211, 0.35);
@@ -110,7 +112,7 @@
 
   .panel {
     border-radius: 40px;
-    max-height: calc(100vh - 80px);
+    width: 704px;
   }
 
   .header {
@@ -130,5 +132,11 @@
 
   .content {
     padding: 0 48px 48px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .title {
+    font-size: 48px;
   }
 }
