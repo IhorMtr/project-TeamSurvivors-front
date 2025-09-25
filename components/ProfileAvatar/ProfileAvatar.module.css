@@ -1,0 +1,182 @@
+.avatarBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+.avatarImageWrap {
+  position: relative;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.avatarImage {
+  border-radius: 50%;
+  object-fit: cover;
+}
+.avatarPlaceholder {
+  width: 132px;
+  height: 132px;
+  border-radius: 50%;
+  background: #eee;
+}
+.uploadButton {
+  margin-top: 8px;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+  border-radius: 100px;
+  width: 335px;
+  height: 38px;
+  background: rgba(0, 0, 0, 0.05);
+  margin-bottom: 36px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #000;
+}
+
+.userInfo {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.userName {
+  font-family: 'Comfortaa', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: #000;
+}
+.userEmail {
+  font-family: 'Lato', sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  color: #000;
+}
+
+/* Tablet */
+@media only screen and (min-width: 768px) {
+  .avatarBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 12px;
+    width: 100%;
+    max-width: 590px;
+    margin-bottom: 32px;
+  }
+
+  .avatarImageWrap {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .avatarImage,
+  .avatarPlaceholder {
+    width: 132px;
+    height: 132px;
+  }
+
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    flex: 1;
+  }
+
+  .userName {
+    font-size: 20px;
+    text-align: left;
+    margin-bottom: 4px;
+  }
+
+  .userEmail {
+    font-size: 14px;
+    text-align: left;
+    margin-bottom: 16px;
+  }
+
+  .uploadButton {
+    width: 218px;
+    height: 38px;
+    font-size: 14px;
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: flex-start;
+  }
+}
+
+/* Desktop */
+@media only screen and (min-width: 1024px) {
+  .avatarBlock {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 24px;
+    max-width: 580px;
+    padding: 0;
+  }
+
+  .avatarImageWrap {
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .avatarImage,
+  .avatarPlaceholder {
+    width: 150px;
+    height: 150px;
+  }
+
+  .userInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 0;
+    flex: 1;
+  }
+
+  .userName {
+    font-size: 28px;
+    text-align: left;
+    margin-bottom: 8px;
+  }
+
+  .userEmail {
+    font-size: 16px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .uploadButton {
+    width: 280px;
+    height: 48px;
+    font-size: 16px;
+    padding: 12px 20px;
+    margin-top: 0;
+    margin-bottom: 0;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+}
