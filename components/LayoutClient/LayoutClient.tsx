@@ -29,7 +29,6 @@ const user = {
   userEmail: 'hanna@gmail.com',
 };
 
-
 export default function LayoutClient({ children }: LayoutClientProps) {
   const isDesktop = useIsDesktop();
   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false);
@@ -70,11 +69,9 @@ export default function LayoutClient({ children }: LayoutClientProps) {
         )}
         <main className={css.container}>
           <section className={css.section}>
-            <div className={css.breadcrumbs_wrapper}>
-              <Breadcrumbs />
-            </div>
-            {children}
+            <Breadcrumbs />
           </section>
+          {children}
         </main>
       </div>
       <ConfirmationModal
