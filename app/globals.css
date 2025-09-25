@@ -105,7 +105,6 @@ p {
   line-height: 160%;
 }
 
-/* Global list reset */
 ul {
   list-style: none;
   margin: 0;
@@ -116,14 +115,15 @@ section {
   padding: 0 20px;
 }
 
-/* Main layout improvements */
 main {
   min-height: 100vh;
   width: 100%;
   position: relative;
+  padding-top: 24px;
+  padding-bottom: 32px;
 }
 
-/* Responsive layout adjustments */
+
 @media only screen and (min-width: 768px) {
   section {
     padding: 0 24px;
