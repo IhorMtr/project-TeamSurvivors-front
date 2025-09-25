@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import './globals.css'; // Глобальные стили и Tailwind
+import './globals.css';
 import { Lato, Comfortaa } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import Sidebar from '@/components/Sidebar/Sidebar';
