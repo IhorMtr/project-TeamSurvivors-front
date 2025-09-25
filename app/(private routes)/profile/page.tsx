@@ -26,6 +26,7 @@ export default function ProfilePage() {
     updateUserMutation.isPending ||
     uploadAvatarMutation.isPending;
 
+
   // Handle avatar upload
   const handleAvatarChange = async (file: File): Promise<void> => {
     try {
@@ -48,7 +49,6 @@ export default function ProfilePage() {
 
   const validateForm = (data: User): Record<string, string> => {
     const newErrors: Record<string, string> = {};
-
     if (!data.name.trim()) newErrors.name = 'Name is required';
     if (data.name.length < 2)
       newErrors.name = 'Name must be at least 2 characters';
@@ -59,6 +59,7 @@ export default function ProfilePage() {
 
     if (!data.gender) newErrors.gender = 'Please select child gender';
     if (!data.dueDate) newErrors.dueDate = 'Expected delivery date is required';
+
 
     return newErrors;
   };
@@ -73,9 +74,7 @@ export default function ProfilePage() {
 
   const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
-
     if (!displayUserData) return;
-
     // Get form data
     const formData = new FormData(event.target as HTMLFormElement);
     const updatedData = {
@@ -84,13 +83,11 @@ export default function ProfilePage() {
       gender: formData.get('gender') as User['gender'],
       dueDate: formData.get('dueDate') as string,
     };
-
     const formErrors = validateForm({ ...displayUserData, ...updatedData });
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       return;
     }
-
     try {
       await updateUserMutation.mutateAsync(updatedData);
       setErrors({});
@@ -144,7 +141,6 @@ export default function ProfilePage() {
       </div>
     );
   }
-
   const displayUserData = userData || {
     _id: 'fallback-user',
     name: 'Ганна',
