@@ -2,7 +2,6 @@ export type Emotion = {
   _id: string;
   title: string;
 };
-
 export type DiaryData = {
   _id: string;
   title: string;

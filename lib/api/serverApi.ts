@@ -1,13 +1,13 @@
-import { Task } from '@/types/types';
-import api from '../api';
-import { cookies } from 'next/headers';
+import { nextServer } from './nextServer';
 
-export const getServerTasks = async (): Promise<Task[]> => {
-  const cookieStore = await cookies();
-  const response = await api.get<{ data: Task[] }>('/api/tasks', {
-    headers: {
-      Cookie: cookieStore.toString(),
-    },
-  });
-  return response.data.data;
+export const getDiaries = async () => {
+  const api = await nextServer();
+  const response = await api.get('/diaries');
+  return response.data;
+};
+
+export const getDiariesById = async (id: string) => {
+  const api = await nextServer();
+  const response = await api.get(`/diaries/${id}`);
+  return response.data;
 };
