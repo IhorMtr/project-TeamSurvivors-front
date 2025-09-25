@@ -2,10 +2,10 @@
 
 import React, { useState, useRef, FormEvent, ChangeEvent } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import styles from './ProfilePage.module.css';
 import { useCurrentUser, useUpdateUser, useUploadAvatar } from '@/lib/hooks/useUser';
 import { User } from '@/lib/api/userApi';
+import Sidebar from '@/components/Sidebar/Sidebar';
 
 export default function ProfilePage(): JSX.Element {
   // React Query hooks
@@ -15,6 +15,7 @@ export default function ProfilePage(): JSX.Element {
   
   // Local state for form validation and UI
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Loading state - either fetching user or updating
@@ -66,7 +67,7 @@ export default function ProfilePage(): JSX.Element {
   const handleSubmit = async (event: FormEvent): Promise<void> => {
     event.preventDefault();
     
-    if (!userData) return;
+    if (!displayUserData) return;
     
     // Get form data
     const formData = new FormData(event.target as HTMLFormElement);
@@ -77,7 +78,7 @@ export default function ProfilePage(): JSX.Element {
       dueDate: formData.get('dueDate') as string,
     };
     
-    const formErrors = validateForm({ ...userData, ...updatedData });
+    const formErrors = validateForm({ ...displayUserData, ...updatedData });
     if (Object.keys(formErrors).length > 0) {
       setErrors(formErrors);
       return;
@@ -94,12 +95,20 @@ export default function ProfilePage(): JSX.Element {
   const handleCancel = (): void => {
     // Reset form and clear errors
     setErrors({});
-    // Reset form values - this will be handled by re-rendering with original userData
     const form = document.querySelector('form') as HTMLFormElement;
     if (form) form.reset();
   };
 
-  // Early return for loading state
+  const handleSidebarClose = (): void => {
+    setSidebarOpen(false);
+  };
+
+  const handleLogout = (): void => {
+    // Add logout logic here
+    console.log('Logout clicked');
+    setSidebarOpen(false);
+  };
+
   if (isLoadingUser) {
     return (
       <div className={styles.container}>
@@ -135,49 +144,57 @@ export default function ProfilePage(): JSX.Element {
     );
   }
 
-  // Early return if no user data
-  if (!userData) {
-    return (
-      <div className={styles.container}>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignItems: 'center', 
-          height: '400px',
-          fontSize: '16px',
-          color: '#666'
-        }}>
-          Дані профілю не знайдено.
-        </div>
-      </div>
-    );
-  }
+  
+  const displayUserData = userData || {
+    _id: 'fallback-user',
+    name: 'Ганна',
+    email: 'hanna@gmail.com',
+    photo: '',
+    gender: '' as User['gender'],
+    dueDate: '2025-07-16'
+  };
 
   return (
     <div className={styles.container}>
+      {/* Sidebar */}
+      {sidebarOpen && (
+        <Sidebar
+          onClose={handleSidebarClose}
+          onLogout={handleLogout}
+          user={userData ? {
+            userPhotoUrl: userData.photo || '/default-avatar.png',
+            userName: userData.name,
+            userEmail: userData.email
+          } : null}
+        />
+      )}
+      
       <section className={styles['profile-section']}>
         <div className={styles['profile-card']}>
-          {/* Breadcrumbs */}
-          <div className={styles['breadcrumbs-container']}>
-            <ul className={styles.breadcrumbs}>
-              <li className={styles['breadcrumb-item']}>
-                <Link href="/" className={styles['breadcrumb-item']}>
-                  Лелека
-                </Link>
-              </li>
-              <li className={styles['breadcrumb-separator']}>&gt;</li>
-              <li className={`${styles['breadcrumb-item']} ${styles.active}`}>Профіль</li>
-              <li className={`${styles['breadcrumb-separator']} ${styles.hidden}`}>&gt;</li>
-              <li className={`${styles['breadcrumb-item']} ${styles.hidden}`}>Link Three</li>
-            </ul>
-          </div>
-
           {/* Profile Header */}
           <div className={styles['profile-header']}>
-            {userData.photo ? (
+            <button
+              type="button"
+              onClick={() => setSidebarOpen(true)}
+              style={{
+                position: 'absolute',
+                top: '20px',
+                left: '20px',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                zIndex: 10
+              }}
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="currentColor"/>
+              </svg>
+            </button>
+            
+            {displayUserData.photo ? (
               <Image
-                src={userData.photo}
-                alt={userData.name}
+                src={displayUserData.photo}
+                alt={displayUserData.name}
                 className={styles['avatar-image']}
                 width={132}
                 height={132}
@@ -199,17 +216,16 @@ export default function ProfilePage(): JSX.Element {
             )}
 
             <div className={styles['profile-info']}>
-              <h1 className={styles['profile-name']}>{userData.name}</h1>
-              <p className={styles['profile-email']}>{userData.email}</p>
+              <h1 className={styles['profile-name']}>{displayUserData.name}</h1>
+              <p className={styles['profile-email']}>{displayUserData.email}</p>
+              <button
+                type="button"
+                onClick={handleUploadClick}
+                className={styles['upload-btn']}
+              >
+                Завантажити нове фото
+              </button>
             </div>
-            
-            <button
-              type="button"
-              onClick={handleUploadClick}
-              className={styles['upload-btn']}
-            >
-              Завантажити нове фото
-            </button>
           </div>
 
           {/* Form Section */}
@@ -223,7 +239,7 @@ export default function ProfilePage(): JSX.Element {
                   type="text"
                   id="name"
                   name="name"
-                  defaultValue={userData.name}
+                  defaultValue={displayUserData.name}
                   onChange={handleInputChange('name')}
                   className={styles['form-input']}
                   placeholder="Введіть ім'я"
@@ -239,7 +255,7 @@ export default function ProfilePage(): JSX.Element {
                   type="email"
                   id="email"
                   name="email"
-                  defaultValue={userData.email}
+                  defaultValue={displayUserData.email}
                   onChange={handleInputChange('email')}
                   className={styles['form-input']}
                   placeholder="Введіть email"
@@ -257,7 +273,7 @@ export default function ProfilePage(): JSX.Element {
                   <select 
                     id="status" 
                     name="gender" 
-                    defaultValue={userData.gender}
+                    defaultValue={displayUserData.gender}
                     onChange={handleInputChange('gender')}
                     className={styles['form-select']}
                   >
@@ -276,7 +292,7 @@ export default function ProfilePage(): JSX.Element {
                     type="date"
                     id="birthdate"
                     name="dueDate"
-                    defaultValue={userData.dueDate}
+                    defaultValue={displayUserData.dueDate}
                     onChange={handleInputChange('dueDate')}
                     className={styles['form-input']}
                   />
