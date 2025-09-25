@@ -1,8 +1,12 @@
 'use client';
 
+<<<<<<< HEAD
 
 
 import { useId } from 'react';
+=======
+import { useId, useState } from 'react';
+>>>>>>> main
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { loginUser } from '../../../../lib/api/auth';
 import Link from 'next/link';
@@ -20,6 +24,8 @@ interface LoginFormValues {
 export default function LoginForm() {
   const fieldId = useId();
   const router = useRouter();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (values: LoginFormValues) => {
     try {
@@ -70,13 +76,27 @@ export default function LoginForm() {
                   className={css.label}
                   htmlFor={`${fieldId}-password`}
                 ></label>
-                <Field
-                  className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
-                  type="password"
-                  name="password"
-                  id={`${fieldId}-password`}
-                  placeholder="Пароль"
-                />
+                <div className={css.passwordWrapper}>
+                  <Field
+                    className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    id={`${fieldId}-password`}
+                    placeholder="Пароль"
+                  />
+                  <button
+                    type="button"
+                    className={css.passwordToggle}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <Image
+                      src={showPassword ? '/eye-open.png' : '/eye-closed.png'}
+                      alt="Toggle password visibility"
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                </div>
                 <ErrorMessage
                   name="password"
                   component="div"

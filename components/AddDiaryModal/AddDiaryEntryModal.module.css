@@ -1,0 +1,142 @@
+.container {
+  width: min(100vw - 32px, 480px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.heading {
+  margin: 0;
+  text-align: center;
+  font-size: 28px;
+  line-height: 1.3;
+  color: var(--color-neutral-darkest);
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  pointer-events: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(17, 24, 39, 0.45);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+}
+
+.panel {
+  width: min(100%, 640px);
+  background: #fff;
+  color: inherit;
+  border-radius: 36px;
+  box-shadow: 0 40px 80px rgba(15, 23, 42, 0.16);
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 32px 12px;
+  flex-direction: column;
+}
+
+.title {
+  order: 2;
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-neutral-darkest);
+}
+
+.closeBtn {
+  order: 1;
+  align-self: flex-end;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--color-neutral-darkest);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+.closeBtn:hover {
+  background: rgba(255, 203, 211, 0.35);
+  transform: scale(1.05);
+}
+.closeBtn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 203, 211, 0.4);
+}
+
+.content {
+  padding: 0 24px 32px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: min(100vw - 40px, 640px);
+    gap: 28px;
+  }
+
+  .heading {
+    font-size: 32px;
+  }
+
+  .backdrop {
+    padding: 24px;
+  }
+
+  .panel {
+    border-radius: 40px;
+    width: 704px;
+  }
+
+  .header {
+    padding: 40px 48px 16px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .closeBtn {
+    top: 32px;
+    right: 32px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .content {
+    padding: 0 48px 48px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .title {
+    font-size: 48px;
+  }
+}
