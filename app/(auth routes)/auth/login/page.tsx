@@ -1,12 +1,7 @@
 'use client';
 
-<<<<<<< HEAD
 
-
-import { useId } from 'react';
-=======
 import { useId, useState } from 'react';
->>>>>>> main
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { loginUser } from '../../../../lib/api/auth';
 import Link from 'next/link';
