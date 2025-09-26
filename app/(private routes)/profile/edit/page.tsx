@@ -4,8 +4,10 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import axios from 'axios';
-import styles from '../../../modules/OnboardingForm.module.css';
+import styles from './OnboardingForm.module.css';
 import { onboardingValidationSchema } from '@/lib/schemas/onboarding';
+import Image from 'next/image';
+import toast from 'react-hot-toast';
 
 export default function EditProfilePage() {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -13,7 +15,6 @@ export default function EditProfilePage() {
 
   return (
     <div className={styles.layout}>
-      {/* Левая колонка: карточка */}
       <div className={styles.left}>
         <div className={styles.card}>
           <div className={styles.heading}>
@@ -37,8 +38,8 @@ export default function EditProfilePage() {
                   headers: { 'Content-Type': 'multipart/form-data' },
                 });
                 router.push('/my-day');
-              } catch (error) {
-                alert('Помилка: ' + (error as any).message);
+              } catch {
+                toast.error('Сталася помилка, спробуйте ще раз');
               } finally {
                 setSubmitting(false);
               }
@@ -46,23 +47,21 @@ export default function EditProfilePage() {
           >
             {({ setFieldValue, isValid, isSubmitting }) => (
               <Form>
-                {/* Фото */}
                 <div className={styles.avatarWrapper}>
                   <div className={styles.avatarCircle}>
                     {avatarPreview ? (
-                      <img
+                      <Image
                         src={avatarPreview}
                         alt="avatar"
                         className={styles.avatarImg}
                       />
                     ) : (
-                      <svg width="48" height="48" fill="none">
-                        <rect width="48" height="48" rx="24" fill="#E5E7EB" />
-                        <path
-                          d="M24 28c-2.5 0-7 1.27-7 3.8V33h14v-1.2C31 29.27 26.5 28 24 28ZM24 25c1.96 0 3.55-1.59 3.55-3.55 0-1.96-1.59-3.55-3.55-3.55-1.96 0-3.55 1.59-3.55 3.55 0 1.96 1.59 3.55 3.55 3.55Z"
-                          fill="#BDBDBD"
-                        />
-                      </svg>
+                      <Image
+                        src={'/preview_photo_onboarding.png'}
+                        alt={'preview photo'}
+                        width={164}
+                        height={164}
+                      />
                     )}
                   </div>
                   <label className={styles.uploadLabel}>
@@ -86,22 +85,23 @@ export default function EditProfilePage() {
                     className={styles.error}
                   />
                 </div>
-
-                {/* Стать дитини */}
-                <span className={styles.label}>Стать дитини</span>
-                <Field as="select" name="gender" className={styles.select}>
-                  <option value="">Оберіть стать</option>
-                  <option value="boy">Хлопчик</option>
-                  <option value="girl">Дівчинка</option>
-                  <option value="unknown">Ще не знаю</option>
-                </Field>
+                <div className={styles.selectWrapper}>
+                  <span className={styles.label}>Стать дитини</span>
+                  <Field as="select" name="gender" className={styles.select}>
+                    <option value="">Оберіть стать</option>
+                    <option value="boy">Хлопчик</option>
+                    <option value="girl">Дівчинка</option>
+                    <option value="unknown">Ще не знаю</option>
+                  </Field>
+                  <svg className={styles.selectChevron}>
+                    <use href="/icons.svg#icon-chevron_down" />
+                  </svg>
+                </div>
                 <ErrorMessage
                   name="gender"
                   component="div"
                   className={styles.error}
                 />
-
-                {/* Дата пологів */}
                 <span className={styles.label}>Планова дата пологів</span>
                 <Field
                   type="date"
@@ -127,9 +127,13 @@ export default function EditProfilePage() {
           </Formik>
         </div>
       </div>
-      {/* Правая колонка: картинка паростка */}
       <div className={styles.right}>
-        <img src="/images/plant.png" alt="plant" className={styles.image} />
+        <Image
+          src="/images/plant.png"
+          alt="plant"
+          className={styles.image}
+          fill
+        />
       </div>
     </div>
   );
