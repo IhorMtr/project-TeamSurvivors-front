@@ -1,3 +1,9 @@
+.my-toast {
+    background: var(--color-scheme-foreground);
+    font-weight: 500;
+    border-radius: 12px;
+}
+
 .formWrapper {
   display: flex;
   justify-content: center;
@@ -176,4 +182,12 @@
     flex: 1;
     display: block;
   }
+}
+
+
+.my-toast {
+    background-color: #bf0404 !important;
+    color: #fff !important;
+    font-weight: 500;
+    border-radius: 12px;
 }

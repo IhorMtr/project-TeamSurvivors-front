@@ -5,6 +5,7 @@ import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
 import ReactToaster from '@/components/ReactToaster/ReactToaster';
 
+
 const lato = Lato({
   subsets: ['latin'],
   weight: ['400', '700'],
