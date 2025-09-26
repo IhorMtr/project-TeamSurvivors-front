@@ -13,7 +13,7 @@ const initialUser: User = {
   id: '',
   email: '',
   name: '',
-  avatar: null,
+  photo: null,
   gender: null,
   dueDate: null,
 };

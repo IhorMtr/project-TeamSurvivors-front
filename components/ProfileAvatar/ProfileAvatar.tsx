@@ -10,7 +10,11 @@ interface ProfileAvatarProps {
   onAvatarChange: (file: File) => void;
 }
 
-export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ user, isUploading, onAvatarChange }) => {
+export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
+  user,
+  isUploading,
+  onAvatarChange,
+}) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,8 +26,14 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ user, isUploading,
   return (
     <div className={styles.avatarBlock}>
       <div className={styles.avatarImageWrap}>
-        {user.avatar ? (
-          <Image src={user.avatar} alt={user.name} width={132} height={132} className={styles.avatarImage} />
+        {user.photo ? (
+          <Image
+            src={user.photo}
+            alt={user.name}
+            width={132}
+            height={132}
+            className={styles.avatarImage}
+          />
         ) : (
           <div className={styles.avatarPlaceholder} />
         )}
@@ -40,9 +50,13 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ user, isUploading,
             onChange={handleFileChange}
             disabled={isUploading}
           />
-          {isUploading ? <PuffLoader size={20} color="#fff" /> : 'Завантажити нове фото'}
+          {isUploading ? (
+            <PuffLoader size={20} color="#fff" />
+          ) : (
+            'Завантажити нове фото'
+          )}
         </label>
       </div>
     </div>
   );
-}
+};
