@@ -61,8 +61,3 @@ export async function logoutUser(): Promise<void> {
   await api.post<ApiResponse<null | undefined>>('/auth/logout');
   delete api.defaults.headers.common.Authorization;
 }
-
-export async function getCurrentUser(): Promise<User> {
-  const res = await api.get<ApiResponse<User>>('/me');
-  return res.data.data;
-}

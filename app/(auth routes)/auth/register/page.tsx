@@ -146,6 +146,7 @@ export default function RegistrationForm() {
           fill
           priority
           className={css.img}
+          sizes="(max-width: 1439px) 0px, 50vw"
         />
       </div>
     </div>

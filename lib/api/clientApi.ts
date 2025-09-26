@@ -1,5 +1,6 @@
 import { NewDiary } from '@/types/diaryEntry';
-import { api } from './auth';
+import { api, ApiResponse } from './auth';
+import { User } from './userApi';
 
 export const getDiaries = async () => {
   const response = await api.get('/diaries');
@@ -12,6 +13,11 @@ export const getDiariesById = async (id: string) => {
 };
 
 export const createDiary = async (data: NewDiary) => {
-  const response = await api.post('/api/diaries', data);
+  const response = await api.post('/diaries', data);
   return response.data.data;
 };
+
+export async function getCurrentUser(): Promise<User> {
+  const res = await api.get<ApiResponse<User>>('/users/me');
+  return res.data.data;
+}
