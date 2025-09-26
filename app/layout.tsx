@@ -30,7 +30,6 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={`${lato.variable} ${comfortaa.variable}`}>
-        <ReactToaster />
         <TanStackProvider>
           <AuthProvider>{children}</AuthProvider>
         </TanStackProvider>
