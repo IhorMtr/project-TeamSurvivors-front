@@ -34,7 +34,8 @@ export default function AuthProvider({
 
     if (
       pathname.startsWith('/auth/login') ||
-      pathname.startsWith('/auth/register')
+      pathname.startsWith('/auth/register') ||
+      pathname.startsWith('/')
     ) {
       setReady(true);
       return;
