@@ -10,16 +10,13 @@ import { AxiosError } from 'axios';
 import { registerUser, loginUser } from '@/lib/api/auth';
 import type { RegisterRequest } from '@/lib/api/auth';
 import { RegistrationFormSchema } from '@/lib/schemas/auth';
-import 'react-toastify/dist/ReactToastify.css';
-import { toast } from 'react-toastify';
+import { toast } from 'react-hot-toast';
 
 type RegistrationFormValues = RegisterRequest;
 
 export default function RegistrationForm() {
   const fieldId = useId();
   const router = useRouter();
-
-  const [error, setError] = useState<string>('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (values: RegistrationFormValues) => {
@@ -31,6 +28,7 @@ export default function RegistrationForm() {
         password: values.password,
       });
 
+      toast.success('Реєстрація успішна!');
       router.push('/profile/edit');
     } catch (err) {
       const axiosError = err as AxiosError<{ message?: string }>;
@@ -41,10 +39,11 @@ export default function RegistrationForm() {
       } else if (axiosError.response?.data?.message) {
         errorMessage = axiosError.response.data.message;
       }
-      setError(errorMessage); // встановлюємо локально
-      toast.error(errorMessage); // і показуємо тост
+
+      toast.error(errorMessage);
     }
   };
+
   return (
     <div className={css.authContainer}>
       <Formik
@@ -119,8 +118,6 @@ export default function RegistrationForm() {
                   component="div"
                   className={css.error}
                 />
-
-                {error && <div className={css.error}>{error}</div>}
               </fieldset>
 
               <button
