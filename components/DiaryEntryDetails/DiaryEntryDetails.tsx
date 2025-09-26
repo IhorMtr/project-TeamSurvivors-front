@@ -7,12 +7,7 @@ import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import EmotionIcon from '../EmotionIcon/EmotionIcon';
 import editIcon from '../../assets/edit.svg';
 import deleteIcon from '../../assets/delete.svg';
-import { DiaryData } from '@/lib/types';
-import { formatDate } from '@/lib/utils';
-import ConfirmationModal from '../ui/Modal/ConfirmationModal';
-import { deleteDiaryById } from '@/lib/api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { DiaryData } from '@/types/types';
 
 export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
   const [isModalOpen, setIsModalOpen] = useState(false);

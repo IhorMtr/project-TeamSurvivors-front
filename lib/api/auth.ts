@@ -1,102 +1,63 @@
-import axios  from 'axios';
+import { User } from '@/types/user';
+import axios, { AxiosInstance } from 'axios';
 
-const api = axios.create({
-  baseURL: "https://project-teamsurvivors.onrender.com/api", 
-  withCredentials: true,               // обов'язково для httpOnly cookie
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+export interface RegisterResponse {
+  user: User;
+}
+
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+export interface LoginResponse {
+  accessToken: string;
+}
+
+export interface RefreshResponse {
+  accessToken: string;
+}
+
+export interface ApiResponse<T> {
+  status: number;
+  message: string;
+  data: T;
+}
+
+export const api: AxiosInstance = axios.create({
+  baseURL: '/api',
+  withCredentials: true,
 });
 
-// interface LogoutResponse {
-//   status: number;
-//   message: string;
-// }
+export async function registerUser(
+  data: RegisterRequest
+): Promise<RegisterResponse> {
+  const res = await api.post<ApiResponse<RegisterResponse>>(
+    '/auth/register',
+    data
+  );
+  return res.data.data;
+}
 
-// interface RefreshResponse {
-//   status: number;
-//   message: string;
-//   token?: string;
-// }
+export async function loginUser(data: LoginRequest): Promise<LoginResponse> {
+  const res = await api.post<ApiResponse<LoginResponse>>('/auth/login', data);
+  const { accessToken } = res.data.data;
+  api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+  return res.data.data;
+}
 
-export const registerUser = async (data: { name: string; email: string; password: string }) => {
-  return api.post("/auth/register", data);
-};
+export async function refreshSession(): Promise<RefreshResponse> {
+  const res = await api.post<ApiResponse<RefreshResponse>>('/auth/refresh');
+  const { accessToken } = res.data.data;
+  api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+  return res.data.data;
+}
 
-export const loginUser = async (data: { email: string; password: string }) => {
-  return api.post("/auth/login", data);
-};
-
-export const logoutUser = () => api.post("/auth/logout");
-
-export const refreshSession = () => api.post("/auth/refresh");
-
-
-api.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    const originalRequest = error.config;
-
-    // якщо токен протух (401) і ще не пробували рефреш
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      try {
-        await api.post("/auth/refresh");
-        return api(originalRequest); // повторюємо запит
-      } catch (refreshError) {
-        console.error("Refresh session failed", refreshError);
-
-        // робимо логаут на фронті (опціонально викликати logoutUser())
-        try {
-          await api.post("/auth/logout");
-        } catch (_) {
-          // ігноруємо, якщо сервер вже видалив сесію
-        }
-
-        // редірект на логін
-        window.location.href = "/auth/login";
-      }
-    }
-
-    return Promise.reject(error);
-  }
-);
-// export const logoutUser = () => {
-//   return api.post<AxiosResponse<LogoutResponse>>("/auth/logout");
-// };
-
-// export const refreshSession = () => {
-//   return api.post<AxiosResponse<RefreshResponse>>("/auth/refresh");
-// };
-
-
-// import axios, { AxiosResponse } from 'axios';
-
-// const api = axios.create({
-//   baseURL: "http://localhost:3000/api", // локальний бекенд
-//   withCredentials: true,                // обов'язково для httpOnly cookie
-// });
-
-// interface LogoutResponse {
-//   status: number;
-//   message: string;
-// }
-
-// interface RefreshResponse {
-//   status: number;
-//   message: string;
-//   token?: string;
-// }
-
-// export const registerUser = async (data: { username: string; email: string; password: string }) => {
-//   return api.post("/auth/register", data);
-// };
-
-// export const loginUser = async (data: { email: string; password: string }) => {
-//   return api.post("/auth/login", data);
-// };
-
-// export const logoutUser = () => {
-//   return api.post<AxiosResponse<LogoutResponse>>("/auth/logout");
-// };
-
-// export const refreshSession = () => {
-//   return api.post<AxiosResponse<RefreshResponse>>("/auth/refresh");
-// };
+export async function logoutUser(): Promise<void> {
+  await api.post<ApiResponse<null | undefined>>('/auth/logout');
+  delete api.defaults.headers.common.Authorization;
+}

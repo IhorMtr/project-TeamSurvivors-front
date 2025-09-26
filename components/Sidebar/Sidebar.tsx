@@ -2,7 +2,6 @@ import Link from 'next/link';
 import css from './Sidebar.module.css';
 import Image from 'next/image';
 
-
 type SideBarProps = {
   onClose: () => void;
   onLogout: () => void;
@@ -13,9 +12,8 @@ type SideBarProps = {
   } | null;
 };
 
-
 export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
-    return (
+  return (
     <div className={css.wrapper}>
       <div className={css.sidebar_top}>
         <div className={css.logo_container}>
@@ -24,8 +22,13 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
             width="95"
             height="29"
             src="/logo-header-sidebar.png"
+            unoptimized
           />
-          <button className={`${css.btn} ${css.btn_close}`} type="button" onClick={() => onClose()}>
+          <button
+            className={`${css.btn} ${css.btn_close}`}
+            type="button"
+            onClick={() => onClose()}
+          >
             <svg className={css.btn_icon} width="32" height="32">
               <use href="/icons.svg#icon-close"></use>
             </svg>

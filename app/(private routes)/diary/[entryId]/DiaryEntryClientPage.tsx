@@ -1,8 +1,8 @@
 'use client';
 
 import DiaryEntryDetails from '@/components/DiaryEntryDetails/DiaryEntryDetails';
-import { getDiariesById } from '@/lib/api';
-import { DiaryData } from '@/lib/types';
+import { getDiariesById } from '@/lib/api/clientApi';
+import { DiaryData } from '@/types/types';
 import { useQuery } from '@tanstack/react-query';
 import { PuffLoader } from 'react-spinners';
 import css from './DiaryEntryClientPage.module.css';

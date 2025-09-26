@@ -1,25 +1,14 @@
 'use client';
 
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { loginUser } from '../../../../lib/api/auth';
-import * as Yup from 'yup';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { AxiosError } from 'axios';
 import css from '../AuthForm.module.css';
 import Image from 'next/image';
-
-const LoginFormSchema = Yup.object().shape({
-  email: Yup.string()
-    .max(64, 'Email занадто довгий')
-    .email('Невірний формат email')
-    .required('Email обов’язковий'),
-  password: Yup.string()
-    .min(8, 'Пароль мінімум 8 символів')
-    .max(128, 'Пароль занадто довгий')
-    .required('Пароль обов’язковий'),
-});
+import { LoginFormSchema } from '@/lib/schemas/auth';
 
 interface LoginFormValues {
   email: string;
@@ -30,11 +19,12 @@ export default function LoginForm() {
   const fieldId = useId();
   const router = useRouter();
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleSubmit = async (values: LoginFormValues) => {
     try {
-      const res = await loginUser(values);
-      console.log('data', res.data);
-      // router.push('/myday');
+      await loginUser(values);
+      router.push('/myday');
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       alert(
@@ -44,28 +34,18 @@ export default function LoginForm() {
   };
 
   return (
-    <Formik
-      initialValues={{ email: '', password: '' }}
-      validationSchema={LoginFormSchema}
-      onSubmit={handleSubmit}
-    >
-      {({ errors, touched, isSubmitting }) => (
-        <div className={css.authContainer}>
-          <div className={css.logoWrapper}>
-            <Image
-              src="/logo.png"
-              alt="Leleka Logo"
-              width={95}
-              height={29}
-              className={css.logo}
-            />
-          </div>
+    <div className={css.authContainer}>
+      <Formik
+        initialValues={{ email: '', password: '' }}
+        validationSchema={LoginFormSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ errors, touched, isSubmitting }) => (
           <div className={css.formWrapper}>
             <Form className={css.form}>
               <fieldset className={css.fieldset}>
                 <legend className={css.legend}>Вхід</legend>
 
-                {/* Email */}
                 <label
                   className={css.label}
                   htmlFor={`${fieldId}-email`}
@@ -83,18 +63,31 @@ export default function LoginForm() {
                   className={css.error}
                 />
 
-                {/* Пароль */}
                 <label
                   className={css.label}
                   htmlFor={`${fieldId}-password`}
                 ></label>
-                <Field
-                  className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
-                  type="password"
-                  name="password"
-                  id={`${fieldId}-password`}
-                  placeholder="Пароль"
-                />
+                <div className={css.passwordWrapper}>
+                  <Field
+                    className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
+                    type={showPassword ? 'text' : 'password'}
+                    name="password"
+                    id={`${fieldId}-password`}
+                    placeholder="Пароль"
+                  />
+                  <button
+                    type="button"
+                    className={css.passwordToggle}
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <Image
+                      src={showPassword ? '/eye-open.png' : '/eye-closed.png'}
+                      alt="Toggle password visibility"
+                      width={20}
+                      height={20}
+                    />
+                  </button>
+                </div>
                 <ErrorMessage
                   name="password"
                   component="div"
@@ -118,21 +111,17 @@ export default function LoginForm() {
               </p>
             </Form>
           </div>
-
-          {/* Бічний малюнок для десктопу */}
-          <div className={css.sideImageWrapper}>
-            <Image
-              src="/nest-login.png"
-              alt="Login Illustration"
-              width={720}
-              height={900}
-              // fill
-              // style={{ objectFit: "contain" }}
-              priority
-            />
-          </div>
-        </div>
-      )}
-    </Formik>
+        )}
+      </Formik>
+      <div className={css.imageWrapper}>
+        <Image
+          src="/nest-login.png"
+          alt="Login Illustration"
+          fill
+          priority
+          className={css.img}
+        />
+      </div>
+    </div>
   );
 }
