@@ -9,37 +9,29 @@ import { PuffLoader } from 'react-spinners';
 import { useDiaryStore } from '@/lib/store/diaryStore';
 import { useEffect } from 'react';
 
-type DiariesResponse = {
-  data: DiaryData[];
-};
-
 export default function DiaryPage() {
   const { selectedDiary, setSelectedDiary } = useDiaryStore();
 
-  const { data, isLoading } = useQuery<DiariesResponse>({
+  const { data: diaries = [], isLoading } = useQuery<DiaryData[]>({
     queryKey: ['diaries'],
     queryFn: getDiaries,
   });
 
-  const diaries = data?.data || [];
-
   useEffect(() => {
-    if (data) {
-      const currentDiaries = data.data || [];
+    if (diaries.length > 0) {
       const currentSelected = useDiaryStore.getState().selectedDiary;
-
-      if (currentDiaries.length > 0) {
-        if (
-          !currentSelected ||
-          !currentDiaries.some(d => d._id === currentSelected._id)
-        ) {
-          setSelectedDiary(currentDiaries[0]);
-        }
-      } else {
+      if (
+        !currentSelected ||
+        !diaries.some(d => d._id === currentSelected._id)
+      ) {
+        setSelectedDiary(diaries[0]);
+      }
+    } else {
+      if (useDiaryStore.getState().selectedDiary !== null) {
         setSelectedDiary(null);
       }
     }
-  }, [data, setSelectedDiary]);
+  }, [diaries, setSelectedDiary]);
 
   if (isLoading) {
     return (
