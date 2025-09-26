@@ -5,7 +5,7 @@
     margin: 0;
     padding: 16px;
     box-sizing: border-box;
-    margin-top: 166px;
+    /* margin-top: 166px; */
   }
   
   .journeyPage__content {
@@ -37,7 +37,7 @@
       width: 100%;
       min-height: calc(100vh - 166px);
       padding: 24px 32px;
-      margin-top: 166px;
+      /* margin-top: 34px; */
     }
     
     .journeyPage__content {
@@ -63,15 +63,15 @@
       box-sizing: border-box;
       overflow-y: auto; */
       position: absolute;
-      top: 109px;
-      left: 312px;
-      width: calc(100% - 312px);
+      /* top: 109px; */
+      /* left: 312px; */
+      /* width: calc(100% - 312px); */
       height: calc(100vh - 109px);
       background-color: var(--color-scheme-background);
       padding: 32px;
       margin: 0;
       box-sizing: border-box;
-      overflow-y: auto;
+      /* overflow-y: auto; */
       min-height: auto;
     }
     
