@@ -1,5 +1,8 @@
 import { NewDiary } from '@/types/diaryEntry';
-import { api } from './auth';
+import { User } from '@/types/user';
+import { api, ApiResponse } from './auth';
+import { ProfileFormData } from '@/utils/schemas/profile';
+
 
 export const getDiaries = async () => {
   const response = await api.get('/diaries');
@@ -12,6 +15,24 @@ export const getDiariesById = async (id: string) => {
 };
 
 export const createDiary = async (data: NewDiary) => {
-  const response = await api.post('/api/diaries', data);
+  const response = await api.post('/diaries', data);
+  return response.data.data;
+};
+
+export const getCurrentUser = async (): Promise<User> => {
+  const response = await api.get<ApiResponse<User>>('/users/me');
+  return response.data.data;
+};
+
+export const updateProfile = async (data: ProfileFormData): Promise<User> => {
+  const response = await api.patch<ApiResponse<User>>('/users/me', data);
+  return response.data.data;
+};
+
+export const uploadAvatar = async (file: File): Promise<User> => {
+  const formData = new FormData();
+  formData.append('photo', file);
+  
+  const response = await api.patch<ApiResponse<User>>('/users/me/photo', formData);
   return response.data.data;
 };

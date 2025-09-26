@@ -3,6 +3,8 @@ import './globals.css';
 import { Lato, Comfortaa } from 'next/font/google';
 import TanStackProvider from '@/components/TanStackProvider/TanStackProvider';
 import AuthProvider from '@/components/AuthProvider/AuthProvider';
+import ReactToaster from '@/components/ReactToaster/ReactToaster';
+
 
 
 const lato = Lato({
@@ -30,13 +32,12 @@ export default function RootLayout({
   return (
     <html lang="uk">
       <body className={`${lato.variable} ${comfortaa.variable}`}>
-
+        <ReactToaster />
         <TanStackProvider>
 
           <AuthProvider>{children}</AuthProvider>
 
         </TanStackProvider>
-
       </body>
     </html>
   );
