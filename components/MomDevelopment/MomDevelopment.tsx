@@ -5,6 +5,7 @@ import { useWeekData } from '@/hooks/useWeekData';
 import { useTasks } from '@/hooks/useTasks';
 import styles from './MomDevelopment.module.css';
 import AddTaskModal from '../AddTaskModal/AddTaskModal';
+import { PuffLoader } from 'react-spinners';
 
 interface MomDevelopmentProps {
   weekNumber: number;
@@ -33,7 +34,10 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
   if (isLoading) {
     return (
       <div className={styles.momDevelopment}>
-        <div className={styles.loading}>Завантаження даних...</div>
+        <div className={styles.loading}>
+          <PuffLoader />
+          <span>Завантаження даних...</span>
+        </div>
       </div>
     );
   }

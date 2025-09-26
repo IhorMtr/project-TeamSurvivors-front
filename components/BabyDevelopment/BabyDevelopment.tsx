@@ -2,6 +2,7 @@
 
 import { useWeekData } from '@/hooks/useWeekData';
 import styles from './BabyDevelopment.module.css';
+import { PuffLoader } from 'react-spinners';
 
 interface BabyDevelopmentProps {
   weekNumber: number;
@@ -13,7 +14,10 @@ export default function BabyDevelopment({ weekNumber }: BabyDevelopmentProps) {
   if (isLoading) {
     return (
       <div className={styles.babyDevelopment}>
-        <div className={styles.loading}>Завантаження даних...</div>
+        <div className={styles.loading}>
+          <PuffLoader />
+          <span>Завантаження даних...</span>
+        </div>
       </div>
     );
   }
