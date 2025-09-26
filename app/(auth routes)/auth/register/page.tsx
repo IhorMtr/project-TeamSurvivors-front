@@ -10,18 +10,16 @@ import { AxiosError } from 'axios';
 import { registerUser, loginUser } from '@/lib/api/auth';
 import type { RegisterRequest } from '@/lib/api/auth';
 import { RegistrationFormSchema } from '@/lib/schemas/auth';
+import { toast } from 'react-hot-toast';
 
 type RegistrationFormValues = RegisterRequest;
 
 export default function RegistrationForm() {
   const fieldId = useId();
   const router = useRouter();
-
-  const [error, setError] = useState<string>('');
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (values: RegistrationFormValues) => {
-    setError('');
     try {
       await registerUser(values);
 
@@ -30,12 +28,19 @@ export default function RegistrationForm() {
         password: values.password,
       });
 
-      router.push('/onboarding');
+      toast.success('Реєстрація успішна!');
+      router.push('/profile/edit');
     } catch (err) {
       const axiosError = err as AxiosError<{ message?: string }>;
-      setError(
-        axiosError.response?.data?.message || 'Помилка під час реєстрації'
-      );
+      let errorMessage = 'Помилка під час реєстрації';
+
+      if (axiosError.response?.status === 409) {
+        errorMessage = 'Такий email вже існує';
+      } else if (axiosError.response?.data?.message) {
+        errorMessage = axiosError.response.data.message;
+      }
+
+      toast.error(errorMessage);
     }
   };
 
@@ -113,8 +118,6 @@ export default function RegistrationForm() {
                   component="div"
                   className={css.error}
                 />
-
-                {error && <div className={css.error}>{error}</div>}
               </fieldset>
 
               <button
@@ -143,6 +146,7 @@ export default function RegistrationForm() {
           fill
           priority
           className={css.img}
+          sizes="(max-width: 1439px) 0px, 50vw"
         />
       </div>
     </div>

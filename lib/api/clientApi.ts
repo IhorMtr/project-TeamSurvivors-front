@@ -3,6 +3,7 @@ import { User } from '@/types/user';
 import { api, ApiResponse } from './auth';
 import { ProfileFormData } from '@/utils/schemas/profile';
 
+
 export const getDiaries = async () => {
   const response = await api.get('/diaries');
   return response.data.data;
@@ -14,7 +15,7 @@ export const getDiariesById = async (id: string) => {
 };
 
 export const createDiary = async (data: NewDiary) => {
-  const response = await api.post('/api/diaries', data);
+  const response = await api.post('/diaries', data);
   return response.data.data;
 };
 
