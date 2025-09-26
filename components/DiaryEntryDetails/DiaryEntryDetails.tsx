@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import css from './DiaryEntryDetails.module.css';
-import Link from 'next/link';
 import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import EmotionIcon from '../EmotionIcon/EmotionIcon';
 import editIcon from '../../assets/edit.svg';
@@ -13,10 +12,11 @@ import { useRouter } from 'next/navigation';
 import { deleteDiaryById } from '@/lib/api/clientApi';
 import { formatDate } from '@/lib/utils';
 import ConfirmationModal from '../ui/Modal/ConfirmationModal';
-
+import AddDiaryEntryModal from '../AddDiaryModal/AddDiaryEntryModal';
 
 export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
+  const [isAddDiaryModalOpen, setIsAddDiaryModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -32,11 +32,12 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
   });
 
   const handleDelete = () => {
-    setIsModalOpen(true);
+    setIsConfirmModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false);
+    setIsConfirmModalOpen(false);
+    setIsAddDiaryModalOpen(false);
   };
 
   const handleConfirmDelete = () => {
@@ -46,7 +47,9 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
       handleCloseModal();
     }
   };
-
+  const handleEdit = () => {
+    setIsAddDiaryModalOpen(true);
+  };
   return (
     <>
       <section className={css.container}>
@@ -54,17 +57,9 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
           <div className={css.detailTitle}>
             <h3 className={css.title}>{diary?.title || ''}</h3>
             {diary && (
-              <Link
-                className={css.btn}
-                href={'/diary'}
-                onClick={() =>
-                  alert(
-                    'Клік по кнопці "Редагувати" відкриває сторінку редагування'
-                  )
-                }
-              >
+              <button className={css.btn} onClick={handleEdit}>
                 <Image src={editIcon} alt="edit_btn" width={24} height={24} />
-              </Link>
+              </button>
             )}
           </div>
 
@@ -91,10 +86,16 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
         </EmotionIconContainer>
       </section>
       <ConfirmationModal
-        isOpen={isModalOpen}
+        isOpen={isConfirmModalOpen}
         title="Видалити цей запис?"
         onCancel={handleCloseModal}
         onConfirm={handleConfirmDelete}
+      />
+      <AddDiaryEntryModal
+        isOpen={isAddDiaryModalOpen}
+        onClose={handleCloseModal}
+        mode="edit"
+        formProps={{ initialValues: diary }}
       />
     </>
   );
