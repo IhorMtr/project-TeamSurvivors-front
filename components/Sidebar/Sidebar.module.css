@@ -30,13 +30,14 @@
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: center;
+  justify-content: center;
   align-items: center;
   background-color: transparent;
 }
 
 .btn_icon {
   fill: #000;
+  cursor: pointer;
 }
 
 .nav {
@@ -115,10 +116,12 @@
 .user_email {
   font-weight: 400;
   margin: 0;
+  font-size: 14px;
 }
 
 .user_name {
   margin: 0;
+  font-size: 14px;
 }
 
 .user_name_wrapper {
