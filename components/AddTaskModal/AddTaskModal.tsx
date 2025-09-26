@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import AddTaskForm from './AddTaskForm';
+import AddTaskForm from '../AddTaskForm/AddTaskForm';
 import styles from './AddTaskModal.module.css';
 import { Task } from '../../types/task';
 
