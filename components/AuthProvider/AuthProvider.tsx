@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useAuthStore } from '@/lib/store/authStore';
 import { api, refreshSession, logoutUser } from '@/lib/api/auth';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import type { User } from '@/types/user';
 import type { ApiResponse } from '@/lib/api/auth';
 
@@ -27,9 +27,19 @@ export default function AuthProvider({
   );
   const [ready, setReady] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     let cancelled = false;
+
+    if (
+      pathname === '/' ||
+      pathname.startsWith('/auth/login') ||
+      pathname.startsWith('/auth/register')
+    ) {
+      setReady(true);
+      return;
+    }
 
     async function checkUser() {
       try {
@@ -62,7 +72,7 @@ export default function AuthProvider({
     return () => {
       cancelled = true;
     };
-  }, [setUser, clearIsAuthenticated, router]);
+  }, [pathname, setUser, clearIsAuthenticated, router]);
 
   if (!ready) {
     return null;

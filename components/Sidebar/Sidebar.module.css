@@ -30,13 +30,14 @@
   margin: 0;
   padding: 0;
   display: flex;
-  flex-direction: center;
+  justify-content: center;
   align-items: center;
   background-color: transparent;
 }
 
 .btn_icon {
   fill: #000;
+  cursor: pointer;
 }
 
 .nav {
@@ -115,10 +116,12 @@
 .user_email {
   font-weight: 400;
   margin: 0;
+  font-size: 14px;
 }
 
 .user_name {
   margin: 0;
+  font-size: 14px;
 }
 
 .user_name_wrapper {
@@ -154,15 +157,13 @@
 @media only screen and (min-width: 1440px) {
   .wrapper {
     width: 312px;
-    padding: 8px 0 0;
   }
   .btn_close {
     display: none;
   }
 
   .logo_container {
-    padding: 17px 28px;
-    padding-bottom: 0;
+    padding: 24px 24px;
   }
 
   .link {

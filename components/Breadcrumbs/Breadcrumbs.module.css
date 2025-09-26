@@ -1,6 +1,5 @@
 .list {
   list-style: none;
-  font-family: var(--font-family);
   font-weight: 400;
   font-size: 12px;
   line-height: 160%;
@@ -10,6 +9,7 @@
   flex-direction: row;
   margin: 0;
   padding: 0;
+  padding-left: 12px;
 }
 
 .icon {
@@ -37,9 +37,16 @@
   color: #7f7f7f;
 }
 
+@media only screen and (min-width: 768px) {
+  .list {
+    padding-left: 8px;
+  }
+}
+
 @media only screen and (min-width: 1440px) {
   .list {
     font-size: 14px;
+    padding-left: 0;
   }
 
   .list li {
