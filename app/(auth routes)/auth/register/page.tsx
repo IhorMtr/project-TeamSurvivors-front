@@ -51,7 +51,7 @@ export default function RegistrationForm() {
         validationSchema={RegistrationFormSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ values, errors, touched, isSubmitting }) => (
           <div className={css.formWrapper}>
             <Form className={css.form}>
               <fieldset className={css.fieldset}>
@@ -104,6 +104,7 @@ export default function RegistrationForm() {
                     type="button"
                     className={css.passwordToggle}
                     onClick={() => setShowPassword(!showPassword)}
+                    disabled={!values.password}
                   >
                     <Image
                       src={showPassword ? '/eye-open.png' : '/eye-closed.png'}
