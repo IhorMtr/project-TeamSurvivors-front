@@ -48,8 +48,8 @@ export function CategoriesField({
     const nextValue = isSelected
       ? selectedOptions.filter(item => item.id !== option.id)
       : [...selectedOptions, option];
-    helpers.setValue(nextValue);
-    helpers.setTouched(true, true);
+    helpers.setValue(nextValue, true);
+    helpers.setTouched(true, false);
   };
 
   const handleToggleOpen = () => {
