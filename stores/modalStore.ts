@@ -4,7 +4,7 @@ import { Task } from '../types/task';
 interface ModalState {
   isTaskModalOpen: boolean;
   taskToEdit: Task | null;
-  openTaskModal: (task?: Task) => void;
+  openTaskModal: (task?: Task | null) => void; 
   closeTaskModal: () => void;
 }
 

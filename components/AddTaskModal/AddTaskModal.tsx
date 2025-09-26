@@ -7,7 +7,7 @@ import { Task } from '../../types/task';
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
-  taskToEdit?: Task | null;
+  taskToEdit?: Task | null; 
 }
 
 const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, taskToEdit }) => {
@@ -36,7 +36,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, taskToEdit
           ×
         </button>
         <h2 className={styles.title}>{taskToEdit ? 'Редагувати завдання' : 'Нове завдання'}</h2>
-        <AddTaskForm taskToEdit={taskToEdit} onClose={onClose} />
+        <AddTaskForm taskToEdit={taskToEdit ?? null} onClose={onClose} /> {/* Додаємо ?? null */}
       </div>
     </div>,
     document.body
