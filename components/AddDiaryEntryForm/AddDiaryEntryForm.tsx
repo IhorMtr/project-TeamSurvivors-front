@@ -15,34 +15,8 @@ import {
   updateDiaryEntry,
   DiaryEntryRequestPayload,
 } from '@/lib/api/diaryEntries';
+import { useQuery } from '@tanstack/react-query';
 import { TextField, TextareaField, CategoriesField } from './fields';
-
-const DEFAULT_OPTIONS: DiaryCategoryOption[] = [
-  {
-    id: '6895bd86a5c677999ed2ae14',
-    title: 'Апатія',
-  },
-  {
-    id: '6895bd86a5c677999ed2ae15',
-    title: 'Апетит',
-  },
-  {
-    id: '6895bd86a5c677999ed2ae16',
-    title: 'Бадьорість',
-  },
-  {
-    id: '6895bd86a5c677999ed2ae17',
-    title: 'Бажання турбуватися',
-  },
-  {
-    id: '6895bd86a5c677999ed2ae18',
-    title: 'Бажання усамітнення',
-  },
-  {
-    id: '6895bd86a5c677999ed2ae19',
-    title: 'Байдужість',
-  },
-];
 
 export default function AddDiaryEntryForm({
   mode = 'create',
@@ -54,11 +28,26 @@ export default function AddDiaryEntryForm({
   successMessage,
   errorMessage,
 }: AddDiaryEntryFormProps) {
+  const {
+    data: emotionOptions,
+    isLoading: isLoadingEmotions,
+  } = useQuery<DiaryCategoryOption[]>({
+    queryKey: ['emotions'],
+    queryFn: async () => {
+      const res = await fetch('/lehlehka_app.emotions.json');
+      if (!res.ok) {
+        throw new Error('Failed to fetch emotions');
+      }
+      return res.json();
+    },
+    staleTime: Infinity, // Fetch once
+  });
+
   const entryId = initialValues?.id;
   const options =
     categoryOptions && categoryOptions.length > 0
       ? categoryOptions
-      : DEFAULT_OPTIONS;
+      : emotionOptions || [];
 
   const formInitialValues: AddDiaryEntryFormValues = useMemo(
     () => ({
@@ -144,7 +133,7 @@ export default function AddDiaryEntryForm({
           <CategoriesField
             name="categories"
             label="Емоції"
-            placeholder="Оберіть емоції"
+            placeholder={isLoadingEmotions ? 'Завантаження...' : 'Оберіть емоції'}
             options={options}
           />
 
@@ -154,7 +143,11 @@ export default function AddDiaryEntryForm({
             placeholder="Додайте текст про свій стан"
           />
 
-          <button type="submit" className={s.submit} disabled={isSubmitting}>
+          <button
+            type="submit"
+            className={s.submit}
+            disabled={isSubmitting || isLoadingEmotions}
+          >
             {isSubmitting ? 'Зберігаємо...' : 'Зберегти'}
           </button>
         </Form>

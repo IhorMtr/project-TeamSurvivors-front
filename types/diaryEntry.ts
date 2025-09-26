@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { Emotion } from './types';
+import type { Emotion, DiaryData } from './types';
 
 export type DiaryCategoryOption = {
   id: string;
