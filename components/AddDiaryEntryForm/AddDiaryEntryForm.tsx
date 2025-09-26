@@ -2,6 +2,7 @@
 
 import { Form, Formik, FormikHelpers } from 'formik';
 import { useMemo } from 'react';
+import { isAxiosError } from 'axios';
 import s from './AddDiaryEntryForm.module.css';
 import {
   AddDiaryEntryFormProps,
@@ -9,7 +10,11 @@ import {
   DiaryCategoryOption,
 } from '@/types/diaryEntry';
 import { diaryEntrySchema } from '@/utils/schemas/diaryEntry';
-import { saveDiaryEntry } from '@/lib/api/diaryEntries';
+import {
+  createDiaryEntry,
+  updateDiaryEntry,
+  DiaryEntryRequestPayload,
+} from '@/lib/api/diaryEntries';
 import { TextField, TextareaField, CategoriesField } from './fields';
 
 const DEFAULT_OPTIONS: DiaryCategoryOption[] = [
@@ -28,10 +33,6 @@ export default function AddDiaryEntryForm({
   onSuccess,
   onError,
   notify,
-  apiBase,
-  apiPath = '/api/diaries',
-  method,
-  headers,
   successMessage,
   errorMessage,
 }: AddDiaryEntryFormProps) {
@@ -40,12 +41,6 @@ export default function AddDiaryEntryForm({
     categoryOptions && categoryOptions.length > 0
       ? categoryOptions
       : DEFAULT_OPTIONS;
-
-  const API_BASE = useMemo(
-    () =>
-      apiBase ?? process.env.NEXT_PUBLIC_API_BASE ?? process.env.API_BASE ?? '',
-    [apiBase]
-  );
 
   const formInitialValues: AddDiaryEntryFormValues = useMemo(
     () => ({
@@ -59,53 +54,47 @@ export default function AddDiaryEntryForm({
     [initialValues]
   );
 
-  const computedMethod: 'POST' | 'PUT' =
-    method ?? (mode === 'edit' || entryId ? 'PUT' : 'POST');
-
   async function handleSubmit(
     values: AddDiaryEntryFormValues,
     helpers: FormikHelpers<AddDiaryEntryFormValues>
   ) {
     const { setSubmitting } = helpers;
-    const requestPayload = {
+    const requestPayload: DiaryEntryRequestPayload = {
       title: values.title.trim(),
       emotions: values.categories,
       description: values.text.trim(),
     };
 
     try {
-      const shouldUpdate = computedMethod === 'PUT';
-      const targetEntryId = shouldUpdate ? entryId : undefined;
+      const shouldUpdate = mode === 'edit' || Boolean(entryId);
 
-      if (shouldUpdate && targetEntryId == null) {
-        throw new Error('Відсутній ідентифікатор запису для оновлення');
+      if (shouldUpdate && entryId == null) {
+        throw new Error('Не вдалося визначити запис для оновлення.');
       }
 
-      const data = await saveDiaryEntry(requestPayload, {
-        entryId: targetEntryId,
-        apiBase: API_BASE,
-        apiPath,
-        headers,
-        method: computedMethod,
-        errorMessage,
-      });
+      const willUpdate = shouldUpdate && entryId != null;
+      const data = willUpdate
+        ? await updateDiaryEntry(entryId, requestPayload)
+        : await createDiaryEntry(requestPayload);
 
       notify?.(
         'success',
-        successMessage ?? (shouldUpdate ? 'Запис оновлено' : 'Запис створено')
+        successMessage ?? (willUpdate ? 'Запис оновлено' : 'Запис створено')
       );
       onSuccess?.(data);
     } catch (error) {
-      let message = errorMessage ?? 'Сталася помилка під час запиту';
+      let message = errorMessage ?? 'Не вдалося зберегти запис.';
 
-      if (error && typeof error === 'object') {
-        const maybeAxiosError = error as {
-          message?: string;
-        };
-
-        if (maybeAxiosError.message) {
-          message = maybeAxiosError.message;
+      if (isAxiosError(error)) {
+        const responseMessage =
+          (error.response?.data as { message?: string } | undefined)?.message;
+        if (responseMessage) {
+          message = responseMessage;
+        } else if (error.message) {
+          message = error.message;
         }
+      } else if (error instanceof Error && error.message) {
+        message = error.message;
       }
 
       notify?.('error', message);
@@ -127,25 +116,25 @@ export default function AddDiaryEntryForm({
           <TextField
             name="title"
             label="Заголовок"
-            placeholder="Введіть назву запису"
+            placeholder="Вкажіть назву запису"
             autoFocus
           />
 
           <CategoriesField
             name="categories"
-            label="Категорії"
-            placeholder="Обрати категорії"
+            label="Емоції"
+            placeholder="Оберіть емоції"
             options={options}
           />
 
           <TextareaField
             name="text"
-            label="Запис"
-            placeholder="Опишіть ваші думки або відчуття"
+            label="Опис"
+            placeholder="Додайте текст про свій стан"
           />
 
           <button type="submit" className={s.submit} disabled={isSubmitting}>
-            {isSubmitting ? 'Збереження...' : 'Зберегти'}
+            {isSubmitting ? 'Зберігаємо...' : 'Зберегти'}
           </button>
         </Form>
       )}
