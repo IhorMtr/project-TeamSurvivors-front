@@ -13,12 +13,16 @@ import { deleteDiaryById } from '@/lib/api/clientApi';
 import { formatDate } from '@/lib/utils';
 import ConfirmationModal from '../ui/Modal/ConfirmationModal';
 import AddDiaryEntryModal from '../AddDiaryModal/AddDiaryEntryModal';
+import { useMemo } from 'react';
+
+import { useDiaryStore } from '@/lib/store/diaryStore';
 
 export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [isAddDiaryModalOpen, setIsAddDiaryModalOpen] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
+  const { setSelectedDiary } = useDiaryStore();
 
   const { mutate: deleteDiary } = useMutation({
     mutationFn: (id: string) => deleteDiaryById(id),
@@ -50,6 +54,29 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
   const handleEdit = () => {
     setIsAddDiaryModalOpen(true);
   };
+
+  const formInitialValues = useMemo(() => {
+    if (!diary) return {};
+    return {
+      id: diary._id,
+      title: diary.title,
+      description: diary.description,
+      categories: diary.emotions.map(emotion => ({
+        id: emotion._id,
+        title: emotion.title,
+      })),
+    };
+  }, [diary]);
+
+  const handleSuccess = (updatedDiary: DiaryData) => {
+    queryClient.invalidateQueries({ queryKey: ['diaries'] });
+    if (diary?._id) {
+      queryClient.invalidateQueries({ queryKey: ['diaries', diary._id] });
+    }
+    setSelectedDiary(updatedDiary);
+    handleCloseModal();
+  };
+
   return (
     <>
       <section className={css.container}>
@@ -95,7 +122,10 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
         isOpen={isAddDiaryModalOpen}
         onClose={handleCloseModal}
         mode="edit"
-        formProps={{ initialValues: diary }}
+        formProps={{
+          initialValues: formInitialValues,
+          onSuccess: handleSuccess,
+        }}
       />
     </>
   );

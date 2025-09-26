@@ -1,19 +1,32 @@
 import Image from 'next/image';
 import css from './DiaryList.module.css';
 import addIcon from '../../assets/add_circle.svg';
+import { useDiaryStore } from '@/lib/store/diaryStore';
 import { DiaryData } from '@/types/types';
 import DiaryEntryCard from '../DiaryEntryCard/DiaryEntryCard';
 import DiaryPlaceholder from '../DiaryPlaceholder/DiaryPlaceholder';
 import AddDiaryEntryModal from '../AddDiaryModal/AddDiaryEntryModal';
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+
 export default function DiaryList({ diaries }: { diaries: DiaryData[] }) {
   const [isAddDiaryModalOpen, setIsAddDiaryModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+  const { setSelectedDiary } = useDiaryStore();
+
   const handleCloseModal = () => {
     setIsAddDiaryModalOpen(false);
   };
   const handleAddDiaryEntry = () => {
     setIsAddDiaryModalOpen(true);
   };
+
+  const handleSuccess = (newDiary: DiaryData) => {
+    queryClient.invalidateQueries({ queryKey: ['diaries'] });
+    setSelectedDiary(newDiary);
+    handleCloseModal();
+  };
+
   return (
     <section className={css.diarySection}>
       <div className={css.container}>
@@ -38,6 +51,9 @@ export default function DiaryList({ diaries }: { diaries: DiaryData[] }) {
         isOpen={isAddDiaryModalOpen}
         onClose={handleCloseModal}
         mode="create"
+        formProps={{
+          onSuccess: handleSuccess,
+        }}
       />
     </section>
   );

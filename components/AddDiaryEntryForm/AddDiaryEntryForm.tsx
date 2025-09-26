@@ -18,12 +18,30 @@ import {
 import { TextField, TextareaField, CategoriesField } from './fields';
 
 const DEFAULT_OPTIONS: DiaryCategoryOption[] = [
-  { value: 'joy', label: 'Радість' },
-  { value: 'sadness', label: 'Смуток' },
-  { value: 'anger', label: 'Злість' },
-  { value: 'fear', label: 'Страх' },
-  { value: 'surprise', label: 'Подив' },
-  { value: 'calm', label: 'Спокій' },
+  {
+    id: '6895bd86a5c677999ed2ae14',
+    title: 'Апатія',
+  },
+  {
+    id: '6895bd86a5c677999ed2ae15',
+    title: 'Апетит',
+  },
+  {
+    id: '6895bd86a5c677999ed2ae16',
+    title: 'Бадьорість',
+  },
+  {
+    id: '6895bd86a5c677999ed2ae17',
+    title: 'Бажання турбуватися',
+  },
+  {
+    id: '6895bd86a5c677999ed2ae18',
+    title: 'Бажання усамітнення',
+  },
+  {
+    id: '6895bd86a5c677999ed2ae19',
+    title: 'Байдужість',
+  },
 ];
 
 export default function AddDiaryEntryForm({
@@ -46,8 +64,8 @@ export default function AddDiaryEntryForm({
     () => ({
       title: initialValues?.title ?? '',
       categories: initialValues?.categories ?? [],
-      text:
-        initialValues?.text ??
+      description:
+        initialValues?.description ??
         (initialValues as { content?: string } | undefined)?.content ??
         '',
     }),
@@ -58,11 +76,12 @@ export default function AddDiaryEntryForm({
     values: AddDiaryEntryFormValues,
     helpers: FormikHelpers<AddDiaryEntryFormValues>
   ) {
-    const { setSubmitting } = helpers;
+    const { setSubmitting, resetForm } = helpers;
     const requestPayload: DiaryEntryRequestPayload = {
       title: values.title.trim(),
-      emotions: values.categories,
-      description: values.text.trim(),
+      emotions: values.categories.map(option => option.id),
+      description: values.description.trim(),
+      date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
     };
 
     try {
@@ -82,12 +101,14 @@ export default function AddDiaryEntryForm({
         successMessage ?? (willUpdate ? 'Запис оновлено' : 'Запис створено')
       );
       onSuccess?.(data);
+      resetForm();
     } catch (error) {
       let message = errorMessage ?? 'Не вдалося зберегти запис.';
 
       if (isAxiosError(error)) {
-        const responseMessage =
-          (error.response?.data as { message?: string } | undefined)?.message;
+        const responseMessage = (
+          error.response?.data as { message?: string } | undefined
+        )?.message;
         if (responseMessage) {
           message = responseMessage;
         } else if (error.message) {
@@ -128,7 +149,7 @@ export default function AddDiaryEntryForm({
           />
 
           <TextareaField
-            name="text"
+            name="description"
             label="Опис"
             placeholder="Додайте текст про свій стан"
           />

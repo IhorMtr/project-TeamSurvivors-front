@@ -2,14 +2,14 @@ import type { ReactNode } from 'react';
 import type { Emotion } from './types';
 
 export type DiaryCategoryOption = {
-  value: string;
-  label: string;
+  id: string;
+  title: string;
 };
 
 export type AddDiaryEntryFormValues = {
   title: string;
-  categories: string[];
-  text: string;
+  categories: DiaryCategoryOption[];
+  description: string;
 };
 
 export type NewDiary = {
@@ -25,13 +25,16 @@ export type DiaryEntryInitialValues = Partial<
 
 export type DiaryEntryFormMode = 'create' | 'edit';
 
-export type NotifyHandler = (type: 'success' | 'error', message: string) => void;
+export type NotifyHandler = (
+  type: 'success' | 'error',
+  message: string
+) => void;
 
 export type AddDiaryEntryFormProps = {
   mode?: DiaryEntryFormMode;
   initialValues?: DiaryEntryInitialValues;
   categoryOptions?: DiaryCategoryOption[];
-  onSuccess?: (data: unknown) => void;
+  onSuccess?: (data: DiaryData) => void;
   onError?: (error: unknown) => void;
   notify?: NotifyHandler;
   successMessage?: string;
