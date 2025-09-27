@@ -1,9 +1,10 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import styles from './AddTaskForm.module.css';
 import { Task } from '../../types/task';
+import { api, ApiResponse } from '@/lib/api/auth';
 
 interface AddTaskFormProps {
   taskToEdit: Task | null;
@@ -11,31 +12,24 @@ interface AddTaskFormProps {
 }
 
 const createOrUpdateTask = async (taskData: Task): Promise<Task> => {
-  const method = taskData.id ? 'PATCH' : 'POST';
-  const url = taskData.id
-    ? `${process.env.NEXT_PUBLIC_API_BASE}/api/tasks/${taskData.id}`
-    : `${process.env.NEXT_PUBLIC_API_BASE}/api/tasks`;
+  const url = taskData._id ? `/tasks/${taskData._id}` : `/tasks`;
 
-  const response = await fetch(url, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(taskData),
-  });
+  const response = await api.post<ApiResponse<Task>>(url, taskData);
 
-  if (!response.ok) {
+  if (response.status !== 201) {
     throw new Error('Помилка при збереженні завдання');
   }
-
-  return response.json();
+  return response.data.data;
 };
 
 const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation<Task, Error, Task>({
     mutationFn: createOrUpdateTask,
     onSuccess: () => {
       toast.success('Завдання успішно збережено!');
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
       onClose();
     },
     onError: error => {
@@ -44,15 +38,16 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
   });
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Назва завдання обов’язкова'),
+    name: Yup.string().required('Назва завдання обов’язкова'),
     date: Yup.date()
       .required('Дата обов’язкова')
       .typeError('Введіть коректну дату'),
   });
 
-  const initialValues: Task = {
-    title: taskToEdit?.title || '',
+  const initialValues: Pick<Task, 'name' | 'date' | 'isDone'> = {
+    name: taskToEdit?.name || '',
     date: taskToEdit?.date || new Date().toISOString().split('T')[0],
+    isDone: taskToEdit?.isDone || false,
   };
 
   return (
@@ -60,16 +55,16 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={values => {
-        mutation.mutate({ ...values, id: taskToEdit?.id });
+        mutation.mutate({ ...values, _id: taskToEdit?._id });
       }}
     >
       {({ isSubmitting }) => (
         <Form className={styles.form}>
           <div className={styles.field}>
             <label htmlFor="title">Завдання</label>
-            <Field name="title" type="text" className={styles.input} />
+            <Field name="name" type="text" className={styles.input} />
             <ErrorMessage
-              name="title"
+              name="name"
               component="div"
               className={styles.error}
             />

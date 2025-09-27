@@ -1,11 +1,13 @@
 'use client';
-import { Task } from '@/types/types';
+import { Task } from '@/types/task';
 import css from './TasksReminderCard.module.css';
 import { getTasks, updateTask } from '@/lib/api/tasks';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/lib/store/authStore';
 import { useRouter } from 'next/navigation';
+import AddTaskModal from '../AddTaskModal/AddTaskModal';
+import { useState } from 'react';
 
 interface UpdateTaskVariables {
   id: Task['_id'];
@@ -16,6 +18,7 @@ const TasksReminderCard = () => {
   const router = useRouter();
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false);
 
   const { data } = useQuery({
     queryKey: ['tasks'],
@@ -39,62 +42,67 @@ const TasksReminderCard = () => {
 
   const onCreateTask = () => {
     if (!isAuthenticated) router.push('/auth/login');
-
-    // TODO: open dialog to create task
+    setIsOpen(true);
+  };
+  const onCloseModal = () => {
+    setIsOpen(false);
   };
 
   const isTasksEmpty =
     !isAuthenticated || (isAuthenticated && data?.length === 0);
 
   return (
-    <div className={css.tasksBlock}>
-      <div className={css.tasksBlockHeader}>
-        <h2>Важливі завдання</h2>
-        <button onClick={onCreateTask}>
-          <svg className={css.svg} width={18} height={18}>
-            <use href="/icons.svg#icon-add_circle"></use>
-          </svg>
-        </button>
-      </div>
-      {isTasksEmpty && (
-        <div>
-          <div className={css.tasksBlockText}>
-            <p className={css.tasksBlockTextBold}>
-              Наразі немає жодних завдань
-            </p>
-            <p>Створіть мершій нове завдання!</p>
-          </div>
-
-          <div>
-            <button
-              className={css.buttonTasks}
-              type="button"
-              onClick={onCreateTask}
-            >
-              Створити завдання
-            </button>
-          </div>
+    <>
+      <AddTaskModal isOpen={isOpen} onClose={onCloseModal} />
+      <div className={css.tasksBlock}>
+        <div className={css.tasksBlockHeader}>
+          <h2>Важливі завдання</h2>
+          <button onClick={onCreateTask}>
+            <svg className={css.svg} width={18} height={18}>
+              <use href="/icons.svg#icon-add_circle"></use>
+            </svg>
+          </button>
         </div>
-      )}
-      {!!data?.length && (
-        <ul>
-          {data?.map(task => (
-            <li key={task._id}>
-              <div>{task.date}</div>
+        {isTasksEmpty && (
+          <div>
+            <div className={css.tasksBlockText}>
+              <p className={css.tasksBlockTextBold}>
+                Наразі немає жодних завдань
+              </p>
+              <p>Створіть мершій нове завдання!</p>
+            </div>
 
-              <input
-                type="checkbox"
-                name={`task-${task._id}`}
-                id={task._id}
-                checked={task.isDone}
-                onChange={onChangeStatusTask}
-              />
-              <span>{task.name}</span>
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+            <div>
+              <button
+                className={css.buttonTasks}
+                type="button"
+                onClick={onCreateTask}
+              >
+                Створити завдання
+              </button>
+            </div>
+          </div>
+        )}
+        {!!data?.length && (
+          <ul>
+            {data?.map(task => (
+              <li key={task._id}>
+                <div className={css.taskDate}>{task.date}</div>
+
+                <input
+                  type="checkbox"
+                  name={`task-${task._id}`}
+                  id={task._id}
+                  checked={task.isDone}
+                  onChange={onChangeStatusTask}
+                />
+                <span>{task.name}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </>
   );
 };
 

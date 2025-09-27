@@ -1,4 +1,4 @@
-import { Task } from '@/types/types';
+import { Task } from '@/types/task';
 import { api } from './auth';
 
 export const getTasks = async (): Promise<Task[]> => {
