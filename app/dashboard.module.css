@@ -10,6 +10,7 @@
 
 @media (min-width: 1440px) {
   .dashboardpage {
+    padding-top: 0;
     display: flex;
     gap: 32px;
     overflow-y: hidden;

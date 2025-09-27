@@ -4,33 +4,13 @@ import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import styles from './AddTaskForm.module.css';
 import { Task } from '../../types/task';
-
+import { updateTask } from '@/lib/api/tasks';
+import { createTask } from '@/lib/api/clientApi';
 
 interface AddTaskFormProps {
   taskToEdit: Task | null;
   onClose: () => void;
 }
-
-const createOrUpdateTask = async (taskData: Task): Promise<Task> => {
-  const method = taskData.id ? 'PATCH' : 'POST';
-  const url = taskData.id
-    ? `${process.env.NEXT_PUBLIC_API_BASE}/api/tasks/${taskData.id}`
-    : `${process.env.NEXT_PUBLIC_API_BASE}/api/tasks`;
-
-  const response = await fetch(url, {
-    method,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(taskData),
-  });
-
-  if (!response.ok) {
-    throw new Error('Помилка при збереженні завдання');
-  }
-
-  return response.json();
-};
 
 const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
   const mutation = useMutation<Task, Error, Task>({
@@ -48,14 +28,14 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
   });
 
   const validationSchema = Yup.object({
-    title: Yup.string().required('Назва завдання обов’язкова'),
+    name: Yup.string().required('Назва завдання обов’язкова'),
     date: Yup.date()
       .required('Дата обов’язкова')
       .typeError('Введіть коректну дату'),
   });
 
   const initialValues: Task = {
-    title: taskToEdit?.title || '',
+    name: taskToEdit?.name || '',
     date: taskToEdit?.date || new Date().toISOString().split('T')[0],
   };
 
@@ -70,10 +50,10 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
       {({ isSubmitting }) => (
         <Form className={styles.form}>
           <div className={styles.field}>
-            <label htmlFor="title">Завдання</label>
-            <Field name="title" type="text" className={styles.input} />
+            <label htmlFor="name">Завдання</label>
+            <Field name="name" type="text" className={styles.input} />
             <ErrorMessage
-              name="title"
+              name="name"
               component="div"
               className={styles.error}
             />
