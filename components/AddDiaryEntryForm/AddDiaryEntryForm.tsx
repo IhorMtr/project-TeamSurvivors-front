@@ -15,16 +15,8 @@ import {
   updateDiaryEntry,
   DiaryEntryRequestPayload,
 } from '@/lib/api/diaryEntries';
+import { useQuery } from '@tanstack/react-query';
 import { TextField, TextareaField, CategoriesField } from './fields';
-
-const DEFAULT_OPTIONS: DiaryCategoryOption[] = [
-  { value: 'joy', label: 'Радість' },
-  { value: 'sadness', label: 'Смуток' },
-  { value: 'anger', label: 'Злість' },
-  { value: 'fear', label: 'Страх' },
-  { value: 'surprise', label: 'Подив' },
-  { value: 'calm', label: 'Спокій' },
-];
 
 export default function AddDiaryEntryForm({
   mode = 'create',
@@ -36,18 +28,33 @@ export default function AddDiaryEntryForm({
   successMessage,
   errorMessage,
 }: AddDiaryEntryFormProps) {
+  const {
+    data: emotionOptions,
+    isLoading: isLoadingEmotions,
+  } = useQuery<DiaryCategoryOption[]>({
+    queryKey: ['emotions'],
+    queryFn: async () => {
+      const res = await fetch('/lehlehka_app.emotions.json');
+      if (!res.ok) {
+        throw new Error('Failed to fetch emotions');
+      }
+      return res.json();
+    },
+    staleTime: Infinity, // Fetch once
+  });
+
   const entryId = initialValues?.id;
   const options =
     categoryOptions && categoryOptions.length > 0
       ? categoryOptions
-      : DEFAULT_OPTIONS;
+      : emotionOptions || [];
 
   const formInitialValues: AddDiaryEntryFormValues = useMemo(
     () => ({
       title: initialValues?.title ?? '',
       categories: initialValues?.categories ?? [],
-      text:
-        initialValues?.text ??
+      description:
+        initialValues?.description ??
         (initialValues as { content?: string } | undefined)?.content ??
         '',
     }),
@@ -58,11 +65,12 @@ export default function AddDiaryEntryForm({
     values: AddDiaryEntryFormValues,
     helpers: FormikHelpers<AddDiaryEntryFormValues>
   ) {
-    const { setSubmitting } = helpers;
+    const { setSubmitting, resetForm } = helpers;
     const requestPayload: DiaryEntryRequestPayload = {
       title: values.title.trim(),
-      emotions: values.categories,
-      description: values.text.trim(),
+      emotions: values.categories.map(option => option.id),
+      description: values.description.trim(),
+      date: new Date().toISOString().slice(0, 10), // YYYY-MM-DD
     };
 
     try {
@@ -82,12 +90,14 @@ export default function AddDiaryEntryForm({
         successMessage ?? (willUpdate ? 'Запис оновлено' : 'Запис створено')
       );
       onSuccess?.(data);
+      resetForm();
     } catch (error) {
       let message = errorMessage ?? 'Не вдалося зберегти запис.';
 
       if (isAxiosError(error)) {
-        const responseMessage =
-          (error.response?.data as { message?: string } | undefined)?.message;
+        const responseMessage = (
+          error.response?.data as { message?: string } | undefined
+        )?.message;
         if (responseMessage) {
           message = responseMessage;
         } else if (error.message) {
@@ -123,17 +133,21 @@ export default function AddDiaryEntryForm({
           <CategoriesField
             name="categories"
             label="Емоції"
-            placeholder="Оберіть емоції"
+            placeholder={isLoadingEmotions ? 'Завантаження...' : 'Оберіть емоції'}
             options={options}
           />
 
           <TextareaField
-            name="text"
+            name="description"
             label="Опис"
             placeholder="Додайте текст про свій стан"
           />
 
-          <button type="submit" className={s.submit} disabled={isSubmitting}>
+          <button
+            type="submit"
+            className={s.submit}
+            disabled={isSubmitting || isLoadingEmotions}
+          >
             {isSubmitting ? 'Зберігаємо...' : 'Зберегти'}
           </button>
         </Form>

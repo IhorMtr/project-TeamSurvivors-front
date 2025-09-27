@@ -34,6 +34,9 @@
 }
 .btn {
   display: flex;
+  border: none;
+  background: transparent;
+  cursor: pointer;
 }
 /* Override global section padding */
 .diarySection {

@@ -1,0 +1,147 @@
+.journeyDetailsContainer {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 335px;
+    margin: 0 auto;
+    height: auto;
+    min-height: 1484px; 
+  }
+  
+  .tabs {
+    box-sizing: border-box;
+    display: flex;
+    border-radius: 100px;
+    padding: 4px;
+    width: 335px;
+    background: var(--color-scheme-foreground);
+    transition: all 0.3s ease;
+  }
+  
+  .tabsMomActive {
+    width: 311px;
+  }
+  
+  .tab {
+    border: 1px solid transparent;
+    border-radius: 100px;
+    padding: 10px 20px;
+    width: 163px;
+    height: 42px;
+    background: transparent;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 160%;
+    color: var(--color-scheme-text);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+  
+  }
+  
+  .tabActive {
+    background: var(--color-scheme-foreground-alt);
+    color: var(--color-scheme-text);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  
+  }
+  
+  .tabActiveMom {
+    border: 1px solid var(--opacity-transparent);
+    border-radius: 100px;
+    padding: 10px 24px;
+    width: 151px;
+    height: 42px;
+    background: var(--color-scheme-foreground-alt);
+  }
+  
+  .content {
+    border-radius: 32px;
+    width: 335px;
+    height: auto;
+    min-height: 983px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    max-height: 1500px;
+  }
+  
+  @media (max-width: 375px) {
+    .content {
+      width: 100%;
+      padding: 16px 8px;
+    }
+  }
+  
+  
+  @media only screen and (min-width: 768px) {
+    .journeyDetailsContainer {
+      width: 704px;
+      height: auto;
+      min-height: 839px;
+    }
+    
+    .tabs {
+      width: 100%;
+      max-width: 704px;
+      height: 50px;
+      padding: 4px;
+    }
+    
+    .tab {
+      width: 50%;
+      height: 41px;
+      padding: 10px 24px;
+    }
+    
+    .tabActive {
+      width: 50%;
+      height: 42px;
+      padding: 10px 24px;
+    }
+    
+    .content {
+      width: 704px;
+      height: auto;
+      min-height: 773px;
+    }
+  }
+  
+  
+  @media only screen and (min-width: 1280px) {
+    .journeyDetailsContainer {
+      width: 1064px;
+      height: auto;
+      min-height: 610px;
+      margin: 24px 32px;
+      box-sizing: border-box;
+    }
+    
+    .tabs {
+      width: 572px;
+      height: 54px;
+      padding: 4px;
+      margin: 0 auto;
+    }
+    
+    .tab {
+      width: 286px;
+      height: 46px;
+      padding: 10px 24px;
+    }
+    
+    .tabActive {
+      width: 286px;
+      height: 46px;
+      padding: 10px 24px;
+    }
+    
+    .content {
+      width: 1064px;
+      height: auto;
+      min-height: 540px; 
+    }
+  }
