@@ -58,12 +58,8 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
     );
   }
 
-  const handleAddTask = (taskName: string) => {
-    createTask({
-      name: taskName,
-      date: new Date().toISOString().split('T')[0],
-    });
-  };
+
+
 
   return (
     <div className={styles.momDevelopment}>
@@ -169,11 +165,10 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
         </div>
       </div>
 
-      {/* <AddTaskModal
+      <AddTaskModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onAddTask={handleAddTask}
-      /> */}
+      />
     </div>
   );
 }
