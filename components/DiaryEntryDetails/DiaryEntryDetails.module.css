@@ -26,8 +26,7 @@
 }
 .container {
   background-color: #fff4f6;
-  margin: 0 20px;
-  margin-top: 32px;
+  margin: 32px 20px;
   border-radius: 32px;
   padding: 24px;
   width: var(--diary-details-width, auto);

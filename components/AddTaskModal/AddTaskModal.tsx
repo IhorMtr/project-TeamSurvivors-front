@@ -1,56 +1,46 @@
-'use client';
-
-import { useState } from 'react';
-import { Modal } from '@/components/ui/Modal';
+import { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import AddTaskForm from '../AddTaskForm/AddTaskForm';
 import styles from './AddTaskModal.module.css';
+import { Task } from '../../types/task';
 
 interface AddTaskModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddTask: (taskName: string) => void;
+  taskToEdit?: Task | null; 
 }
 
-export default function AddTaskModal({ isOpen, onClose, onAddTask }: AddTaskModalProps) {
-  const [taskName, setTaskName] = useState('');
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (taskName.trim()) {
-      onAddTask(taskName.trim());
-      setTaskName('');
-      onClose();
+const AddTaskModal: React.FC<AddTaskModalProps> = ({ isOpen, onClose, taskToEdit }) => {
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+    if (isOpen) {
+      document.addEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'hidden';
     }
-  };
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+      document.body.style.overflow = 'auto';
+    };
+  }, [isOpen, onClose]);
 
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} ariaLabel="Додати нове завдання">
-      <h2 className={styles.title}>Нове завдання</h2>
-      
-      <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.inputGroup}>
-          <label htmlFor="taskName" className={styles.label}>
-            Назва завдання
-          </label>
-          <input
-            id="taskName"
-            type="text"
-            value={taskName}
-            onChange={(e) => setTaskName(e.target.value)}
-            placeholder="Введіть назву завдання..."
-            className={styles.input}
-            autoFocus
-          />
-        </div>
-        
-        <div className={styles.buttons}>
-          <button type="button" onClick={onClose} className={styles.cancelButton}>
-            Скасувати
-          </button>
-          <button type="submit" className={styles.submitButton} disabled={!taskName.trim()}>
-            Додати
-          </button>
-        </div>
-      </form>
-    </Modal>
+  if (!isOpen) return null;
+
+  return createPortal(
+    <div className={styles.backdrop} onClick={onClose}>
+      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+        <button className={styles.closeButton} onClick={onClose} aria-label="Закрити">
+          ×
+        </button>
+        <h2 className={styles.title}>{taskToEdit ? 'Редагувати завдання' : 'Нове завдання'}</h2>
+        <AddTaskForm taskToEdit={taskToEdit ?? null} onClose={onClose} /> {/* Додаємо ?? null */}
+      </div>
+    </div>,
+    document.body
   );
-}
+};
+
+export default AddTaskModal;

@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useField } from 'formik';
-import { CategoriesFieldProps } from '@/types/diaryEntry';
+import { CategoriesFieldProps, DiaryCategoryOption } from '@/types/diaryEntry';
 import { FieldControl } from './FieldControl';
 import s from '../AddDiaryEntryForm.module.css';
 
@@ -12,15 +12,14 @@ export function CategoriesField({
   placeholder,
   options,
 }: CategoriesFieldProps) {
-  const [field, meta, helpers] = useField<string[]>(name);
+  // The field's value is an array of DiaryCategoryOption objects
+  const [field, meta, helpers] = useField<DiaryCategoryOption[]>(name);
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const selectedValues = useMemo(
-    () => (Array.isArray(field.value) ? field.value : []),
-    [field.value]
-  );
-  const labelId = `${name as string}-label`;
-  const triggerId = `${name as string}-trigger`;
+
+  const selectedOptions = Array.isArray(field.value) ? field.value : [];
+  const labelId = `${name}-label`;
+  const triggerId = `${name}-trigger`;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -30,9 +29,9 @@ export function CategoriesField({
     };
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (!containerRef.current) return;
-      if (containerRef.current.contains(event.target as Node)) return;
-      setIsOpen(false);
+      if (!containerRef.current?.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
@@ -44,31 +43,20 @@ export function CategoriesField({
     };
   }, [isOpen]);
 
-  const selectedOptions = useMemo(() => {
-    const index = new Map(
-      options.map(item => [item.value, item.label] as const)
-    );
-    return selectedValues
-      .map(value => {
-        const optionLabel = index.get(value);
-        return optionLabel ? { value, label: optionLabel } : null;
-      })
-      .filter(Boolean) as Array<{ value: string; label: string }>;
-  }, [selectedValues, options]);
-
-  const toggleOption = (value: string) => {
-    const next = selectedValues.includes(value)
-      ? selectedValues.filter(item => item !== value)
-      : [...selectedValues, value];
-    helpers.setValue(next);
-    helpers.setTouched(true, true);
+  const toggleOption = (option: DiaryCategoryOption) => {
+    const isSelected = selectedOptions.some(item => item.id === option.id);
+    const nextValue = isSelected
+      ? selectedOptions.filter(item => item.id !== option.id)
+      : [...selectedOptions, option];
+    helpers.setValue(nextValue, true);
+    helpers.setTouched(true, false);
   };
 
   const handleToggleOpen = () => {
     setIsOpen(prev => !prev);
   };
 
-  const dropdownId = `${name as string}-dropdown`;
+  const dropdownId = `${name}-dropdown`;
   const triggerClass =
     meta.touched && meta.error
       ? `${s.selectTrigger} ${s.invalid}`
@@ -98,9 +86,9 @@ export function CategoriesField({
         >
           <div className={s.selectContent}>
             {selectedOptions.length > 0 ? (
-              selectedOptions.map(({ value, label: optionLabel }) => (
-                <span key={value} className={s.chip}>
-                  {optionLabel}
+              selectedOptions.map(option => (
+                <span key={option.id} className={s.chip}>
+                  {option.title}
                 </span>
               ))
             ) : (
@@ -124,20 +112,20 @@ export function CategoriesField({
             ) : (
               <ul className={s.options}>
                 {options.map(option => {
-                  const checked = selectedValues.includes(option.value);
+                  const checked = selectedOptions.some(item => item.id === option.id);
                   return (
-                    <li key={option.value}>
+                    <li key={option.id}>
                       <label className={s.option}>
                         <input
                           type="checkbox"
                           className={s.checkbox}
                           checked={checked}
-                          onChange={() => toggleOption(option.value)}
+                          onChange={() => toggleOption(option)}
                         />
                         <span className={s.checkboxBox} aria-hidden="true">
-                          {checked && <span className={s.checkboxMark} />}
+                          {checked && <span className={s.checkboxMark} />} 
                         </span>
-                        <span className={s.optionLabel}>{option.label}</span>
+                        <span className={s.optionLabel}>{option.title}</span>
                       </label>
                     </li>
                   );

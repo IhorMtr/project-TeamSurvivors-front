@@ -2,7 +2,6 @@
   display: none;
 }
 
-
 @media (min-width: 1440px) {
   .mobileOnly {
     display: none;
@@ -10,7 +9,8 @@
 
   .desktopOnly {
     display: flex;
-    justify-content: flex-end;
+    margin-left: 32px;
+    /* justify-content: flex-end; */
     gap: 32px;
     width: 1128px;
 

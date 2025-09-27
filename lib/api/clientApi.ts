@@ -44,3 +44,8 @@ export const updateOnboarding = async (data: onboardingUser): Promise<User> => {
   const response = await api.patch<ApiResponse<User>>('/users/me', data);
   return response.data.data;
 };
+
+export const deleteDiaryById = async (id: string) => {
+  const response = await api.delete(`/diaries/${id}`);
+  return response.data;
+};
