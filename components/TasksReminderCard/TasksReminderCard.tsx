@@ -66,7 +66,7 @@ const TasksReminderCard = () => {
         <div className={css.tasksBlockHeader}>
           <h2>Важливі завдання</h2>
           <button onClick={onCreateTask}>
-            <svg className={css.svg} width={18} height={18}>
+            <svg className={css.svg} width={14} height={12}>
               <use href="/icons.svg#icon-add_circle"></use>
             </svg>
           </button>
@@ -98,14 +98,22 @@ const TasksReminderCard = () => {
                 <div className={css.taskDate}>{formatDate(task.date)}</div>
 
                 <div className={css.taskCheckboxBlock}>
-                  <input
-                    type="checkbox"
-                    name={`task-${task._id}`}
-                    id={task._id}
-                    checked={task.isDone}
-                    onChange={onChangeStatusTask}
-                  />
-                  <span className={css.taskCheckboxBlockName}>{task.name}</span>
+                  <div className={css.taskCheckboxBlock}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        id={task._id}
+                        checked={task.isDone}
+                        onChange={onChangeStatusTask}
+                      />
+                      <svg className={css.taskCheckboxIcon} aria-hidden="true">
+                        <use href="/icons.svg#check-mark"></use>
+                      </svg>
+                      <span className={css.taskCheckboxBlockName}>
+                        {task.name}
+                      </span>
+                    </label>
+                  </div>
                 </div>
               </li>
             ))}
