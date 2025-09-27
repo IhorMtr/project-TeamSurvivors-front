@@ -58,6 +58,34 @@
   background-color: #ffdae0;
 }
 
+.taskDate {
+  font-size: 8px;
+}
+.taskCheckboxBlock {
+  display: flex;
+  gap: 8px;
+}
+
+.taskItem:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.taskCheckboxBlock input[type='checkbox'] {
+  appearance: none;
+  outline: none;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0);
+  border-radius: 4px;
+  width: 18px;
+  height: 18px;
+}
+
+.taskCheckboxBlockName {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
 @media (min-width: 1440px) {
   .tasksBlockHeader h2 {
     font-size: 24px;
@@ -69,5 +97,14 @@
   .buttonTasks {
     font-size: 16px;
     cursor: pointer;
+  }
+
+  .taskDate {
+    font-size: 12px;
+  }
+
+  .taskCheckboxBlockName {
+    font-size: 14px;
+    line-height: 1.6;
   }
 }

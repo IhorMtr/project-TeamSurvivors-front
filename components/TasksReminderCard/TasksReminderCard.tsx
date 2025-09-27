@@ -51,6 +51,13 @@ const TasksReminderCard = () => {
   const isTasksEmpty =
     !isAuthenticated || (isAuthenticated && data?.length === 0);
 
+  const formatDate = (date: string) => {
+    return new Date(date).toLocaleDateString('uk-UA', {
+      day: '2-digit',
+      month: '2-digit',
+    });
+  };
+
   return (
     <>
       <AddTaskModal isOpen={isOpen} onClose={onCloseModal} />
@@ -86,17 +93,19 @@ const TasksReminderCard = () => {
         {!!data?.length && (
           <ul>
             {data?.map(task => (
-              <li key={task._id}>
-                <div className={css.taskDate}>{task.date}</div>
+              <li className={css.taskItem} key={task._id}>
+                <div className={css.taskDate}>{formatDate(task.date)}</div>
 
-                <input
-                  type="checkbox"
-                  name={`task-${task._id}`}
-                  id={task._id}
-                  checked={task.isDone}
-                  onChange={onChangeStatusTask}
-                />
-                <span>{task.name}</span>
+                <div className={css.taskCheckboxBlock}>
+                  <input
+                    type="checkbox"
+                    name={`task-${task._id}`}
+                    id={task._id}
+                    checked={task.isDone}
+                    onChange={onChangeStatusTask}
+                  />
+                  <span className={css.taskCheckboxBlockName}>{task.name}</span>
+                </div>
               </li>
             ))}
           </ul>
