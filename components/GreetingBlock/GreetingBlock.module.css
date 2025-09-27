@@ -1,6 +1,7 @@
 .titleDashboard {
   font-size: 24px;
   text-align: left;
+  margin-left: 32px;
 }
 
 @media (min-width: 1440px) {

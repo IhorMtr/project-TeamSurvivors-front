@@ -40,14 +40,18 @@ export default function DashboardPage({
 
   return (
     <LayoutClient>
+      <GreetingBlock />
       {children}
       <div className={css.dashboardpage}>
-        <GreetingBlock />
-        <StatusBlock week={myDay.weekNumber} dayAll={myDay.daysLeftToBirth} />
-        <BabyTodayCard myDay={myDay} />
-        <MomTipCard dailyTip={myDay.momDailyTips?.at(randomDailyTip) || ''} />
-        <TasksReminderCard />
-        <FeelingCheckCard />
+        <div className={css.columnFirst}>
+          <StatusBlock week={myDay.weekNumber} dayAll={myDay.daysLeftToBirth} />
+          <BabyTodayCard myDay={myDay} />
+          <MomTipCard dailyTip={myDay.momDailyTips?.at(randomDailyTip) || ''} />
+        </div>
+        <div className={css.columnSecond}>
+          <TasksReminderCard />
+          <FeelingCheckCard />
+        </div>
       </div>
     </LayoutClient>
   );

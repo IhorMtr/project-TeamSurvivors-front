@@ -47,8 +47,8 @@ const TasksReminderCard = () => {
     !isAuthenticated || (isAuthenticated && data?.length === 0);
 
   return (
-    <div>
-      <div>
+    <div className={css.tasksBlock}>
+      <div className={css.tasksBlockHeader}>
         <h2>Важливі завдання</h2>
         <button onClick={onCreateTask}>
           <svg className={css.svg} width={18} height={18}>
@@ -58,13 +58,19 @@ const TasksReminderCard = () => {
       </div>
       {isTasksEmpty && (
         <div>
-          <div>
-            <span>Наразі немає жодних завдань</span>
-            <span>Створіть мершій нове завдання!</span>
+          <div className={css.tasksBlockText}>
+            <p className={css.tasksBlockTextBold}>
+              Наразі немає жодних завдань
+            </p>
+            <p>Створіть мершій нове завдання!</p>
           </div>
 
           <div>
-            <button type="button" onClick={onCreateTask}>
+            <button
+              className={css.buttonTasks}
+              type="button"
+              onClick={onCreateTask}
+            >
               Створити завдання
             </button>
           </div>

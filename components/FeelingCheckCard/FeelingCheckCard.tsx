@@ -2,6 +2,7 @@ import { useAuthStore } from '@/lib/store/authStore';
 import { useRouter } from 'next/navigation';
 import AddDiaryEntryModal from '../AddDiaryModal/AddDiaryEntryModal';
 import { useState } from 'react';
+import css from './FeelingCheckCard.module.css';
 
 const FeelingCheckCard = () => {
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
@@ -15,14 +16,20 @@ const FeelingCheckCard = () => {
 
   return (
     <>
-      <div>
+      <div className={css.feelingCheckCard}>
         <h2>Як ви себе почуваєте?</h2>
-        <div>
-          <span>Рекомендація на сьогодні:</span>
-          <span>Занотуйте незвичні відчуття у тілі.</span>
+        <div className={css.feelingCheckCardText}>
+          <p className={css.feelingCheckCardTextBold}>
+            Рекомендація на сьогодні:
+          </p>
+          <p>Занотуйте незвичні відчуття у тілі.</p>
         </div>
         <div>
-          <button type="button" onClick={onCreateDiary}>
+          <button
+            className={css.feelingCheckCardButton}
+            type="button"
+            onClick={onCreateDiary}
+          >
             Зробити запис у щоденник
           </button>
         </div>

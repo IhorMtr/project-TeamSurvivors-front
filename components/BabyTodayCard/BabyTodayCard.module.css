@@ -6,6 +6,10 @@
   max-height: 616px;
   margin-bottom: 24px;
 }
+.babyTodayCard img {
+  max-width: 287px;
+  height: 216px;
+}
 
 .babyTodayCard h2 {
   font-size: 20px;
@@ -57,8 +61,15 @@
 }
 
 @media (min-width: 1440px) {
+  .babyTodayCard {
+    overflow-y: auto;
+  }
   .babyTodayCard h2 {
     font-size: 24px;
+  }
+  .babyTodayCard img {
+    max-width: 257px;
+    height: 194px;
   }
   .babyTodayCardBlockList {
     font-size: 16px;

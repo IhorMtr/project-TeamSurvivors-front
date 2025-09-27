@@ -1,0 +1,52 @@
+.feelingCheckCard {
+  background-color: #fff4f6;
+  border-radius: 32px;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.feelingCheckCard h2 {
+  font-size: 20px;
+  margin: 0 0 8px 0;
+}
+
+.feelingCheckCardText {
+  margin-bottom: 20px;
+}
+
+.feelingCheckCardText p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.feelingCheckCardTextBold {
+  font-weight: 700;
+}
+
+.feelingCheckCardButton {
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 4px solid #ffcbd3;
+  border-radius: 100px;
+  padding: 10px 24px;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Lato', sans-serif;
+  background-color: #ffdae0;
+}
+
+@media (min-width: 1440px) {
+  .feelingCheckCard h2 {
+    font-size: 24px;
+  }
+  .feelingCheckCard p {
+    font-size: 16px;
+  }
+
+  .feelingCheckCardButton {
+    font-size: 16px;
+    cursor: pointer;
+  }
+}
