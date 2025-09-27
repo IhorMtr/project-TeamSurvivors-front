@@ -1,7 +1,8 @@
 .svg {
-  fill: var(--color-white);
-  width: 14px;
-  height: 12px;
+  fill: black;
+  stroke: black;
+  width: 22px;
+  height: 22px;
 }
 
 .tasksBlock {
@@ -41,6 +42,10 @@
 .tasksBlockTextBold {
   font-weight: 700;
   margin-bottom: 4px;
+}
+
+.addCircleBtn {
+  align-self: flex-start !important;
 }
 
 .buttonTasks {

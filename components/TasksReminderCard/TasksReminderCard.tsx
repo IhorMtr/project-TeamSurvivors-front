@@ -65,8 +65,8 @@ const TasksReminderCard = () => {
       <div className={css.tasksBlock}>
         <div className={css.tasksBlockHeader}>
           <h2>Важливі завдання</h2>
-          <button onClick={onCreateTask}>
-            <svg className={css.svg} width={14} height={12}>
+          <button className={css.addCircleBtn} onClick={onCreateTask}>
+            <svg className={css.svg}>
               <use href="/icons.svg#icon-add_circle"></use>
             </svg>
           </button>
@@ -107,7 +107,7 @@ const TasksReminderCard = () => {
                         onChange={onChangeStatusTask}
                       />
                       <svg className={css.taskCheckboxIcon} aria-hidden="true">
-                        <use href="/icons.svg#check-mark"></use>
+                        <use href="/icons.svg#icon-check-mark"></use>
                       </svg>
                       <span className={css.taskCheckboxBlockName}>
                         {task.name}
