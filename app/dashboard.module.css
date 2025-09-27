@@ -11,8 +11,8 @@
 @media (min-width: 1440px) {
   .dashboardpage {
     display: flex;
-
     gap: 32px;
+    overflow-y: hidden;
   }
 
   .columnFirst {

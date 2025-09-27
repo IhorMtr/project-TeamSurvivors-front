@@ -4,6 +4,7 @@
   border-radius: 32px;
   overflow: auto;
   max-height: 616px;
+
   margin-bottom: 24px;
 }
 .babyTodayCard img {
@@ -51,10 +52,7 @@
     justify-content: space-between;
     gap: 16px;
   }
-  .babyTodayCardBlockImg {
-    max-width: 257px;
-    width: 100%;
-  }
+
   .babyTodayCardBlockList {
     width: 100%;
   }
@@ -63,6 +61,8 @@
 @media (min-width: 1440px) {
   .babyTodayCard {
     overflow-y: auto;
+    min-height: 421px;
+    max-height: 616px;
   }
   .babyTodayCard h2 {
     font-size: 24px;

@@ -24,3 +24,10 @@ export type MyDay = {
   babyDevelopment: string;
   momDailyTips: string[];
 };
+
+export type Task = {
+  _id: string;
+  isDone: boolean;
+  name: string;
+  date: string;
+};
