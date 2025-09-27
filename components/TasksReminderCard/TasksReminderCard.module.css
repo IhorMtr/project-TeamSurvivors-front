@@ -1,0 +1,161 @@
+.svg {
+  fill: black;
+  stroke: black;
+  width: 22px;
+  height: 22px;
+}
+
+.tasksBlock {
+  background-color: #fff4f6;
+  border-radius: 32px;
+  max-height: 498px;
+  height: 100%;
+  overflow-y: auto;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.tasksBlockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 20px;
+}
+
+.tasksBlockHeader h2 {
+  font-size: 20px;
+  margin: 0 0 16px 0;
+}
+
+.tasksBlockHeader button {
+  all: unset;
+}
+
+.tasksBlockText {
+  margin-bottom: 16px;
+}
+
+.tasksBlockText p {
+  font-size: 14px;
+  margin: 0;
+}
+.tasksBlockTextBold {
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.addCircleBtn {
+  align-self: flex-start !important;
+}
+
+.buttonTasks {
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 4px solid #ffcbd3;
+  border-radius: 100px;
+  padding: 10px 24px;
+  font-weight: 500;
+  font-size: 14px;
+  font-family: 'Lato', sans-serif;
+  background-color: #ffdae0;
+}
+
+.taskDate {
+  font-size: 8px;
+}
+.taskCheckboxBlock {
+  display: flex;
+  gap: 8px;
+}
+
+.taskItem:not(:last-child) {
+  margin-bottom: 16px;
+}
+
+.taskCheckboxBlock label {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  gap: 8px;
+}
+
+.taskCheckboxBlock input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.taskCheckboxIcon {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  fill: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.taskCheckboxBlock input:checked {
+  background-color: #000;
+}
+
+.taskCheckboxBlock input:checked + .taskCheckboxIcon {
+  opacity: 1;
+  fill: #fff;
+  stroke: #fff;
+}
+
+.taskCheckboxBlock input:checked + .taskCheckboxIcon + .taskCheckboxBlockName {
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.taskCheckboxBlockName {
+  font-size: 12px;
+  line-height: 1.6;
+  user-select: none;
+}
+
+.taskCheckboxBlockName {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+@media (min-width: 1440px) {
+  .tasksBlockHeader h2 {
+    font-size: 24px;
+  }
+  .tasksBlockText p {
+    font-size: 16px;
+  }
+
+  .buttonTasks {
+    font-size: 16px;
+    cursor: pointer;
+  }
+
+  .taskDate {
+    font-size: 12px;
+  }
+
+  .taskCheckboxBlockName {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+}

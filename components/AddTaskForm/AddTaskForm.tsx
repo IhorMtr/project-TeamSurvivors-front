@@ -4,7 +4,8 @@ import { useMutation } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import styles from './AddTaskForm.module.css';
 import { Task } from '../../types/task';
-import { createTask, updateTask } from '@/lib/api/clientApi';
+import { updateTask } from '@/lib/api/tasks';
+import { createTask } from '@/lib/api/clientApi';
 
 interface AddTaskFormProps {
   taskToEdit: Task | null;
@@ -43,16 +44,14 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={values => {
-        mutation.mutate(values);
+        mutation.mutate({ ...values, id: taskToEdit?.id });
       }}
     >
       {({ isSubmitting }) => (
         <Form className={styles.form}>
           <div className={styles.field}>
-            <label htmlFor="name" className={styles.inputTitle}>
-              Назва завдання
-            </label>
-            <Field id="name" name="name" type="text" className={styles.input} />
+            <label htmlFor="name">Завдання</label>
+            <Field name="name" type="text" className={styles.input} />
             <ErrorMessage
               name="name"
               component="div"
