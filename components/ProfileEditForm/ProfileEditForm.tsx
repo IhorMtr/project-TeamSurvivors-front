@@ -38,9 +38,13 @@ export default function ProfileEditForm({
                   id="name"
                   name="name"
                   className={styles.input}
-                  placeholder="Введіть ім&apos;я"
+                  placeholder="Введіть ім'я"
                 />
-                <ErrorMessage name="name" component="div" className={styles.error} />
+                <ErrorMessage
+                  name="name"
+                  component="div"
+                  className={styles.error}
+                />
               </div>
 
               <div className={styles.fieldGroup}>
@@ -54,19 +58,33 @@ export default function ProfileEditForm({
                   className={styles.input}
                   placeholder="Введіть email"
                 />
-                <ErrorMessage name="email" component="div" className={styles.error} />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className={styles.error}
+                />
               </div>
 
               <div className={styles.fieldGroup}>
                 <label htmlFor="gender" className={styles.label}>
                   Стать дитини
                 </label>
-                <Field as="select" id="gender" name="gender" className={styles.select}>
+                <Field
+                  as="select"
+                  id="gender"
+                  name="gender"
+                  className={styles.select}
+                >
                   <option value="">Оберіть стать</option>
                   <option value="boy">Хлопчик</option>
                   <option value="girl">Дівчинка</option>
+                  <option value="unknown">Ще не знаю</option>
                 </Field>
-                <ErrorMessage name="gender" component="div" className={styles.error} />
+                <ErrorMessage
+                  name="gender"
+                  component="div"
+                  className={styles.error}
+                />
               </div>
 
               <div className={styles.fieldGroup}>
@@ -79,7 +97,11 @@ export default function ProfileEditForm({
                   name="dueDate"
                   className={styles.input}
                 />
-                <ErrorMessage name="dueDate" component="div" className={styles.error} />
+                <ErrorMessage
+                  name="dueDate"
+                  component="div"
+                  className={styles.error}
+                />
               </div>
             </Form>
 
@@ -101,7 +123,11 @@ export default function ProfileEditForm({
                 disabled={formSubmitting || isSubmitting || !dirty}
                 onClick={submitForm}
               >
-                {formSubmitting || isSubmitting ? <PuffLoader /> : 'Зберегти зміни'}
+                {formSubmitting || isSubmitting ? (
+                  <PuffLoader />
+                ) : (
+                  'Зберегти зміни'
+                )}
               </button>
             </div>
           </>
