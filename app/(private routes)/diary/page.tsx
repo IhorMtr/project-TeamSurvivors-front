@@ -8,6 +8,7 @@ import { DiaryData } from '@/types/types';
 import { PuffLoader } from 'react-spinners';
 import { useDiaryStore } from '@/lib/store/diaryStore';
 import { useEffect } from 'react';
+import GreetingBlock from '@/components/GreetingBlock/GreetingBlock';
 
 export default function DiaryPage() {
   const { selectedDiary, setSelectedDiary } = useDiaryStore();
@@ -43,6 +44,7 @@ export default function DiaryPage() {
 
   return (
     <>
+      <GreetingBlock />
       <div className={css.mobileOnly}>
         <DiaryList diaries={diaries} />
       </div>

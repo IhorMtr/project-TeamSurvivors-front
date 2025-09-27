@@ -15,7 +15,7 @@
   background-color: var(--color-pastel-pink-lighter);
   padding: 24px;
   border-radius: 32px;
-  margin: 32px 0;
+
   width: var(--diary-list-width, auto);
   height: var(--diary-list-height, 100vh);
   overflow-y: auto;
@@ -38,9 +38,9 @@
   background: transparent;
   cursor: pointer;
 }
-/* Override global section padding */
+
 .diarySection {
-  padding: 0 20px; /* Mobile padding */
+  padding: 0 20px;
 }
 
 .listPlaceholder {
@@ -51,12 +51,12 @@
 
 @media (min-width: 768px) {
   .diarySection {
-    padding: 0 32px; /* Tablet padding */
+    padding: 0 32px;
   }
 }
 @media (min-width: 1440px) {
   .diarySection {
-    padding: 0; /* Desktop padding */
+    padding: 0;
   }
   .title {
     font-size: 20px;

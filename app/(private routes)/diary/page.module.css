@@ -10,15 +10,14 @@
   .desktopOnly {
     display: flex;
     margin-left: 32px;
-    /* justify-content: flex-end; */
     gap: 32px;
-    width: 1128px;
 
     --diary-list-width: 387px;
-    --diary-list-height: 727px;
+    --diary-list-height: 660px;
     --diary-details-width: 643px;
     --diary-details-height: 727px;
     --emotion-font-size: 16px;
+    max-height: 100vh;
   }
 }
 

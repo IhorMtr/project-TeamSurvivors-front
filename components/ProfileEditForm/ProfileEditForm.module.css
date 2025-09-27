@@ -109,6 +109,7 @@
 .cancelButton {
   background: var(--opacity-neutral-darkest-5);
   color: var(--color-scheme-text);
+  border-bottom: 4px solid var(--opacity-neutral-darkest-15);
 }
 
 .cancelButton:hover:not(:disabled) {
@@ -116,12 +117,18 @@
 }
 
 .saveButton {
-  background: #ffdae0;
+  background: var(--color-scheme-foreground-alt);
+  border-bottom: 4px solid var(--color-scheme-accent);
   color: var(--color-scheme-text);
 }
 
 .saveButton:hover:not(:disabled) {
-  background-color: #ff9aa1;
+  background: var(--color-scheme-foreground);
+  border-bottom: 4px solid var(--opacity-neutral-darkest-15);
+}
+.saveButton:active:not(:disabled) {
+  background: var(--color-scheme-accent);
+  border-bottom: 4px solid var(--opacity-neutral-darkest-15);
 }
 
 .cancelButton:disabled,
@@ -153,11 +160,13 @@
   .input,
   .select {
     width: 100%;
-    max-width: 600px;
-    height: 44px;
+    max-width: 704px;
+    height: 37px;
     padding: 12px 16px;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 12px;
+    padding-top: 0;
+    padding-bottom: 0;
   }
 
   .select {
@@ -182,7 +191,7 @@
   }
 }
 
-@media only screen and (min-width: 1024px) {
+@media only screen and (min-width: 1440px) {
   .container {
     max-width: 1440px;
   }
@@ -205,8 +214,8 @@
   .select {
     width: 100%;
     max-width: 700px;
-    height: 48px;
-    padding: 14px 18px;
+    height: 40px;
+    padding: 0 18px;
     font-size: 16px;
     border-radius: 12px;
   }
@@ -237,6 +246,5 @@
   .cancelButton:hover:not(:disabled),
   .saveButton:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 }

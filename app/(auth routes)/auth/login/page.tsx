@@ -34,12 +34,7 @@ export default function LoginForm() {
 
       toast.success('Вхід успішний!');
 
-      const estimateBirthDate = user.dueDate ?? '';
-      if (user.dueDate) {
-        router.push(`/weeks/my-day/${estimateBirthDate}`);
-      } else {
-        router.push('/weeks/my-day-demo');
-      }
+      router.push(`/`);
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       const message =

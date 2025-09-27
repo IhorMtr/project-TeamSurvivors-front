@@ -32,7 +32,7 @@ export default function DiaryEntryClientPage({ entryId }: { entryId: string }) {
   }
 
   if (!diary) {
-    return <div>Diary entry not found.</div>; //Скорее все не нужно, но пусть пока будет
+    return <div>Diary entry not found.</div>;
   }
 
   return <DiaryEntryDetails diary={diary} />;

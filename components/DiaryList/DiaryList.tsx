@@ -22,7 +22,10 @@ export default function DiaryList({ diaries }: { diaries: DiaryData[] }) {
   };
 
   const handleSuccess = (newDiary: DiaryData) => {
-    queryClient.invalidateQueries({ queryKey: ['diaries'] });
+    queryClient.setQueryData<DiaryData[]>(['diaries'], old =>
+      old ? [newDiary, ...old] : [newDiary]
+    );
+
     setSelectedDiary(newDiary);
     handleCloseModal();
   };

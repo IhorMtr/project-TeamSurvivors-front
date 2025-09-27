@@ -79,6 +79,10 @@ svg {
   fill: none;
 }
 
+main {
+  overflow-y: hidden;
+}
+
 button {
   font-family: inherit;
   font-size: inherit;
