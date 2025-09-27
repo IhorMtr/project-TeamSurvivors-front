@@ -1,36 +1,46 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './ProfilePage.module.css';
-import { useCurrentUser, useUpdateUser, useUploadAvatar } from '@/lib/hooks/useUser';
+import {
+  useCurrentUser,
+  useUpdateUser,
+  useUploadAvatar,
+} from '@/lib/hooks/useUser';
 import { ProfileAvatar } from '@/components/ProfileAvatar/ProfileAvatar';
 import ProfileEditForm from '@/components/ProfileEditForm/ProfileEditForm';
 import { ProfileFormData } from '@/utils/schemas/profile';
-
+import PuffLoader from 'react-spinners/PuffLoader';
+import { toast } from 'react-hot-toast';
 
 export default function ProfilePage() {
   const { data: userData, isLoading: isLoadingUser, error } = useCurrentUser();
   const updateUserMutation = useUpdateUser();
   const uploadAvatarMutation = useUploadAvatar();
 
+  useEffect(() => {
+    if (error) {
+      toast.error('Помилка завантаження профілю. Спробуйте ще раз.');
+    }
+  }, [error]);
+
   if (isLoadingUser) {
     return (
-      <div className={styles.container}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px' }}>
-          <span>Завантаження...</span>
-        </div>
+      <div
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '50%',
+          transform: 'translate(-50%, -50%)',
+        }}
+      >
+        <PuffLoader />
       </div>
     );
   }
 
   if (error || !userData) {
-    return (
-      <div className={styles.container}>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '400px', fontSize: '16px', color: '#e74c3c' }}>
-          Помилка завантаження профілю. Спробуйте оновити сторінку.
-        </div>
-      </div>
-    );
+    return null;
   }
 
   const initialValues: ProfileFormData = {
@@ -51,7 +61,9 @@ export default function ProfilePage() {
         <ProfileEditForm
           initialValues={initialValues}
           isSubmitting={updateUserMutation.isPending}
-          onSubmit={(values: ProfileFormData) => updateUserMutation.mutate(values)}
+          onSubmit={(values: ProfileFormData) =>
+            updateUserMutation.mutate(values)
+          }
           onCancel={() => updateUserMutation.reset()}
         />
       </div>

@@ -3,6 +3,6 @@ export interface User {
   email: string;
   name: string;
   photo: string | null;
-  gender: 'male' | 'female' | 'other' | null;
+  gender: 'boy' | 'girl' | 'unknown' | null;
   dueDate: string | null;
 }

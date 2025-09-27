@@ -2,7 +2,7 @@ import { NewDiary } from '@/types/diaryEntry';
 import { User } from '@/types/user';
 import { api, ApiResponse } from './auth';
 import { ProfileFormData } from '@/utils/schemas/profile';
-
+import { onboardingUser } from '@/types/onboardingUser';
 
 export const getDiaries = async () => {
   const response = await api.get('/diaries');
@@ -32,7 +32,15 @@ export const updateProfile = async (data: ProfileFormData): Promise<User> => {
 export const uploadAvatar = async (file: File): Promise<User> => {
   const formData = new FormData();
   formData.append('photo', file);
-  
-  const response = await api.patch<ApiResponse<User>>('/users/me/photo', formData);
+
+  const response = await api.patch<ApiResponse<User>>(
+    '/users/me/photo',
+    formData
+  );
+  return response.data.data;
+};
+
+export const updateOnboarding = async (data: onboardingUser): Promise<User> => {
+  const response = await api.patch<ApiResponse<User>>('/users/me', data);
   return response.data.data;
 };

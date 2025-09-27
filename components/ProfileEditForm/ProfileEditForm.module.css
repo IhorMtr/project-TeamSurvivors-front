@@ -4,7 +4,6 @@
   min-width: 320px;
   max-width: 375px;
   margin: 0 auto;
-  padding: 0 20px;
   box-sizing: border-box;
   position: relative;
 }
@@ -100,7 +99,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   font-family: inherit;
-  border-bottom: 4px solid rgba(0, 0, 0, 0.15);
+  border: none;
   border-radius: 100px;
   padding: 8px 20px;
   width: 159px;
@@ -108,23 +107,21 @@
 }
 
 .cancelButton {
-  background: rgba(0, 0, 0, 0.05);
-  color: #000 !important;
+  background: var(--opacity-neutral-darkest-5);
+  color: var(--color-scheme-text);
 }
 
 .cancelButton:hover:not(:disabled) {
   background-color: #e8e8e8;
-  color: #000 !important;
 }
 
 .saveButton {
   background: #ffdae0;
-  color: #000 !important;
+  color: var(--color-scheme-text);
 }
 
 .saveButton:hover:not(:disabled) {
   background-color: #ff9aa1;
-  color: #000 !important;
 }
 
 .cancelButton:disabled,
