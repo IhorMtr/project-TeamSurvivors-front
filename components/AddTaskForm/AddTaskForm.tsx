@@ -1,17 +1,31 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import styles from './AddTaskForm.module.css';
 import { Task } from '../../types/task';
-import { createTask, updateTask } from '@/lib/api/clientApi';
+import { api, ApiResponse } from '@/lib/api/auth';
+
 
 interface AddTaskFormProps {
   taskToEdit: Task | null;
   onClose: () => void;
 }
 
+const createOrUpdateTask = async (taskData: Task): Promise<Task> => {
+  const url = taskData._id ? `/tasks/${taskData._id}` : `/tasks`;
+
+  const response = await api.post<ApiResponse<Task>>(url, taskData);
+
+  if (response.status !== 201) {
+    throw new Error('Помилка при збереженні завдання');
+  }
+  return response.data.data;
+};
+
 const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
+  const queryClient = useQueryClient();
+
   const mutation = useMutation<Task, Error, Task>({
     mutationFn: task =>
       taskToEdit && taskToEdit.id
@@ -19,6 +33,7 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
         : createTask(task),
     onSuccess: () => {
       toast.success('Завдання успішно збережено!');
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
       onClose();
     },
     onError: error => {
@@ -33,9 +48,10 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
       .typeError('Введіть коректну дату'),
   });
 
-  const initialValues: Task = {
+  const initialValues: Pick<Task, 'name' | 'date' | 'isDone'> = {
     name: taskToEdit?.name || '',
     date: taskToEdit?.date || new Date().toISOString().split('T')[0],
+    isDone: taskToEdit?.isDone || false,
   };
 
   return (
@@ -43,16 +59,14 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={values => {
-        mutation.mutate(values);
+        mutation.mutate({ ...values, _id: taskToEdit?._id });
       }}
     >
       {({ isSubmitting }) => (
         <Form className={styles.form}>
           <div className={styles.field}>
-            <label htmlFor="name" className={styles.inputTitle}>
-              Назва завдання
-            </label>
-            <Field id="name" name="name" type="text" className={styles.input} />
+            <label htmlFor="title">Завдання</label>
+            <Field name="name" type="text" className={styles.input} />
             <ErrorMessage
               name="name"
               component="div"

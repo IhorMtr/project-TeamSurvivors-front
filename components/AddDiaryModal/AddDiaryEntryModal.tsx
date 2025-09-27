@@ -15,6 +15,7 @@ type AddDiaryEntryModalProps = {
   backdropClassName?: string;
   contentClassName?: string;
   formProps?: Partial<AddDiaryEntryFormProps>;
+  onSuccess?: () => void;
 };
 
 export default function AddDiaryEntryModal({
@@ -26,6 +27,7 @@ export default function AddDiaryEntryModal({
   backdropClassName,
   contentClassName,
   formProps,
+  onSuccess,
 }: AddDiaryEntryModalProps) {
   const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -99,7 +101,7 @@ export default function AddDiaryEntryModal({
           </button>
         </div>
         <div className={styles.content}>
-          <AddDiaryEntryForm {...(formProps || {})} />
+          <AddDiaryEntryForm {...(formProps || {})} onSuccess={onSuccess} />
         </div>
       </div>
     </div>

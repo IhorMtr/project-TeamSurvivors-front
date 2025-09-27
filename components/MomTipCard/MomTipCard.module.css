@@ -1,0 +1,29 @@
+.momTipCardBlock {
+  padding: 24px;
+  background-color: #fff4f6;
+  border-radius: 32px;
+  margin-bottom: 16px;
+}
+
+.momTipCardBlock h2 {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.momTipCardBlock p {
+  font-size: 14px;
+  margin: 0;
+}
+
+@media (min-width: 1440px) {
+  .momTipCardBlock {
+    margin-bottom: 0px;
+  }
+  .momTipCardBlock h2 {
+    font-size: 24px;
+  }
+  .momTipCardBlock p {
+    font-size: 16px;
+  }
+}
