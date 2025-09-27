@@ -6,6 +6,7 @@ import styles from './AddTaskForm.module.css';
 import { Task } from '../../types/task';
 import { api, ApiResponse } from '@/lib/api/auth';
 
+
 interface AddTaskFormProps {
   taskToEdit: Task | null;
   onClose: () => void;
@@ -26,7 +27,10 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<Task, Error, Task>({
-    mutationFn: createOrUpdateTask,
+    mutationFn: task =>
+      taskToEdit && taskToEdit.id
+        ? updateTask(taskToEdit.id, { name: task.name, date: task.date })
+        : createTask(task),
     onSuccess: () => {
       toast.success('Завдання успішно збережено!');
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
@@ -71,8 +75,10 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="date">Дата</label>
-            <Field name="date" type="date" className={styles.input} />
+            <label htmlFor="date" className={styles.inputTitle}>
+              Дата
+            </label>
+            <Field id="date" name="date" type="date" className={styles.input} />
             <ErrorMessage
               name="date"
               component="div"
