@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Emotion } from './types';
 
-
-
 export type DiaryCategoryOption = {
   value: string;
   label: string;
@@ -36,10 +34,6 @@ export type AddDiaryEntryFormProps = {
   onSuccess?: (data: unknown) => void;
   onError?: (error: unknown) => void;
   notify?: NotifyHandler;
-  apiBase?: string;
-  apiPath?: string;
-  method?: 'POST' | 'PUT';
-  headers?: Record<string, string>;
   successMessage?: string;
   errorMessage?: string;
 };
