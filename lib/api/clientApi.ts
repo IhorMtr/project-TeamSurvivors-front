@@ -57,9 +57,9 @@ export const updateTask = async (
 ): Promise<Task> => {
   const response = await api.patch(`/tasks/${id}`, data);
   return response.data.data;
+};
 
 export const deleteDiaryById = async (id: string) => {
   const response = await api.delete(`/diaries/${id}`);
   return response.data;
-
 };
