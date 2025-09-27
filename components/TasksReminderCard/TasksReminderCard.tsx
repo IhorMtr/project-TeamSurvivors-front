@@ -66,7 +66,7 @@ const TasksReminderCard = () => {
         <div className={css.tasksBlockHeader}>
           <h2>Важливі завдання</h2>
           <button onClick={onCreateTask}>
-            <svg className={css.svg} width={18} height={18}>
+            <svg className={css.svg} width={14} height={12}>
               <use href="/icons.svg#icon-add_circle"></use>
             </svg>
           </button>

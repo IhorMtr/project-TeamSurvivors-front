@@ -1,8 +1,7 @@
 .svg {
-  fill: black;
-  stroke: black;
-  width: 18px;
-  height: 18px;
+  fill: var(--color-white);
+  width: 14px;
+  height: 12px;
 }
 
 .tasksBlock {
