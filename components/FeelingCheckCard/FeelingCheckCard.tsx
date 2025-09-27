@@ -34,11 +34,7 @@ const FeelingCheckCard = () => {
           </button>
         </div>
       </div>
-      <AddDiaryEntryModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-        onSuccess={() => setIsOpen(false)}
-      />
+      <AddDiaryEntryModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 };
