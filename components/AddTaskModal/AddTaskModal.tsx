@@ -53,7 +53,6 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
           {taskToEdit ? 'Редагувати завдання' : `Нове завдання`}
         </h2>
         <AddTaskForm taskToEdit={taskToEdit ?? null} onClose={onClose} />{' '}
-        {/* Додаємо ?? null */}
       </div>
     </div>,
     document.body

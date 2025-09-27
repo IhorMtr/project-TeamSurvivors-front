@@ -33,7 +33,6 @@ export default function AuthProvider({
     let cancelled = false;
 
     if (
-      pathname === '/' ||
       pathname.startsWith('/auth/login') ||
       pathname.startsWith('/auth/register')
     ) {
@@ -41,7 +40,7 @@ export default function AuthProvider({
       return;
     }
 
-    async function checkUser() {
+    async function checkUser(required: boolean) {
       try {
         const { accessToken } = await refreshSession();
         api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
@@ -49,13 +48,13 @@ export default function AuthProvider({
         const user = await getCurrentUser();
         if (user && !cancelled) {
           setUser(user);
-        } else if (!cancelled) {
+        } else if (required && !cancelled) {
           clearIsAuthenticated();
           logoutUser().catch(() => {});
           router.replace('/auth/login');
         }
       } catch {
-        if (!cancelled) {
+        if (required && !cancelled) {
           clearIsAuthenticated();
           logoutUser().catch(() => {});
           router.replace('/auth/login');
@@ -67,7 +66,12 @@ export default function AuthProvider({
       }
     }
 
-    checkUser();
+    if (pathname === '/') {
+      checkUser(false);
+      return;
+    }
+
+    checkUser(true);
 
     return () => {
       cancelled = true;

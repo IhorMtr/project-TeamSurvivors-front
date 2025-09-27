@@ -75,6 +75,13 @@
 @media (min-width: 1440px) {
   .submitButton {
     height: 46px;
+    transition: 0.3s;
+  }
+
+  .submitButton:hover,
+  .submitButton:focus {
+    background: var(--color-scheme-foreground);
+    border-bottom: 4px solid var(--opacity-neutral-darkest-15);
   }
 
   .input {
