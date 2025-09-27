@@ -70,15 +70,57 @@
   margin-bottom: 16px;
 }
 
-.taskCheckboxBlock input[type='checkbox'] {
-  appearance: none;
-  outline: none;
+.taskCheckboxBlock label {
+  position: relative;
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0);
-  border-radius: 4px;
+  gap: 8px;
+}
+
+.taskCheckboxBlock input {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
   width: 18px;
   height: 18px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  background-color: rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition:
+    background-color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.taskCheckboxIcon {
+  position: absolute;
+  left: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 12px;
+  fill: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+.taskCheckboxBlock input:checked {
+  background-color: #000;
+}
+
+.taskCheckboxBlock input:checked + .taskCheckboxIcon {
+  opacity: 1;
+  fill: #fff;
+  stroke: #fff;
+}
+
+.taskCheckboxBlockName {
+  font-size: 12px;
+  line-height: 1.6;
+  user-select: none;
 }
 
 .taskCheckboxBlockName {

@@ -98,14 +98,22 @@ const TasksReminderCard = () => {
                 <div className={css.taskDate}>{formatDate(task.date)}</div>
 
                 <div className={css.taskCheckboxBlock}>
-                  <input
-                    type="checkbox"
-                    name={`task-${task._id}`}
-                    id={task._id}
-                    checked={task.isDone}
-                    onChange={onChangeStatusTask}
-                  />
-                  <span className={css.taskCheckboxBlockName}>{task.name}</span>
+                  <div className={css.taskCheckboxBlock}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        id={task._id}
+                        checked={task.isDone}
+                        onChange={onChangeStatusTask}
+                      />
+                      <svg className={css.taskCheckboxIcon} aria-hidden="true">
+                        <use href="/icons.svg#check-mark"></use>
+                      </svg>
+                      <span className={css.taskCheckboxBlockName}>
+                        {task.name}
+                      </span>
+                    </label>
+                  </div>
                 </div>
               </li>
             ))}
