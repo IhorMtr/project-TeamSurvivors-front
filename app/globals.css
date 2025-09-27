@@ -64,6 +64,16 @@ body {
   overflow-x: hidden;
 }
 
+@media screen and (min-width: 1440px) {
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden !important;
+  }
+}
+
 svg {
   stroke: none;
   fill: none;
@@ -123,7 +133,6 @@ main {
   padding-top: 24px;
   padding-bottom: 32px;
 }
-
 
 @media only screen and (min-width: 768px) {
   section {
