@@ -399,7 +399,7 @@
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1440px) {
   .container {
     max-width: 1440px;
     width: 100%;
@@ -414,10 +414,13 @@
     overflow: hidden;
     padding: 32px;
     box-sizing: border-box;
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .profile-card {
     width: 100%;
     padding: 0;
+    margin-top: 16px;
   }
 
   .profile-header {

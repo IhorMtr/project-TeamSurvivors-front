@@ -29,9 +29,9 @@
   margin: 32px 20px;
   border-radius: 32px;
   padding: 24px;
+  margin-right: 0;
   width: var(--diary-details-width, auto);
   height: var(--diary-details-height, 100vh);
-  overflow-y: auto;
   --emotion-card-bg: rgba(0, 0, 0, 0.05);
   --emotion-font-size: 12px;
   --emotion-font-weight: 600;
@@ -42,21 +42,17 @@
   flex-direction: column;
 }
 
-/* @media (max-width: 374px) {
-  .container {
-    margin: 0 10px;
-    padding: 16px;
-  }
-} */
 .text {
   margin: 8px 0;
   font-size: 14px;
   line-height: 1.5;
+  overflow-wrap: break-word;
 }
 @media (min-width: 768px) {
   .container {
     --emotion-font-size: 12px;
     margin: 32px;
+    margin-top: 0;
   }
   .detailHeader {
     flex-direction: row;
@@ -65,9 +61,15 @@
 }
 @media (min-width: 1440px) {
   .container {
-    margin-right: 32px;
+    margin-right: 0 !important;
     margin-left: 0;
     --emotion-font-size: 14px;
+    margin-bottom: 0;
+    max-height: 100%;
+    position: relative;
+  }
+  .container {
+    height: 660px;
   }
   .title {
     font-size: 20px;

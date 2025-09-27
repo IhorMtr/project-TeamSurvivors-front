@@ -101,7 +101,6 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
                   height={24}
                 />
               </button>
-              //TODO: додати функціонал відкриття модалки для редагування та видалення
             )}
           </div>
         </div>

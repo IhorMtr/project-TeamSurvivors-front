@@ -176,5 +176,14 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+    transition: 0.3s;
+  }
+
+  .uploadButton:hover {
+    background-color: #e8e8e8;
+    border-bottom: 4px solid var(--opacity-neutral-darkest-15);
+  }
+  .uploadButton:hover {
+    transform: translateY(-2px);
   }
 }
