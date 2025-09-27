@@ -3,6 +3,7 @@ import { User } from '@/types/user';
 import { api, ApiResponse } from './auth';
 import { ProfileFormData } from '@/utils/schemas/profile';
 import { onboardingUser } from '@/types/onboardingUser';
+import { Task } from '@/types/task';
 
 export const getDiaries = async () => {
   const response = await api.get('/diaries');
@@ -45,7 +46,20 @@ export const updateOnboarding = async (data: onboardingUser): Promise<User> => {
   return response.data.data;
 };
 
+export const createTask = async (data: Task): Promise<Task> => {
+  const response = await api.post('/tasks', data);
+  return response.data.data;
+};
+
+export const updateTask = async (
+  id: string,
+  data: Partial<Task>
+): Promise<Task> => {
+  const response = await api.patch(`/tasks/${id}`, data);
+  return response.data.data;
+
 export const deleteDiaryById = async (id: string) => {
   const response = await api.delete(`/diaries/${id}`);
   return response.data;
+
 };

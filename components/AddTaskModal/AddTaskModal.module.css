@@ -10,14 +10,29 @@
   align-items: center;
   z-index: 1000;
 }
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  display: block;
+  pointer-events: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
 .modal {
-  background: white;
+  background: var(--color-scheme-background);
   border-radius: 8px;
   padding: 20px;
   width: 90%;
-  max-width: 500px;
   position: relative;
+  border-radius: 40px;
+  padding: 64px 20px;
+  width: 335px;
+  height: 484px;
+  max-width: 768px;
 }
 
 .closeButton {
@@ -30,15 +45,32 @@
   cursor: pointer;
 }
 
-.title {
-  font-size: 24px;
-  margin-bottom: 20px;
+.modalTitle {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 120%;
+  letter-spacing: 0.01em;
   text-align: center;
+  margin-top: 0;
+  margin-bottom: 48px;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .modal {
-    width: 95%;
-    padding: 15px;
+    padding: 64px 32px;
+    width: 704px;
+    height: 441px;
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .modal {
+    padding: 64px;
+    width: 768px;
+    height: 472px;
+  }
+  .modalTitle {
+    font-size: 48px;
   }
 }
