@@ -19,8 +19,6 @@ export default function DashboardPage({
 }) {
   const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const user = useAuthStore(state => state.user);
-  console.dir(user, 'user');
-  console.dir(isAuthenticated, 'isAuthenticated');
 
   const { data: resMyDayProfile } = useQuery({
     queryKey: ['myDayProfile', user.dueDate || '2026-01-15'],

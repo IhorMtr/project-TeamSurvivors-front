@@ -1,5 +1,5 @@
 'use client';
-import { Task } from '@/types/task';
+import { Task } from '@/types/types';
 import css from './TasksReminderCard.module.css';
 import { getTasks, updateTask } from '@/lib/api/tasks';
 
@@ -46,6 +46,7 @@ const TasksReminderCard = () => {
   };
   const onCloseModal = () => {
     setIsOpen(false);
+    queryClient.invalidateQueries({ queryKey: ['tasks'] });
   };
 
   const isTasksEmpty =
