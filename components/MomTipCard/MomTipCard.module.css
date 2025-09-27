@@ -3,6 +3,7 @@
   background-color: #fff4f6;
   border-radius: 32px;
   margin-bottom: 16px;
+  overflow: auto;
 }
 
 .momTipCardBlock h2 {
