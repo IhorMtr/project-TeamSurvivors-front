@@ -58,14 +58,12 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
     );
   }
 
- 
   const handleAddTask = (taskName: string) => {
     createTask({
       name: taskName,
       date: new Date().toISOString().split('T')[0],
     });
   };
-  
 
   return (
     <div className={styles.momDevelopment}>
@@ -73,7 +71,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
         <div className={styles.columnFeel}>
           <div className={styles.feelContainer}>
             <h2 className={styles.feelTitle}>Як ви можете почуватись</h2>
-            
+
             <div className={styles.tagsContainer}>
               {momData.feelings.states.map((state, index) => (
                 <div key={index} className={styles.tag}>
@@ -81,7 +79,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
                 </div>
               ))}
             </div>
-            
+
             <p className={styles.feelDescription}>
               {momData.feelings.sensationDescr}
             </p>
@@ -91,12 +89,12 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
         <div className={styles.columnAdvice}>
           <div className={styles.adviceContainer}>
             <h2 className={styles.adviceTitle}>Поради для вашого комфорту</h2>
-            
+
             {momData.comfortTips.map((tip, index) => (
               <div key={index} className={styles.adviceItem}>
                 <div className={styles.adviceIcon}>
-                  <img 
-                    src={getIconByCategory(tip.category)} 
+                  <img
+                    src={getIconByCategory(tip.category)}
                     alt={tip.category}
                     width="24"
                     height="24"
@@ -116,7 +114,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
         <div className={styles.taskContainer}>
           <div className={styles.taskHeader}>
             <h3 className={styles.taskTitle}>Важливі завдання</h3>
-            <button 
+            <button
               onClick={() => setIsModalOpen(true)}
               className={styles.addButton}
               title="Додати нове завдання"
@@ -125,52 +123,57 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
             </button>
           </div>
 
-
-
           <ul className={styles.tasksList}>
             {tasks.map(task => (
-              <li 
-                key={task._id} 
+              <li
+                key={task._id}
                 className={styles.taskItem}
-                onClick={(e) => {
-                  e.preventDefault(); 
-                  e.stopPropagation(); 
+                onClick={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
                   toggleTask(task._id, task.isDone);
                 }}
               >
                 <div className={styles.taskDate}>
                   {new Date(task.date).toLocaleDateString('uk-UA', {
                     day: '2-digit',
-                    month: '2-digit'
+                    month: '2-digit',
                   })}
                 </div>
                 <div className={styles.taskContent}>
-                  <div className={`${styles.checkbox} ${task.isDone ? styles.checkboxChecked : ''}`}>
+                  <div
+                    className={`${styles.checkbox} ${task.isDone ? styles.checkboxChecked : ''}`}
+                  >
                     {task.isDone && (
-                      <img src="/checbox.svg" alt="Виконано" width="14" height="12" />
+                      <img
+                        src="/checbox.svg"
+                        alt="Виконано"
+                        width="14"
+                        height="12"
+                      />
                     )}
                   </div>
-                  <span className={`${styles.taskText} ${task.isDone ? styles.taskTextCompleted : ''}`}>
+                  <span
+                    className={`${styles.taskText} ${task.isDone ? styles.taskTextCompleted : ''}`}
+                  >
                     {task.name}
                   </span>
                 </div>
               </li>
             ))}
-            
+
             {tasks.length === 0 && (
               <li className={styles.noTasks}>Немає завдань</li>
             )}
           </ul>
-
-
         </div>
       </div>
 
-      <AddTaskModal
+      {/* <AddTaskModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onAddTask={handleAddTask}
-      />
+      /> */}
     </div>
   );
 }
