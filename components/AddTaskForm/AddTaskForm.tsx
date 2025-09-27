@@ -66,7 +66,9 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
       {({ isSubmitting }) => (
         <Form className={styles.form}>
           <div className={styles.field}>
-            <label htmlFor="title">Завдання</label>
+            <label htmlFor="title" className={styles.inputTitle}>
+              Назва завдання
+            </label>
             <Field name="title" type="text" className={styles.input} />
             <ErrorMessage
               name="title"
@@ -76,7 +78,9 @@ const AddTaskForm: React.FC<AddTaskFormProps> = ({ taskToEdit, onClose }) => {
           </div>
 
           <div className={styles.field}>
-            <label htmlFor="date">Дата</label>
+            <label htmlFor="date" className={styles.inputTitle}>
+              Дата
+            </label>
             <Field name="date" type="date" className={styles.input} />
             <ErrorMessage
               name="date"
