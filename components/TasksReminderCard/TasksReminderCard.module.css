@@ -117,6 +117,11 @@
   stroke: #fff;
 }
 
+.taskCheckboxBlock input:checked + .taskCheckboxIcon + .taskCheckboxBlockName {
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.5);
+}
+
 .taskCheckboxBlockName {
   font-size: 12px;
   line-height: 1.6;
