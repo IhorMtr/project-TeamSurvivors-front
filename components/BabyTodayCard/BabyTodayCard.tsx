@@ -12,13 +12,15 @@ const BabyTodayCard = ({ myDay }: BabyTodayCardProps) => {
       <h2>Малюк сьогодні</h2>
       <div className={css.babyTodayCardContent}>
         <div className={css.babyTodayCardBlockImg}>
-          <Image
-            width={500}
-            height={300}
-            className={css.babyTodayCardImg}
-            src={myDay.image}
-            alt="Малюк"
-          />
+          {myDay.image && (
+            <Image
+              width={500}
+              height={300}
+              className={css.babyTodayCardImg}
+              src={myDay.image}
+              alt="Малюк"
+            />
+          )}
         </div>
         <ul className={css.babyTodayCardBlockList}>
           <li>

@@ -1,8 +1,8 @@
 import { Task } from '@/types/types';
-import api from '../api';
+import { api } from './auth';
 
 export const getTasks = async (): Promise<Task[]> => {
-  const response = await api.get<{ data: Task[] }>('/api/tasks');
+  const response = await api.get<{ data: Task[] }>('/tasks');
   return response.data.data;
 };
 
@@ -10,6 +10,6 @@ export const updateTask = async (
   id: Task['_id'],
   payload: Partial<Task>
 ): Promise<Task> => {
-  const response = await api.patch<Task>(`/api/tasks/${id}`, payload);
+  const response = await api.patch<Task>(`/tasks/${id}`, payload);
   return response.data;
 };

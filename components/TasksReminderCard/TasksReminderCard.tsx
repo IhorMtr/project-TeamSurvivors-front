@@ -3,56 +3,60 @@ import { Task } from '@/types/types';
 import css from './TasksReminderCard.module.css';
 import { getTasks, updateTask } from '@/lib/api/tasks';
 
-import {
-  QueryClient,
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from '@tanstack/react-query';
-
-interface TasksReminderCardProps {
-  tasks: Task[];
-}
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useAuthStore } from '@/lib/store/authStore';
+import { useRouter } from 'next/navigation';
 
 interface UpdateTaskVariables {
   id: Task['_id'];
   payload: Partial<Task>;
 }
 
-const TasksReminderCard = ({ tasks = [] }: TasksReminderCardProps) => {
+const TasksReminderCard = () => {
+  const router = useRouter();
+  const isAuthenticated = useAuthStore(state => state.isAuthenticated);
   const queryClient = useQueryClient();
+
   const { data } = useQuery({
     queryKey: ['tasks'],
     queryFn: () => getTasks(),
     refetchOnMount: false,
+    enabled: isAuthenticated,
   });
 
-  const { mutateAsync } = useMutation<Task, Error, UpdateTaskVariables>({
+  const { mutate } = useMutation<Task, Error, UpdateTaskVariables>({
     mutationFn: ({ id, payload }) => updateTask(id, payload),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 
-  const onChangeStatusTask = async (
-    evt: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onChangeStatusTask = (evt: React.ChangeEvent<HTMLInputElement>) => {
     const id = evt.target.id;
     const checkedStatus = evt.target.checked;
-    mutateAsync({ id, payload: { isDone: checkedStatus } });
+    mutate({ id, payload: { isDone: checkedStatus } });
   };
+
+  const onCreateTask = () => {
+    if (!isAuthenticated) router.push('/auth/login');
+
+    // TODO: open dialog to create task
+  };
+
+  const isTasksEmpty =
+    !isAuthenticated || (isAuthenticated && data?.length === 0);
 
   return (
     <div>
       <div>
         <h2>Важливі завдання</h2>
-        {/* <button onClick={}> */}
-        <svg className={css.svg} width={18} height={18}>
-          <use href="/icons.svg#add_circle"></use>
-        </svg>
-        {/* </button> */}
+        <button onClick={onCreateTask}>
+          <svg className={css.svg} width={18} height={18}>
+            <use href="/icons.svg#icon-add_circle"></use>
+          </svg>
+        </button>
       </div>
-      {data?.length === 0 && (
+      {isTasksEmpty && (
         <div>
           <div>
             <span>Наразі немає жодних завдань</span>
@@ -60,7 +64,9 @@ const TasksReminderCard = ({ tasks = [] }: TasksReminderCardProps) => {
           </div>
 
           <div>
-            <button type="button">Створити завдання</button>
+            <button type="button" onClick={onCreateTask}>
+              Створити завдання
+            </button>
           </div>
         </div>
       )}
