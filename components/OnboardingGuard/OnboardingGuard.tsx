@@ -2,7 +2,8 @@
 
 import { useAuthStore } from '@/lib/store/authStore';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import { toast } from 'react-hot-toast';
 
 export default function OnboardingGuard({
   children,
@@ -13,12 +14,18 @@ export default function OnboardingGuard({
   const pathname = usePathname();
   const router = useRouter();
 
+  const toastShown = useRef(false);
+
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    const isOnboardingDone = Boolean(user.gender && user.photo && user.dueDate);
+    const isOnboardingDone = Boolean(user.gender && user.dueDate);
 
     if (!isOnboardingDone && pathname !== '/profile/edit') {
+      if (!toastShown.current) {
+        toast.error('Ви не пройшли онбордінг!');
+        toastShown.current = true;
+      }
       router.replace('/profile/edit');
     }
 

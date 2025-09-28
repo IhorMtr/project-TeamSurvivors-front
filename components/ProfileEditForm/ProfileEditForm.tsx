@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FieldProps } from 'formik';
 import { PuffLoader } from 'react-spinners';
 import { profileSchema, ProfileFormData } from '@/utils/schemas/profile';
 import styles from './ProfileEditForm.module.css';
@@ -34,7 +34,7 @@ export default function ProfileEditForm({
             <Form className={styles.form}>
               <div className={styles.fieldGroup}>
                 <label htmlFor="name" className={styles.label}>
-                  Ім'я
+                  Ім&apos;я
                 </label>
                 <Field
                   type="text"
@@ -80,18 +80,21 @@ export default function ProfileEditForm({
                 >
                   <div className={styles.selectWrapper}>
                     <Field name="gender">
-                      {({ field }: { field: any }) => (
+                      {({ field }: FieldProps) => (
                         <select
                           {...field}
                           id="gender"
                           className={styles.select}
-                          onMouseDown={() => setGenderOpen(prev => !prev)}                          onBlur={() => setGenderOpen(false)}
-                          onChange={(e) => {
-                            field.onChange(e); // Formik's handler
-                            setGenderOpen(false); // Close our state
+                          onMouseDown={() => setGenderOpen(prev => !prev)}
+                          onBlur={() => setGenderOpen(false)}
+                          onChange={e => {
+                            field.onChange(e);
+                            setGenderOpen(false);
                           }}
                         >
-                          <option value="" disabled hidden>Оберіть стать</option>
+                          <option value="" disabled hidden>
+                            Оберіть стать
+                          </option>
                           <option value="boy">Хлопчик</option>
                           <option value="girl">Дівчинка</option>
                           <option value="unknown">Ще не знаю</option>
