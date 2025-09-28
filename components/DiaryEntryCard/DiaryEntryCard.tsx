@@ -4,7 +4,7 @@ import EmotionIcon from '../EmotionIcon/EmotionIcon';
 import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import css from './DiaryEntryCard.module.css';
 import { useDiaryStore } from '@/lib/store/diaryStore';
-import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useMediaQuery } from '@/lib/hooks/useMediaQuery';
 import { useRouter } from 'next/navigation';
 import { formatDate } from '@/lib/utils';
 

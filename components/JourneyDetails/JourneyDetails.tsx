@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from "react";
-import styles from "./JourneyDetails.module.css";
-import BabyDevelopment from "../BabyDevelopment/BabyDevelopment";
-import MomDevelopment from "../MomDevelopment/MomDevelopment";
+import { useState } from 'react';
+import styles from './JourneyDetails.module.css';
+import BabyDevelopment from '../BabyDevelopment/BabyDevelopment';
+import MomDevelopment from '../MomDevelopment/MomDevelopment';
 
 interface JourneyDetailsProps {
   weekNumber: number;
@@ -14,7 +14,9 @@ export default function JourneyDetails({ weekNumber }: JourneyDetailsProps) {
 
   return (
     <div className={styles.journeyDetailsContainer}>
-      <div className={`${styles.tabs} ${activeTab === 'mom' ? styles.tabsMomActive : ''}`}>
+      <div
+        className={`${styles.tabs} ${activeTab === 'mom' ? styles.tabsMomActive : ''}`}
+      >
         <button
           className={`${styles.tab} ${activeTab === 'baby' ? styles.tabActive : ''}`}
           onClick={() => setActiveTab('baby')}

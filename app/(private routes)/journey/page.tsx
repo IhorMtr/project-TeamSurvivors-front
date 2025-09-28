@@ -1,32 +1,29 @@
 'use client';
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useCurrentWeek } from "@/hooks/useCurrentWeek";
-import { PuffLoader } from "react-spinners";
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { PuffLoader } from 'react-spinners';
+import { useAuthStore } from '@/lib/store/authStore';
+import { useWeek } from '@/lib/hooks/useWeek';
 
 export default function JourneyRedirectPage() {
-    const router = useRouter();
-    const { currentWeek, isLoading } = useCurrentWeek();
+  const router = useRouter();
+  const dueDate = useAuthStore(state => state.user.dueDate);
+  const currentWeek = useWeek(dueDate);
 
-    useEffect(() => {
-        if (!isLoading && currentWeek) {
-            router.replace(`/journey/${currentWeek}`);
-        }
-    }, [router, currentWeek, isLoading]);
-
-    if (isLoading) {
-        return (
-            <div>
-                <PuffLoader />
-                <p>Визначаємо вашу текущу тиждень...</p>
-            </div>
-        );
+  useEffect(() => {
+    if (currentWeek) {
+      router.replace(`/journey/${currentWeek}`);
     }
+  }, [router, currentWeek]);
 
+  if (!currentWeek) {
     return (
-        <div >
-            <p>Перенаправлення на {currentWeek} тиждень...</p>
-        </div>
+      <div className="flex flex-col items-center justify-center min-h-screen">
+        <PuffLoader />
+      </div>
     );
+  }
+
+  return null;
 }

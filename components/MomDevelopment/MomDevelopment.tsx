@@ -1,11 +1,10 @@
 'use client';
 
-import { useState } from 'react';
-import { useWeekData } from '@/hooks/useWeekData';
-import { useTasks } from '@/hooks/useTasks';
+import { useWeekData } from '@/lib/hooks/useWeekData';
 import styles from './MomDevelopment.module.css';
-import AddTaskModal from '../AddTaskModal/AddTaskModal';
 import { PuffLoader } from 'react-spinners';
+import TasksReminderCardJourney from '../TasksReminderCardJourney/TasksReminderCardJourney';
+import Image from 'next/image';
 
 interface MomDevelopmentProps {
   weekNumber: number;
@@ -28,8 +27,6 @@ const getIconByCategory = (category: string) => {
 
 export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
   const { momData, isLoading, error } = useWeekData(weekNumber);
-  const { tasks, toggleTask, createTask } = useTasks();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   if (isLoading) {
     return (
@@ -57,13 +54,6 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
       </div>
     );
   }
-
-  const handleAddTask = (taskName: string) => {
-    createTask({
-      name: taskName,
-      date: new Date().toISOString().split('T')[0],
-    });
-  };
 
   return (
     <div className={styles.momDevelopment}>
@@ -93,7 +83,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
             {momData.comfortTips.map((tip, index) => (
               <div key={index} className={styles.adviceItem}>
                 <div className={styles.adviceIcon}>
-                  <img
+                  <Image
                     src={getIconByCategory(tip.category)}
                     alt={tip.category}
                     width="24"
@@ -109,71 +99,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
           </div>
         </div>
       </div>
-
-      <div className={styles.taskBlock}>
-        <div className={styles.taskContainer}>
-          <div className={styles.taskHeader}>
-            <h3 className={styles.taskTitle}>Важливі завдання</h3>
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className={styles.addButton}
-              title="Додати нове завдання"
-            >
-              <img src="/add_circle.svg" alt="Додати" width="24" height="24" />
-            </button>
-          </div>
-
-          <ul className={styles.tasksList}>
-            {tasks.map(task => (
-              <li
-                key={task._id}
-                className={styles.taskItem}
-                onClick={e => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  toggleTask(task._id, task.isDone);
-                }}
-              >
-                <div className={styles.taskDate}>
-                  {new Date(task.date).toLocaleDateString('uk-UA', {
-                    day: '2-digit',
-                    month: '2-digit',
-                  })}
-                </div>
-                <div className={styles.taskContent}>
-                  <div
-                    className={`${styles.checkbox} ${task.isDone ? styles.checkboxChecked : ''}`}
-                  >
-                    {task.isDone && (
-                      <img
-                        src="/checbox.svg"
-                        alt="Виконано"
-                        width="14"
-                        height="12"
-                      />
-                    )}
-                  </div>
-                  <span
-                    className={`${styles.taskText} ${task.isDone ? styles.taskTextCompleted : ''}`}
-                  >
-                    {task.name}
-                  </span>
-                </div>
-              </li>
-            ))}
-
-            {tasks.length === 0 && (
-              <li className={styles.noTasks}>Немає завдань</li>
-            )}
-          </ul>
-        </div>
-      </div>
-
-      {/* <AddTaskModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onAddTask={handleAddTask}
-      /> */}
+      <TasksReminderCardJourney />
     </div>
   );
 }

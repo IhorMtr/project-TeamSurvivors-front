@@ -1,13 +1,16 @@
 'use client';
 
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { tasksApi, type Task, type CreateTaskData } from '@/services/tasksApi';
-
+import { tasksApi, type CreateTaskData } from '@/services/tasksApi';
 
 export const useTasks = () => {
   const queryClient = useQueryClient();
 
-  const { data: tasks = [], isLoading, error } = useQuery({
+  const {
+    data: tasks = [],
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ['tasks'],
     queryFn: tasksApi.getTasks,
     retry: 1,
@@ -16,17 +19,16 @@ export const useTasks = () => {
   const createMutation = useMutation({
     mutationFn: tasksApi.createTask,
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['tasks'] });
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 
-
   const updateStatusMutation = useMutation({
-    mutationFn: ({ taskId, isDone }: { taskId: string; isDone: boolean }) => 
+    mutationFn: ({ taskId, isDone }: { taskId: string; isDone: boolean }) =>
       tasksApi.updateTaskStatus(taskId, isDone),
-      
+
     onSuccess: () => {
-      queryClient.invalidateQueries({queryKey: ['tasks']});
+      queryClient.invalidateQueries({ queryKey: ['tasks'] });
     },
   });
 
