@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { PuffLoader } from 'react-spinners';
 import { profileSchema, ProfileFormData } from '@/utils/schemas/profile';
@@ -18,6 +19,8 @@ export default function ProfileEditForm({
   onCancel,
   isSubmitting = false,
 }: ProfileEditFormProps) {
+  const [isGenderOpen, setGenderOpen] = useState(false);
+
   return (
     <div className={styles.container}>
       <Formik
@@ -31,7 +34,7 @@ export default function ProfileEditForm({
             <Form className={styles.form}>
               <div className={styles.fieldGroup}>
                 <label htmlFor="name" className={styles.label}>
-                  Ім&apos;я
+                  Ім'я
                 </label>
                 <Field
                   type="text"
@@ -65,21 +68,41 @@ export default function ProfileEditForm({
                 />
               </div>
 
+              {/* Modified Gender Field */}
               <div className={styles.fieldGroup}>
                 <label htmlFor="gender" className={styles.label}>
                   Стать дитини
                 </label>
-                <Field
-                  as="select"
-                  id="gender"
-                  name="gender"
-                  className={styles.select}
+                <div
+                  className={`${styles.inputWrapper} ${
+                    isGenderOpen ? styles.open : ''
+                  }`}
                 >
-                  <option value="">Оберіть стать</option>
-                  <option value="boy">Хлопчик</option>
-                  <option value="girl">Дівчинка</option>
-                  <option value="unknown">Ще не знаю</option>
-                </Field>
+                  <div className={styles.selectWrapper}>
+                    <Field name="gender">
+                      {({ field }: { field: any }) => (
+                        <select
+                          {...field}
+                          id="gender"
+                          className={styles.select}
+                          onMouseDown={() => setGenderOpen(prev => !prev)}                          onBlur={() => setGenderOpen(false)}
+                          onChange={(e) => {
+                            field.onChange(e); // Formik's handler
+                            setGenderOpen(false); // Close our state
+                          }}
+                        >
+                          <option value="" disabled hidden>Оберіть стать</option>
+                          <option value="boy">Хлопчик</option>
+                          <option value="girl">Дівчинка</option>
+                          <option value="unknown">Ще не знаю</option>
+                        </select>
+                      )}
+                    </Field>
+                    <svg className={styles.selectChevron}>
+                      <use href="/icons.svg#icon-chevron_down" />
+                    </svg>
+                  </div>
+                </div>
                 <ErrorMessage
                   name="gender"
                   component="div"
