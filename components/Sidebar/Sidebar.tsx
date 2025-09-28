@@ -1,6 +1,9 @@
+'use client';
+
 import Link from 'next/link';
 import css from './Sidebar.module.css';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 
 type SideBarProps = {
   onClose: () => void;
@@ -13,62 +16,82 @@ type SideBarProps = {
 };
 
 export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
+  const pathname = usePathname();
+
+  const isActive = (href: string) => {
+    if (href === '/') {
+      return pathname === '/';
+    }
+    return pathname === href || pathname.startsWith(href + '/');
+  };
+
   return (
     <div className={css.wrapper}>
       <div className={css.sidebar_top}>
         <div className={css.logo_container}>
           <Image
             alt="logo lehleka"
-            width="95"
-            height="29"
+            width={95}
+            height={29}
             src="/logo-header-sidebar.png"
             unoptimized
           />
           <button
             className={`${css.btn} ${css.btn_close}`}
             type="button"
-            onClick={() => onClose()}
+            onClick={onClose}
           >
             <svg className={css.btn_icon} width="32" height="32">
-              <use href="/icons.svg#icon-close"></use>
+              <use href="/icons.svg#icon-close" />
             </svg>
           </button>
         </div>
+
         <ul className={css.nav}>
-          <li className={css.nav_item}>
+          <li className={`${css.nav_item} ${isActive('/') ? css.active : ''}`}>
             <Link className={css.link} href="/">
               <svg className={css.nav_icon} width="24" height="24">
-                <use href="/icons.svg#icon-today"></use>
+                <use href="/icons.svg#icon-today" />
               </svg>
               <p className={css.nav_name}>Мій день</p>
             </Link>
           </li>
-          <li className={css.nav_item}>
+
+          <li
+            className={`${css.nav_item} ${isActive('/journey') ? css.active : ''}`}
+          >
             <Link className={css.link} href="/journey">
               <svg className={css.nav_icon} width="24" height="24">
-                <use href="/icons.svg#icon-conversion_path"></use>
+                <use href="/icons.svg#icon-conversion_path" />
               </svg>
               <p className={css.nav_name}>Подорож</p>
             </Link>
           </li>
-          <li className={css.nav_item}>
+
+          <li
+            className={`${css.nav_item} ${isActive('/diary') ? css.active : ''}`}
+          >
             <Link className={css.link} href="/diary">
               <svg className={css.nav_icon} width="24" height="24">
-                <use href="/icons.svg#icon-book"></use>
+                <use href="/icons.svg#icon-book" />
               </svg>
               <p className={css.nav_name}>Щоденник</p>
             </Link>
           </li>
-          <li className={css.nav_item}>
+
+          <li
+            className={`${css.nav_item} ${isActive('/profile') ? css.active : ''}`}
+          >
             <Link className={css.link} href="/profile">
               <svg className={css.nav_icon} width="24" height="24">
-                <use href="/icons.svg#icon-account_circle"></use>
+                <use href="/icons.svg#icon-account_circle" />
               </svg>
               <p className={css.nav_name}>Профіль</p>
             </Link>
           </li>
         </ul>
       </div>
+
       <div className={css.sidebar_bottom}>
         {user ? (
           <div className={css.user_wrapper}>
@@ -80,16 +103,16 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
                   alt="user photo"
                   width={40}
                   height={40}
-                ></Image>
+                />
               </div>
               <div className={css.user_name_wrapper}>
                 <p className={css.user_name}>{user.userName}</p>
                 <p className={css.user_email}>{user.userEmail}</p>
               </div>
             </Link>
-            <button onClick={() => onLogout()} className={css.btn}>
+            <button onClick={onLogout} className={css.btn}>
               <svg className={css.btn_icon} width="24" height="24">
-                <use href="/icons.svg#icon-logout"></use>
+                <use href="/icons.svg#icon-logout" />
               </svg>
             </button>
           </div>

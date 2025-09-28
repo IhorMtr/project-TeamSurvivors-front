@@ -1,3 +1,7 @@
+.nav_item.active .link {
+  background: var(--color-scheme-foreground);
+}
+
 .wrapper {
   display: flex;
   flex-direction: column;

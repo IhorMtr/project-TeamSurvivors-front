@@ -63,7 +63,7 @@ export default function EditProfilePage() {
                   dueDate: values.dueDate || null,
                 });
 
-                router.push('/my-day');
+                router.push('/');
               } catch {
                 toast.error('Сталася помилка, спробуйте ще раз');
               } finally {

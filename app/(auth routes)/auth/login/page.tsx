@@ -22,11 +22,12 @@ interface LoginFormValues {
 export default function LoginForm() {
   const fieldId = useId();
   const router = useRouter();
-  const { setUser } = useAuthStore();
+  const { setUser, clearIsAuthenticated } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (values: LoginFormValues) => {
     try {
+      clearIsAuthenticated();
       await loginUser(values);
 
       const user: User = await getCurrentUser();
@@ -34,15 +35,7 @@ export default function LoginForm() {
 
       toast.success('Вхід успішний!');
 
-      // const estimateBirthDate = user.dueDate ?? '';
-      // if (user.dueDate) {
-      //   router.push(`/weeks/my-day/${estimateBirthDate}`);
-      // } else {
-      //   router.push('/weeks/my-day-demo');
-      // }
-      router.push('/journey');
-
-
+      router.push('/');
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;
       const message =

@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useWeekData } from '@/lib/hooks/useWeekData';
 import styles from './MomDevelopment.module.css';
 import { PuffLoader } from 'react-spinners';
 import TasksReminderCardJourney from '../TasksReminderCardJourney/TasksReminderCardJourney';
-import Image from 'next/image';
+import { toast } from 'react-hot-toast';
 
 interface MomDevelopmentProps {
   weekNumber: number;
@@ -13,47 +14,47 @@ interface MomDevelopmentProps {
 const getIconByCategory = (category: string) => {
   switch (category) {
     case 'Харчування':
-      return '/fork_spoon.svg';
+      return 'icon-fork_spoon';
     case 'Гігієна':
     case 'Активність':
-      return '/fitness_center.svg';
+      return 'icon-fitness_center';
     case 'Самопочуття':
     case 'Відпочинок та комфорт':
-      return '/chair.svg';
+      return 'icon-chair';
     default:
-      return '/fork_spoon.svg';
+      return 'icon-fork_spoon';
   }
 };
 
 export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
   const { momData, isLoading, error } = useWeekData(weekNumber);
 
+  useEffect(() => {
+    if (error) {
+      toast.error('Помилка завантаження даних');
+    }
+    if (!isLoading && !momData && !error) {
+      toast.error('Дані не знайдено');
+    }
+  }, [error, momData, isLoading]);
+
   if (isLoading) {
     return (
       <div className={styles.momDevelopment}>
-        <div className={styles.loading}>
-          <PuffLoader />
-          <span>Завантаження даних...</span>
-        </div>
+        <PuffLoader />
       </div>
     );
   }
 
-  if (error) {
+  if (error || (!momData && !isLoading)) {
     return (
       <div className={styles.momDevelopment}>
-        <div className={styles.error}>Помилка завантаження даних</div>
+        <PuffLoader />
       </div>
     );
   }
 
-  if (!momData) {
-    return (
-      <div className={styles.momDevelopment}>
-        <div className={styles.error}>Дані не знайдено</div>
-      </div>
-    );
-  }
+  const safeMomData = momData!;
 
   return (
     <div className={styles.momDevelopment}>
@@ -63,7 +64,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
             <h2 className={styles.feelTitle}>Як ви можете почуватись</h2>
 
             <div className={styles.tagsContainer}>
-              {momData.feelings.states.map((state, index) => (
+              {safeMomData.feelings.states.map((state, index) => (
                 <div key={index} className={styles.tag}>
                   <span className={styles.tagText}>{state}</span>
                 </div>
@@ -71,7 +72,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
             </div>
 
             <p className={styles.feelDescription}>
-              {momData.feelings.sensationDescr}
+              {safeMomData.feelings.sensationDescr}
             </p>
           </div>
         </div>
@@ -80,15 +81,14 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
           <div className={styles.adviceContainer}>
             <h2 className={styles.adviceTitle}>Поради для вашого комфорту</h2>
 
-            {momData.comfortTips.map((tip, index) => (
+            {safeMomData.comfortTips.map((tip, index) => (
               <div key={index} className={styles.adviceItem}>
                 <div className={styles.adviceIcon}>
-                  <Image
-                    src={getIconByCategory(tip.category)}
-                    alt={tip.category}
-                    width="24"
-                    height="24"
-                  />
+                  <svg className={styles.icon} width="24" height="24">
+                    <use
+                      href={`/icons.svg#${getIconByCategory(tip.category)}`}
+                    />
+                  </svg>
                 </div>
                 <div className={styles.adviceContent}>
                   <h3 className={styles.adviceItemTitle}>{tip.category}</h3>
