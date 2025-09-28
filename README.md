@@ -24,3 +24,5 @@
 | **icon-tag_square**      | ![icon-tag_square](./assets/tag_square.svg)           |
 | **icon-today**           | ![icon-today](./assets/today.svg)                     |
 | **icon-check-mark**      | ![icon-today](./assets/check-mark.svg)                |
+
+.
