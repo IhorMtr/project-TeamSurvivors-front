@@ -5,7 +5,6 @@
   width: 335px;
   margin: 0 auto;
   height: auto;
-  min-height: 1484px;
 }
 
 .tabs {
@@ -67,7 +66,6 @@
 @media (max-width: 375px) {
   .content {
     width: 100%;
-    padding: 16px 8px;
   }
 }
 

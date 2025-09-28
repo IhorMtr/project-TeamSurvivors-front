@@ -27,6 +27,7 @@
   align-items: center;
   padding: 16px 24px;
   padding-bottom: 0;
+  margin-bottom: 24px;
 }
 
 .btn {
@@ -168,6 +169,7 @@
 
   .logo_container {
     padding: 24px 24px;
+    margin-bottom: 0;
   }
 
   .link {
