@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import css from '../AuthForm.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -19,7 +19,18 @@ export default function RegistrationForm() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (values: RegistrationFormValues) => {
+  const handleSubmit = async (
+    values: RegistrationFormValues,
+    { validateForm }: FormikHelpers<RegistrationFormValues>
+  ) => {
+    const validationErrors = await validateForm(values);
+    if (Object.keys(validationErrors).length > 0) {
+      Object.values(validationErrors).forEach(msg => {
+        toast.error(String(msg));
+      });
+      return;
+    }
+
     try {
       await registerUser(values);
 
@@ -31,16 +42,32 @@ export default function RegistrationForm() {
       toast.success('Реєстрація успішна!');
       router.push('/profile/edit');
     } catch (err) {
-      const axiosError = err as AxiosError<{ message?: string }>;
-      let errorMessage = 'Помилка під час реєстрації';
+      const error = err as AxiosError<{ message?: string }>;
+      let message = 'Сталася невідома помилка. Спробуйте пізніше.';
 
-      if (axiosError.response?.status === 409) {
-        errorMessage = 'Такий email вже існує';
-      } else if (axiosError.response?.data?.message) {
-        errorMessage = axiosError.response.data.message;
+      if (error.response) {
+        const status = error.response.status;
+        switch (status) {
+          case 400:
+            message =
+              error.response.data?.message ||
+              'Некоректні дані у формі. Перевірте введені значення.';
+            break;
+          case 409:
+            message = 'Користувач із таким email вже існує.';
+            break;
+          case 500:
+            message = 'Помилка сервера. Спробуйте трохи пізніше.';
+            break;
+          default:
+            message =
+              error.response.data?.message || 'Помилка під час реєстрації.';
+        }
+      } else if (error.request) {
+        message = 'Немає з’єднання з сервером. Перевірте інтернет.';
       }
 
-      toast.error(errorMessage);
+      toast.error(message);
     }
   };
 
@@ -50,6 +77,8 @@ export default function RegistrationForm() {
         initialValues={{ name: '', email: '', password: '' }}
         validationSchema={RegistrationFormSchema}
         onSubmit={handleSubmit}
+        validateOnBlur={true}
+        validateOnChange={false}
       >
         {({ values, errors, touched, isSubmitting }) => (
           <div className={css.formWrapper}>
@@ -61,7 +90,9 @@ export default function RegistrationForm() {
                   Ім’я*
                 </label>
                 <Field
-                  className={`${css.input} ${errors.name && touched.name ? css.inputError : ''}`}
+                  className={`${css.input} ${
+                    errors.name && touched.name ? css.inputError : ''
+                  }`}
                   type="text"
                   name="name"
                   id={`${fieldId}-name`}
@@ -77,7 +108,9 @@ export default function RegistrationForm() {
                   Пошта*
                 </label>
                 <Field
-                  className={`${css.input} ${errors.email && touched.email ? css.inputError : ''}`}
+                  className={`${css.input} ${
+                    errors.email && touched.email ? css.inputError : ''
+                  }`}
                   type="email"
                   name="email"
                   id={`${fieldId}-email`}
@@ -94,7 +127,9 @@ export default function RegistrationForm() {
                 </label>
                 <div className={css.passwordWrapper}>
                   <Field
-                    className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
+                    className={`${css.input} ${
+                      errors.password && touched.password ? css.inputError : ''
+                    }`}
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     id={`${fieldId}-password`}

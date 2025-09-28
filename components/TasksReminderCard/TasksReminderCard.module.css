@@ -4,7 +4,9 @@
   width: 22px;
   height: 22px;
 }
-
+.groupTitle {
+  font-size: 16px;
+}
 .tasksBlock {
   background-color: #fff4f6;
   border-radius: 32px;
@@ -138,6 +140,9 @@
 }
 
 @media (min-width: 1440px) {
+  .groupTitle {
+    font-size: 20px;
+  }
   .tasksBlockHeader h2 {
     font-size: 24px;
   }

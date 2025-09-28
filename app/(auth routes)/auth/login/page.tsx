@@ -1,7 +1,7 @@
 'use client';
 
 import { useId, useState } from 'react';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field, ErrorMessage, FormikHelpers } from 'formik';
 import { loginUser } from '../../../../lib/api/auth';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -25,7 +25,18 @@ export default function LoginForm() {
   const { setUser, clearIsAuthenticated } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = async (values: LoginFormValues) => {
+  const handleSubmit = async (
+    values: LoginFormValues,
+    { validateForm }: FormikHelpers<LoginFormValues>
+  ) => {
+    const validationErrors = await validateForm(values);
+    if (Object.keys(validationErrors).length > 0) {
+      Object.values(validationErrors).forEach(msg => {
+        toast.error(String(msg));
+      });
+      return;
+    }
+
     try {
       clearIsAuthenticated();
       await loginUser(values);
@@ -34,12 +45,31 @@ export default function LoginForm() {
       setUser(user);
 
       toast.success('Вхід успішний!');
-
       router.push('/');
     } catch (err) {
-      const error = err as AxiosError<{ message: string }>;
-      const message =
-        error.response?.data?.message || 'Невірно вказаний логін чи пароль';
+      const error = err as AxiosError<{ message?: string }>;
+      let message = 'Сталася невідома помилка. Спробуйте пізніше.';
+
+      if (error.response) {
+        const status = error.response.status;
+        switch (status) {
+          case 400:
+            message =
+              error.response.data?.message || 'Некоректні дані у формі.';
+            break;
+          case 401:
+            message = 'Невірний логін або пароль.';
+            break;
+          case 500:
+            message = 'Помилка сервера. Спробуйте знову пізніше.';
+            break;
+          default:
+            message = error.response.data?.message || 'Помилка авторизації.';
+        }
+      } else if (error.request) {
+        message = 'Немає з’єднання з сервером. Перевірте інтернет.';
+      }
+
       toast.error(message);
     }
   };
@@ -50,6 +80,8 @@ export default function LoginForm() {
         initialValues={{ email: '', password: '' }}
         validationSchema={LoginFormSchema}
         onSubmit={handleSubmit}
+        validateOnBlur={true}
+        validateOnChange={false}
       >
         {({ values, errors, touched, isSubmitting }) => (
           <div className={css.formWrapper}>
@@ -62,7 +94,9 @@ export default function LoginForm() {
                   htmlFor={`${fieldId}-email`}
                 ></label>
                 <Field
-                  className={`${css.input} ${errors.email && touched.email ? css.inputError : ''}`}
+                  className={`${css.input} ${
+                    errors.email && touched.email ? css.inputError : ''
+                  }`}
                   type="email"
                   name="email"
                   id={`${fieldId}-email`}
@@ -80,7 +114,9 @@ export default function LoginForm() {
                 ></label>
                 <div className={css.passwordWrapper}>
                   <Field
-                    className={`${css.input} ${errors.password && touched.password ? css.inputError : ''}`}
+                    className={`${css.input} ${
+                      errors.password && touched.password ? css.inputError : ''
+                    }`}
                     type={showPassword ? 'text' : 'password'}
                     name="password"
                     id={`${fieldId}-password`}

@@ -23,20 +23,18 @@ export const ProfileAvatar: React.FC<ProfileAvatarProps> = ({
     }
   };
 
+  const avatarSrc = user.photo || '/default-avatar.png';
+
   return (
     <div className={styles.avatarBlock}>
       <div className={styles.avatarImageWrap}>
-        {user.photo ? (
-          <Image
-            src={user.photo}
-            alt={user.name}
-            width={132}
-            height={132}
-            className={styles.avatarImage}
-          />
-        ) : (
-          <div className={styles.avatarPlaceholder} />
-        )}
+        <Image
+          src={avatarSrc}
+          alt={user.name || 'User avatar'}
+          width={132}
+          height={132}
+          className={styles.avatarImage}
+        />
       </div>
       <div className={styles.userInfo}>
         <div className={styles.userName}>{user.name}</div>

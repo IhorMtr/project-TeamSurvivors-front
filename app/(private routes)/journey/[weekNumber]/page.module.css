@@ -3,7 +3,6 @@
   min-height: calc(100vh - 166px);
   background-color: var(--color-scheme-background);
   margin: 0;
-  padding: 16px;
 }
 
 .journeyPage__content {

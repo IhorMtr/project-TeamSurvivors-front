@@ -49,7 +49,7 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
 
         <ul className={css.nav}>
           <li className={`${css.nav_item} ${isActive('/') ? css.active : ''}`}>
-            <Link className={css.link} href="/">
+            <Link className={css.link} href="/" onClick={onClose}>
               <svg className={css.nav_icon} width="24" height="24">
                 <use href="/icons.svg#icon-today" />
               </svg>
@@ -60,7 +60,7 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
           <li
             className={`${css.nav_item} ${isActive('/journey') ? css.active : ''}`}
           >
-            <Link className={css.link} href="/journey">
+            <Link className={css.link} href="/journey" onClick={onClose}>
               <svg className={css.nav_icon} width="24" height="24">
                 <use href="/icons.svg#icon-conversion_path" />
               </svg>
@@ -71,7 +71,7 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
           <li
             className={`${css.nav_item} ${isActive('/diary') ? css.active : ''}`}
           >
-            <Link className={css.link} href="/diary">
+            <Link className={css.link} href="/diary" onClick={onClose}>
               <svg className={css.nav_icon} width="24" height="24">
                 <use href="/icons.svg#icon-book" />
               </svg>
@@ -82,7 +82,7 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
           <li
             className={`${css.nav_item} ${isActive('/profile') ? css.active : ''}`}
           >
-            <Link className={css.link} href="/profile">
+            <Link className={css.link} href="/profile" onClick={onClose}>
               <svg className={css.nav_icon} width="24" height="24">
                 <use href="/icons.svg#icon-account_circle" />
               </svg>
@@ -95,7 +95,11 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
       <div className={css.sidebar_bottom}>
         {user ? (
           <div className={css.user_wrapper}>
-            <Link className={css.profile_link} href="/profile">
+            <Link
+              className={css.profile_link}
+              href="/profile"
+              onClick={onClose}
+            >
               <div className={css.user_photo_wrapper}>
                 <Image
                   className={css.user_photo}
@@ -119,11 +123,19 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
         ) : (
           <div className={css.user_wrapper}>
             <div className={css.login_register_wrapper}>
-              <Link href="/auth/login" className={css.login_register}>
+              <Link
+                href="/auth/login"
+                className={css.login_register}
+                onClick={onClose}
+              >
                 Увійти
               </Link>
               <span>|</span>
-              <Link href="/auth/register" className={css.login_register}>
+              <Link
+                href="/auth/register"
+                className={css.login_register}
+                onClick={onClose}
+              >
                 Зареєструватись
               </Link>
             </div>
