@@ -20,7 +20,26 @@ export const profileSchema = yup.object({
   dueDate: yup
     .string()
     .required("Планова дата пологів обов'язкова")
-    .matches(/^\d{4}-\d{2}-\d{2}$/, 'Дата повинна бути у форматі YYYY-MM-DD'),
+    .test(
+      'is-not-past',
+      'Дата не може бути в минулому',
+      (value) => {
+        if (!value) return true; // Handled by .required()
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        return new Date(value) >= today;
+      }
+    )
+    .test(
+      'is-within-42-weeks',
+      'Вагітність триває до 42 тижнів',
+      (value) => {
+        if (!value) return true; // Handled by .required()
+        const maxDate = new Date();
+        maxDate.setDate(maxDate.getDate() + 42 * 7);
+        return new Date(value) <= maxDate;
+      }
+    ),
 });
 
 export type ProfileFormData = yup.InferType<typeof profileSchema>;

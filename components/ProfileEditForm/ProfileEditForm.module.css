@@ -62,10 +62,6 @@
 .select {
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-  background-position: right 12px center;
-  background-repeat: no-repeat;
-  background-size: 16px;
   padding-right: 40px;
 }
 
@@ -79,6 +75,33 @@
   color: #e74c3c;
   margin-top: 4px;
   min-height: 16px;
+}
+
+/* Custom Select Styles from Onboarding */
+.inputWrapper {
+  position: relative;
+}
+
+.selectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.selectChevron {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  fill: var(--color-neutral-dark, #4c4c4c);
+  pointer-events: none; /* Make sure it doesn't block clicks on the select */
+  transition: transform 0.2s ease;
+}
+
+.inputWrapper.open .selectChevron {
+  transform: translateY(-50%) rotate(180deg);
 }
 
 .buttonGroup {
