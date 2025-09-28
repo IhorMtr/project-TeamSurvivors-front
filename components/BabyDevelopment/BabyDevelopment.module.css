@@ -1,13 +1,10 @@
-
 .babyDevelopment {
-    background: var(--color-scheme-foreground);
-    border-radius: 32px;
-    width: 335px;
-    height: auto;
-    min-height: 983px;
-    padding: 24px;
-    box-sizing: border-box;
-    overflow: hidden;
+  background: var(--color-scheme-foreground);
+  border-radius: 32px;
+  height: auto;
+  min-height: 983px;
+  padding: 24px;
+  overflow: hidden;
 }
 
 .sizeContainer {
@@ -64,7 +61,7 @@
   font-size: 14px;
   line-height: 150%;
   color: var(--color-scheme-text);
-  overflow-y: auto; 
+  overflow-y: auto;
   max-height: 352px;
 }
 
@@ -135,7 +132,6 @@
   height: 24px;
 }
 
-
 @media only screen and (min-width: 768px) {
   .babyDevelopment {
     width: 704px;
@@ -143,7 +139,7 @@
     min-height: 773px;
     margin: 0 auto;
   }
-  
+
   .sizeContainer {
     width: 100%;
     width: 656px;
@@ -154,7 +150,7 @@
     align-items: flex-start;
     gap: 16px;
   }
-  
+
   .imagePlaceholder {
     width: 656px;
     height: 379px;
@@ -167,17 +163,17 @@
     margin: 0;
     align-self: flex-start;
   }
-  
+
   .contentContainer {
     width: 656px;
-    height: auto; 
+    height: auto;
     min-height: 277px;
     margin: 0 auto;
     gap: 16px;
     display: flex;
     flex-direction: column;
   }
-  
+
   .textContent {
     width: 100%;
     font-weight: 400;
@@ -187,7 +183,7 @@
     height: auto;
     min-height: 200px;
   }
-  
+
   .funFact {
     width: 656px;
     height: 77px;
@@ -197,11 +193,9 @@
     flex-direction: column;
     gap: 8px;
     margin: 0 auto;
-    box-sizing: border-box;
   }
 
   .funFactText {
-    
     width: 100%;
     margin: 0;
     font-family: var(--font-family);
@@ -213,11 +207,10 @@
   }
 }
 
-
-@media only screen and (min-width: 1280px) {
+@media only screen and (min-width: 1440px) {
   .babyDevelopment {
     width: 1064px;
-    height: auto; 
+    height: auto;
     min-height: 467px;
     margin: 0;
     display: flex;
@@ -225,8 +218,6 @@
     margin-bottom: 73px;
   }
 
- 
-  
   .sizeContainer {
     width: 461px;
     height: 419px;
@@ -235,32 +226,32 @@
     gap: 16px;
     margin: 0;
     flex-shrink: 0;
-    box-sizing: border-box;
   }
-  
+
   .imagePlaceholder {
     width: 461px;
     height: 379px;
     margin: 0;
   }
-  
+
   .contentContainer {
     width: 523px;
-    height: auto; 
+    height: auto;
     min-height: 400px;
     margin: 0;
+    gap: 0;
+    justify-content: initial;
   }
-  
+
   .textContent {
     width: 523px;
-    height: auto; 
-    min-height: 280px; 
+    height: auto;
+    min-height: 280px;
     font-weight: 400;
     font-size: 16px;
     line-height: 150%;
   }
 
-  
   .funFact {
     width: 523px;
     height: 104px;
@@ -270,7 +261,6 @@
     display: flex;
     gap: 8px;
     margin: 0;
-    box-sizing: border-box;
   }
 
   .funFactHeader {
@@ -279,7 +269,7 @@
     gap: 8px;
     width: 100%;
   }
-  
+
   .funFactText {
     width: 100%;
     margin: 0;
@@ -311,7 +301,8 @@
   }
 }
 
-.loading, .error {
+.loading,
+.error {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -331,7 +322,6 @@
   object-fit: cover;
   border-radius: 24px;
 }
-
 
 .demoNotice {
   background: var(--color-oasis-light);
@@ -362,7 +352,7 @@
 }
 
 .imagePlaceholder {
-  position: relative; 
+  position: relative;
   border: 1px solid var(--color-scheme-border);
   border-radius: 24px;
   display: flex;
