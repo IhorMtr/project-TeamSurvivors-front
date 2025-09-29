@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Formik, Form, Field } from 'formik';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
-
+import { AxiosError } from 'axios';
 import styles from './OnboardingForm.module.css';
 import { useUpdateUser, useUploadAvatar } from '@/lib/hooks/useUser';
 import { updateOnboarding } from '@/lib/api/clientApi';
@@ -16,6 +16,26 @@ type FormValues = {
   dueDate: string;
   avatar: File | null;
 };
+
+function getErrorMessage(err: unknown, fallback: string) {
+  const error = err as AxiosError<{ message?: string }>;
+  if (error.response) {
+    const status = error.response.status;
+    switch (status) {
+      case 400:
+        return error.response.data?.message || 'Некоректні дані у формі.';
+      case 401:
+        return 'Сесію завершено. Увійдіть ще раз.';
+      case 500:
+        return 'Помилка сервера. Спробуйте пізніше.';
+      default:
+        return error.response.data?.message || fallback;
+    }
+  } else if (error.request) {
+    return 'Немає з’єднання з сервером. Перевірте інтернет.';
+  }
+  return fallback;
+}
 
 export default function EditProfilePage() {
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
@@ -50,41 +70,64 @@ export default function EditProfilePage() {
             initialValues={{ gender: '', dueDate: '', avatar: null }}
             onSubmit={async (values, { setSubmitting }) => {
               try {
-                if (values.dueDate) {
-                  const selectedDate = new Date(values.dueDate);
-                  const today = new Date();
-                  today.setHours(0, 0, 0, 0);
+                if (!values.dueDate) {
+                  toast.error('Поле "Планова дата пологів" є обовʼязковим');
+                  setSubmitting(false);
+                  return;
+                }
 
-                  const maxDate = new Date(today);
-                  maxDate.setDate(today.getDate() + 294);
+                const selectedDate = new Date(values.dueDate);
 
-                  if (selectedDate < today) {
-                    toast.error('Дата не може бути раніше сьогоднішньої');
-                    setSubmitting(false);
-                    return;
-                  }
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
 
-                  if (selectedDate > maxDate) {
-                    toast.error('Дата не може бути пізніше ніж через 42 тижні');
-                    setSubmitting(false);
-                    return;
-                  }
+                const minDate = new Date(today);
+                minDate.setDate(today.getDate() + 1);
+
+                const maxDate = new Date(today);
+                maxDate.setDate(today.getDate() + 294);
+
+                if (selectedDate < minDate) {
+                  toast.error('Дата має бути не раніше ніж завтра');
+                  setSubmitting(false);
+                  return;
+                }
+                if (selectedDate > maxDate) {
+                  toast.error('Дата не може бути пізніше ніж через 42 тижні');
+                  setSubmitting(false);
+                  return;
                 }
 
                 if (values.avatar) {
-                  await uploadAvatarMutation.mutateAsync(values.avatar);
+                  try {
+                    await uploadAvatarMutation.mutateAsync(values.avatar);
+                  } catch (e) {
+                    toast.error(
+                      getErrorMessage(e, 'Не вдалося завантажити фото')
+                    );
+                    setSubmitting(false);
+                    return;
+                  }
                 }
 
-                await updateOnboarding({
-                  gender: values.gender
-                    ? (values.gender as 'boy' | 'girl' | 'unknown')
-                    : null,
-                  dueDate: values.dueDate || null,
-                });
+                try {
+                  await updateOnboarding({
+                    gender: values.gender
+                      ? (values.gender as 'boy' | 'girl' | 'unknown')
+                      : null,
+                    dueDate: values.dueDate,
+                  });
+                } catch (e) {
+                  toast.error(getErrorMessage(e, 'Не вдалося зберегти анкету'));
+                  setSubmitting(false);
+                  return;
+                }
 
                 router.push('/');
-              } catch {
-                toast.error('Сталася помилка, спробуйте ще раз');
+              } catch (e) {
+                toast.error(
+                  getErrorMessage(e, 'Сталася помилка, спробуйте ще раз')
+                );
               } finally {
                 setSubmitting(false);
               }

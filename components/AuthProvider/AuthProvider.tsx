@@ -6,6 +6,7 @@ import { api, refreshSession, logoutUser } from '@/lib/api/auth';
 import { useRouter, usePathname } from 'next/navigation';
 import type { User } from '@/types/user';
 import type { ApiResponse } from '@/lib/api/auth';
+import { PuffLoader } from 'react-spinners';
 
 async function getCurrentUser(): Promise<User | null> {
   try {
@@ -79,7 +80,18 @@ export default function AuthProvider({
   }, [pathname, setUser, clearIsAuthenticated, router]);
 
   if (!ready) {
-    return null;
+    return (
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+        }}
+      >
+        <PuffLoader />
+      </div>
+    );
   }
 
   return <>{children}</>;

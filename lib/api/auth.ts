@@ -1,5 +1,6 @@
 import { User } from '@/types/user';
 import axios, { AxiosInstance } from 'axios';
+import { useAuthStore } from '../store/authStore';
 
 export interface RegisterRequest {
   name: string;
@@ -60,4 +61,6 @@ export async function refreshSession(): Promise<RefreshResponse> {
 export async function logoutUser(): Promise<void> {
   await api.post<ApiResponse<null | undefined>>('/auth/logout');
   delete api.defaults.headers.common.Authorization;
+  const { clearIsAuthenticated } = useAuthStore.getState();
+  clearIsAuthenticated();
 }
