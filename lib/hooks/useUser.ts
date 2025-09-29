@@ -22,7 +22,7 @@ export const useUpdateUser = () => {
 
   return useMutation({
     mutationFn: (userData: ProfileFormData) => updateProfile(userData),
-    onSuccess: (updatedUser) => {
+    onSuccess: updatedUser => {
       queryClient.setQueryData(USER_QUERIES.current, updatedUser);
       toast.success('Профіль успішно оновлено!');
     },
@@ -41,11 +41,11 @@ export const useUploadAvatar = () => {
     mutationFn: (file: File) => uploadAvatar(file),
     onSuccess: (updatedUser: User) => {
       queryClient.setQueryData(USER_QUERIES.current, updatedUser);
+      queryClient.invalidateQueries({ queryKey: USER_QUERIES.current });
       toast.success('Фото успішно завантажено!');
     },
     onError: (error: Error) => {
-      const errorMessage = 'Помилка при завантаженні фото';
-      toast.error(errorMessage);
+      toast.error('Помилка при завантаженні фото');
       console.error('Upload avatar error:', error);
     },
   });

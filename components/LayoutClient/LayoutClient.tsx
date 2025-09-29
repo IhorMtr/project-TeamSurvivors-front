@@ -33,7 +33,7 @@ export default function LayoutClient({ children }: LayoutClientProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isModalLogoutOpen, setIsModalLogoutOpen] = useState(false);
 
-  const { user, isAuthenticated, clearIsAuthenticated } = useAuthStore();
+  const { clearIsAuthenticated } = useAuthStore();
   const router = useRouter();
 
   const requestLogout = () => setIsModalLogoutOpen(true);
@@ -60,15 +60,6 @@ export default function LayoutClient({ children }: LayoutClientProps) {
         >
           <Sidebar
             onClose={() => setSidebarOpen(false)}
-            user={
-              isAuthenticated
-                ? {
-                    userPhotoUrl: user?.photo || '/default-avatar.png',
-                    userName: user?.name,
-                    userEmail: user?.email,
-                  }
-                : null
-            }
             onLogout={requestLogout}
           />
         </aside>

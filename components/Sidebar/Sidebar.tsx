@@ -4,19 +4,16 @@ import Link from 'next/link';
 import css from './Sidebar.module.css';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useCurrentUser } from '@/lib/hooks/useUser';
 
 type SideBarProps = {
   onClose: () => void;
   onLogout: () => void;
-  user: {
-    userPhotoUrl: string;
-    userName: string;
-    userEmail: string;
-  } | null;
 };
 
-export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
+export default function Sidebar({ onClose, onLogout }: SideBarProps) {
   const pathname = usePathname();
+  const { data: user } = useCurrentUser();
 
   const isActive = (href: string) => {
     if (href === '/') {
@@ -103,15 +100,15 @@ export default function Sidebar({ onClose, onLogout, user }: SideBarProps) {
               <div className={css.user_photo_wrapper}>
                 <Image
                   className={css.user_photo}
-                  src={user.userPhotoUrl}
+                  src={user.photo || '/default-avatar.png'}
                   alt="user photo"
                   width={40}
                   height={40}
                 />
               </div>
               <div className={css.user_name_wrapper}>
-                <p className={css.user_name}>{user.userName}</p>
-                <p className={css.user_email}>{user.userEmail}</p>
+                <p className={css.user_name}>{user.name}</p>
+                <p className={css.user_email}>{user.email}</p>
               </div>
             </Link>
             <button onClick={onLogout} className={css.btn}>
