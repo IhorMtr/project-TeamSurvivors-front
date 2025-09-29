@@ -2,12 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { Formik, Form, Field } from 'formik';
 import Image from 'next/image';
 import toast from 'react-hot-toast';
 
 import styles from './OnboardingForm.module.css';
-import { onboardingValidationSchema } from '@/lib/schemas/onboarding';
 import { useUpdateUser, useUploadAvatar } from '@/lib/hooks/useUser';
 import { updateOnboarding } from '@/lib/api/clientApi';
 import { useAuthStore } from '@/lib/store/authStore';
@@ -29,9 +28,7 @@ export default function EditProfilePage() {
 
   useEffect(() => {
     if (!isAuthenticated) return;
-
-    const isOnboardingDone = Boolean(user.gender && user.photo && user.dueDate);
-
+    const isOnboardingDone = Boolean(user.gender || user.photo || user.dueDate);
     if (isOnboardingDone) {
       router.replace('/');
     }
@@ -51,15 +48,37 @@ export default function EditProfilePage() {
 
           <Formik<FormValues>
             initialValues={{ gender: '', dueDate: '', avatar: null }}
-            validationSchema={onboardingValidationSchema}
             onSubmit={async (values, { setSubmitting }) => {
               try {
+                if (values.dueDate) {
+                  const selectedDate = new Date(values.dueDate);
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+
+                  const maxDate = new Date(today);
+                  maxDate.setDate(today.getDate() + 294);
+
+                  if (selectedDate < today) {
+                    toast.error('Дата не може бути раніше сьогоднішньої');
+                    setSubmitting(false);
+                    return;
+                  }
+
+                  if (selectedDate > maxDate) {
+                    toast.error('Дата не може бути пізніше ніж через 42 тижні');
+                    setSubmitting(false);
+                    return;
+                  }
+                }
+
                 if (values.avatar) {
                   await uploadAvatarMutation.mutateAsync(values.avatar);
                 }
 
                 await updateOnboarding({
-                  gender: values.gender as 'boy' | 'girl' | 'unknown' | null,
+                  gender: values.gender
+                    ? (values.gender as 'boy' | 'girl' | 'unknown')
+                    : null,
                   dueDate: values.dueDate || null,
                 });
 
@@ -71,7 +90,7 @@ export default function EditProfilePage() {
               }
             }}
           >
-            {({ setFieldValue, isValid, isSubmitting }) => {
+            {({ setFieldValue, isSubmitting }) => {
               const isBusy =
                 isSubmitting ||
                 updateUserMutation.isPending ||
@@ -114,12 +133,6 @@ export default function EditProfilePage() {
                         }}
                       />
                     </label>
-
-                    <ErrorMessage
-                      name="avatar"
-                      component="div"
-                      className={styles.error}
-                    />
                   </div>
 
                   <div
@@ -144,11 +157,6 @@ export default function EditProfilePage() {
                       </svg>
                     </div>
                   </div>
-                  <ErrorMessage
-                    name="gender"
-                    component="div"
-                    className={styles.error}
-                  />
 
                   <div className={styles.inputWrapper}>
                     <span className={styles.label}>Планова дата пологів</span>
@@ -158,17 +166,12 @@ export default function EditProfilePage() {
                       className={`${styles.dateInput} ${styles.formInput}`}
                       placeholder="ДД.ММ.РРРР"
                     />
-                    <ErrorMessage
-                      name="dueDate"
-                      component="div"
-                      className={styles.error}
-                    />
                   </div>
 
                   <button
                     type="submit"
                     className={styles.button}
-                    disabled={!isValid || isBusy}
+                    disabled={isBusy}
                   >
                     Зберегти
                   </button>
