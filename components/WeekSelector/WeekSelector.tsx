@@ -47,6 +47,26 @@ const WeekSelector: React.FC<WeekSelectorProps> = ({
     }
   }, [selectedWeek]);
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      if (e.deltaY === 0) return;
+      e.preventDefault();
+      container.scrollTo({
+        left: container.scrollLeft + e.deltaY,
+        behavior: 'auto',
+      });
+    };
+
+    container.addEventListener('wheel', handleWheel);
+
+    return () => {
+      container.removeEventListener('wheel', handleWheel);
+    };
+  }, []);
+
   return (
     <div className={styles.weekSelectorContainer}>
       <div ref={containerRef} className={styles.weekSelector}>

@@ -40,7 +40,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
 
   if (isLoading) {
     return (
-      <div className={styles.momDevelopment}>
+      <div className={styles.loading}>
         <PuffLoader />
       </div>
     );
@@ -48,7 +48,7 @@ export default function MomDevelopment({ weekNumber }: MomDevelopmentProps) {
 
   if (error || (!momData && !isLoading)) {
     return (
-      <div className={styles.momDevelopment}>
+      <div className={styles.loading}>
         <PuffLoader />
       </div>
     );
