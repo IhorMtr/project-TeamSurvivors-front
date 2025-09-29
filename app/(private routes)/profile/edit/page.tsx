@@ -77,13 +77,18 @@ export default function EditProfilePage() {
                 }
 
                 const selectedDate = new Date(values.dueDate);
+
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
+
+                const minDate = new Date(today);
+                minDate.setDate(today.getDate() + 1);
+
                 const maxDate = new Date(today);
                 maxDate.setDate(today.getDate() + 294);
 
-                if (selectedDate < today) {
-                  toast.error('Дата не може бути раніше сьогоднішньої');
+                if (selectedDate < minDate) {
+                  toast.error('Дата має бути не раніше ніж завтра');
                   setSubmitting(false);
                   return;
                 }
