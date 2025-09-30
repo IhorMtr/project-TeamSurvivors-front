@@ -13,6 +13,7 @@ import { User } from '../../../../types/user';
 import { useAuthStore } from '../../../../lib/store/authStore';
 import { toast } from 'react-hot-toast';
 import { getCurrentUser } from '@/lib/api/clientApi';
+import GoogleLoginButton from '@/components/GoogleLoginButton/GoogleLoginButton';
 
 interface LoginFormValues {
   email: string;
@@ -150,6 +151,8 @@ export default function LoginForm() {
               >
                 {isSubmitting ? 'Завантаження...' : 'Увійти'}
               </button>
+<GoogleLoginButton text="Увійти через Google" />
+
 
               <p className={css.registerLink}>
                 Немає аккаунту?{' '}
@@ -158,6 +161,7 @@ export default function LoginForm() {
                 </Link>
               </p>
             </Form>
+           
           </div>
         )}
       </Formik>

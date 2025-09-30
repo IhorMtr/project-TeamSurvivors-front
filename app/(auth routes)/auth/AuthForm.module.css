@@ -93,11 +93,14 @@
   cursor: pointer;
   font-size: 14px;
   color: var(--color-scheme-text);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s, box-shadow 0.2s;
 }
 
 .submitButton:hover,
 .button:hover {
   background: var(--color-scheme-foreground);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .submitButton:active,
@@ -149,6 +152,7 @@
   align-items: center;
   justify-content: center;
 }
+
 
 @media (min-width: 768px) {
   .form {
