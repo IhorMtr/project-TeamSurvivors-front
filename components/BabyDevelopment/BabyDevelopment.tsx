@@ -25,7 +25,7 @@ export default function BabyDevelopment({ weekNumber }: BabyDevelopmentProps) {
 
   if (isLoading) {
     return (
-      <div className={styles.babyDevelopment}>
+      <div className={styles.loading}>
         <PuffLoader />
       </div>
     );
@@ -33,7 +33,7 @@ export default function BabyDevelopment({ weekNumber }: BabyDevelopmentProps) {
 
   if (error || (!babyData && !isLoading)) {
     return (
-      <div className={styles.babyDevelopment}>
+      <div className={styles.loading}>
         <PuffLoader />
       </div>
     );

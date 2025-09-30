@@ -76,7 +76,7 @@
 .funFact {
   border-radius: 12px;
   padding: 12px;
-  height: 119px;
+  /* height: 119px; */
   background: var(--color-scheme-foreground-alt);
   display: flex;
   flex-direction: column;
@@ -106,7 +106,7 @@
   line-height: 150%;
   color: var(--color-scheme-text);
   margin: 0;
-  overflow: auto;
+  /* overflow: auto; */
 }
 
 .textContent::-webkit-scrollbar {
@@ -186,7 +186,7 @@
 
   .funFact {
     width: 656px;
-    height: 77px;
+    /* height: 77px; */
     padding: 12px;
     border-radius: 12px;
     display: flex;
@@ -203,7 +203,7 @@
     font-size: 14px;
     line-height: 150%;
     color: var(--color-scheme-text);
-    overflow-y: auto;
+    /* overflow-y: auto; */
   }
 }
 
@@ -279,6 +279,7 @@
     line-height: 150%;
     color: var(--color-scheme-text);
     word-wrap: break-word;
+    overflow-y: auto;
   }
   .textContent p {
     margin: 0;

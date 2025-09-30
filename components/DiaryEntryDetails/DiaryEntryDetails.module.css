@@ -53,15 +53,18 @@
 @media (min-width: 768px) {
   .container {
     --emotion-font-size: 12px;
-    margin: 32px;
+    /* margin: 32px; */
+    margin: 32px auto;
     max-width: 765px;
-    margin-bottom: 0;
+    width: calc(100% - 64px); /* Добавлено: 100% ширины минус 32px*2 по бокам */
+    /* margin-bottom: 0; */
   }
   .detailHeader {
     flex-direction: row;
     justify-content: space-between;
   }
 }
+
 @media (min-width: 1440px) {
   .container {
     margin-right: 0 !important;
