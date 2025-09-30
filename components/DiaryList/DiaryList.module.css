@@ -1,3 +1,7 @@
+.icon {
+  fill: var(--color-scheme-text);
+}
+
 .title {
   font-size: 18px;
   margin: 0;

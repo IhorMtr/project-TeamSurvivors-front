@@ -1,11 +1,8 @@
 'use client';
-import { useState } from 'react';
-import Image from 'next/image';
+import { useState, useMemo } from 'react';
 import css from './DiaryEntryDetails.module.css';
 import EmotionIconContainer from '../EmotionIconContainer/EmotionIconContainer';
 import EmotionIcon from '../EmotionIcon/EmotionIcon';
-import editIcon from '../../assets/edit.svg';
-import deleteIcon from '../../assets/delete.svg';
 import { DiaryData } from '@/types/types';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -13,8 +10,6 @@ import { deleteDiaryById } from '@/lib/api/clientApi';
 import { formatDate } from '@/lib/utils';
 import ConfirmationModal from '../ui/Modal/ConfirmationModal';
 import AddDiaryEntryModal from '../AddDiaryModal/AddDiaryEntryModal';
-import { useMemo } from 'react';
-
 import { useDiaryStore } from '@/lib/store/diaryStore';
 
 export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
@@ -51,6 +46,7 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
       handleCloseModal();
     }
   };
+
   const handleEdit = () => {
     setIsAddDiaryModalOpen(true);
   };
@@ -85,7 +81,9 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
             <h3 className={css.title}>{diary?.title || ''}</h3>
             {diary && (
               <button className={css.btn} onClick={handleEdit}>
-                <Image src={editIcon} alt="edit_btn" width={24} height={24} />
+                <svg width={24} height={24} className={css.icon}>
+                  <use xlinkHref="/icons.svg#icon-edit" />
+                </svg>
               </button>
             )}
           </div>
@@ -94,12 +92,9 @@ export default function DiaryEntryDetails({ diary }: { diary?: DiaryData }) {
             <div>{diary?.date ? formatDate(diary.date) : ''}</div>
             {diary && (
               <button className={css.btn} onClick={handleDelete}>
-                <Image
-                  src={deleteIcon}
-                  alt="delete_btn"
-                  width={24}
-                  height={24}
-                />
+                <svg width={24} height={24} className={css.icon}>
+                  <use xlinkHref="/icons.svg#icon-delete" />
+                </svg>
               </button>
             )}
           </div>

@@ -1,6 +1,5 @@
-import Image from 'next/image';
+'use client';
 import css from './DiaryList.module.css';
-import addIcon from '../../assets/add_circle.svg';
 import { useDiaryStore } from '@/lib/store/diaryStore';
 import { DiaryData } from '@/types/types';
 import DiaryEntryCard from '../DiaryEntryCard/DiaryEntryCard';
@@ -38,7 +37,9 @@ export default function DiaryList({ diaries }: { diaries: DiaryData[] }) {
           <div className={css.btnSection}>
             <p className={css.btn_name}>Новий запис</p>
             <button className={css.btn} onClick={handleAddDiaryEntry}>
-              <Image src={addIcon} alt="add_btn" width={24} height={24} />
+              <svg width={24} height={24} className={css.icon}>
+                <use xlinkHref="/icons.svg#icon-add_circle" />
+              </svg>
             </button>
           </div>
         </div>

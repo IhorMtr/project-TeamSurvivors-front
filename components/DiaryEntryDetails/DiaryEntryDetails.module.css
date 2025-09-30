@@ -3,6 +3,10 @@
   gap: 8px;
   align-items: center;
 }
+
+.icon {
+  fill: var(--color-scheme-text);
+}
 .title {
   margin: 0;
   padding: 0;
