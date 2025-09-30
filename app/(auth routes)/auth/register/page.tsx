@@ -11,6 +11,7 @@ import { registerUser, loginUser } from '@/lib/api/auth';
 import type { RegisterRequest } from '@/lib/api/auth';
 import { RegistrationFormSchema } from '@/lib/schemas/auth';
 import { toast } from 'react-hot-toast';
+import GoogleLoginButton from '@/components/GoogleLoginButton/GoogleLoginButton';
 
 type RegistrationFormValues = RegisterRequest;
 
@@ -163,6 +164,9 @@ export default function RegistrationForm() {
               >
                 {isSubmitting ? 'Завантаження...' : 'Зареєструватись'}
               </button>
+      <GoogleLoginButton text="Зареєструватися через Google" />
+
+
 
               <p className={css.loginLink}>
                 Вже маєте акаунт?{' '}
@@ -171,6 +175,7 @@ export default function RegistrationForm() {
                 </Link>
               </p>
             </Form>
+           
           </div>
         )}
       </Formik>

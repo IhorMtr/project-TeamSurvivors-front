@@ -64,3 +64,26 @@ export async function logoutUser(): Promise<void> {
   const { clearIsAuthenticated } = useAuthStore.getState();
   clearIsAuthenticated();
 }
+
+
+export async function getGoogleOAuthUrl(): Promise<string> {
+  const res = await api.get<ApiResponse<{ url: string }>>("/auth/get-oauth-url");
+  return res.data.data.url;
+}
+
+// 2. Підтвердити OAuth (відправити code)
+export async function confirmGoogleOAuth(code: string): Promise<LoginResponse> {
+  const res = await api.post<ApiResponse<LoginResponse>>(
+    "/auth/confirm-oauth",
+    { code },
+    { withCredentials: true } // 
+  );
+
+  const { accessToken } = res.data.data;
+
+  // зберігаємо токен у headers, як у loginUser
+  api.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+  return res.data.data;
+  
+}
