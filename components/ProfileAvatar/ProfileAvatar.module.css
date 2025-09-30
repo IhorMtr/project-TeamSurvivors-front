@@ -1,3 +1,7 @@
+.container {
+  margin: 0 auto;
+  max-width: 375px;
+}
 .avatarBlock {
   display: flex;
   flex-direction: column;
@@ -67,6 +71,9 @@
 }
 
 @media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
   .avatarBlock {
     display: flex;
     flex-direction: row;
@@ -121,6 +128,9 @@
 }
 
 @media only screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+  }
   .avatarBlock {
     display: flex;
     flex-direction: row;

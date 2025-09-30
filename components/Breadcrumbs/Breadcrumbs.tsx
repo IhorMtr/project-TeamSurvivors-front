@@ -25,32 +25,34 @@ export default function Breadcrumbs() {
   }
 
   return (
-    <nav className={css.breadcrumbs} aria-label="Breadcrumb">
-      <ul className={css.list}>
-        <li>
-          <Link href="/" className={css.home}>
-            Лелека
-          </Link>
-          <svg className={css.icon} width="24" height="24">
-            <use href="/icons.svg#icon-chevron_up"></use>
-          </svg>
-        </li>
-
-        {crumbs.map((c, i) => (
-          <li key={c.href}>
-            {i === crumbs.length - 1 ? (
-              <span className={css.current}>{c.label}</span>
-            ) : (
-              <>
-                <Link href={c.href}>{c.label}</Link>
-                <svg className={css.icon} width="24" height="24">
-                  <use href="/icons.svg#icon-chevron_up"></use>
-                </svg>
-              </>
-            )}
+    <div className={css.container}>
+      <nav className={css.breadcrumbs} aria-label="Breadcrumb">
+        <ul className={css.list}>
+          <li>
+            <Link href="/" className={css.home}>
+              Лелека
+            </Link>
+            <svg className={css.icon} width="24" height="24">
+              <use href="/icons.svg#icon-chevron_up"></use>
+            </svg>
           </li>
-        ))}
-      </ul>
-    </nav>
+
+          {crumbs.map((c, i) => (
+            <li key={c.href}>
+              {i === crumbs.length - 1 ? (
+                <span className={css.current}>{c.label}</span>
+              ) : (
+                <>
+                  <Link href={c.href}>{c.label}</Link>
+                  <svg className={css.icon} width="24" height="24">
+                    <use href="/icons.svg#icon-chevron_up"></use>
+                  </svg>
+                </>
+              )}
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
   );
 }

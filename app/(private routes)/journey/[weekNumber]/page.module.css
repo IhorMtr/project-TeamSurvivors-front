@@ -1,3 +1,7 @@
+.container {
+  max-width: 375px;
+  margin: 0 auto;
+}
 .journeyPage {
   width: 100%;
   min-height: calc(100vh - 166px);
@@ -26,20 +30,26 @@
 }
 
 @media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
   .journeyPage {
     width: 100%;
     min-height: calc(100vh - 166px);
-    padding: 24px 32px;
   }
 
   .journeyPage__content {
     width: 100%;
     min-height: calc(100vh - 214px);
     gap: 32px;
+    display: block;
   }
 }
 
 @media only screen and (min-width: 1440px) {
+  .container {
+    max-width: 1608px;
+  }
   .journeyPage {
     position: absolute;
     height: calc(100vh - 109px);
@@ -52,6 +62,7 @@
   }
 
   .journeyPage__content {
+    display: flex;
     width: 100%;
     max-width: 1128px;
     min-height: calc(100vh - 173px);

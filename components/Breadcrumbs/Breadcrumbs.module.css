@@ -1,3 +1,8 @@
+.container {
+  max-width: 375px;
+  margin: 0 auto;
+}
+
 .list {
   list-style: none;
   font-weight: 400;
@@ -37,13 +42,27 @@
   color: #7f7f7f;
 }
 
+/* @media only screen and (min-width: 375px) {
+  .list {
+    margin-left: 20px;
+  }
+} */
+
 @media only screen and (min-width: 768px) {
   .list {
     padding-left: 8px;
   }
+
+  .container {
+    max-width: 768px;
+  }
 }
 
 @media only screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+    margin: 0;
+  }
   .list {
     font-size: 14px;
     padding-left: 0;

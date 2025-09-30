@@ -33,11 +33,13 @@ export default function JourneyPage() {
   }
 
   return (
-    <div className={styles.journeyPage}>
-      <div className={styles.journeyPage__content}>
-        <GreetingBlock />
-        <WeekSelector selectedWeek={selectedWeek} maxWeek={maxWeek} />
-        <JourneyDetails weekNumber={selectedWeek} />
+    <div className={styles.container}>
+      <div className={styles.journeyPage}>
+        <div className={styles.journeyPage__content}>
+          <GreetingBlock />
+          <WeekSelector selectedWeek={selectedWeek} maxWeek={maxWeek} />
+          <JourneyDetails weekNumber={selectedWeek} />
+        </div>
       </div>
     </div>
   );
