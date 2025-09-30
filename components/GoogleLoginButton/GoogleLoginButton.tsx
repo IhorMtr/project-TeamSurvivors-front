@@ -1,36 +1,40 @@
 'use client';
 
-import { FC } from "react";
-import { getGoogleOAuthUrl } from "@/lib/api/auth";
-import Image from "next/image";
+import { FC } from 'react';
+import { getGoogleOAuthUrl } from '@/lib/api/auth';
+import Image from 'next/image';
 import css from './GoogleLoginButton.module.css';
+import toast from 'react-hot-toast';
 
 interface GoogleLoginButtonProps {
-  className?: string;      // додаткові класи зовні
-  text?: string;           // текст кнопки
+  className?: string;
+  text?: string;
 }
 
-const GoogleLoginButton: FC<GoogleLoginButtonProps> = ({ className = '', text = "Увійти через Google" }) => {
+const GoogleLoginButton: FC<GoogleLoginButtonProps> = ({
+  className = '',
+  text = 'Увійти через Google',
+}) => {
   const handleGoogleLogin = async () => {
     try {
       const url = await getGoogleOAuthUrl();
       window.location.href = url;
-    } catch (err) {
-      console.error("Помилка отримання Google OAuth URL:", err);
+    } catch {
+      toast.error('Помилка отримання Google OAuth URL. Спробуйте ще раз.');
     }
   };
 
   return (
-    <button 
+    <button
       type="button"
-      onClick={handleGoogleLogin} 
+      onClick={handleGoogleLogin}
       className={`${css.googleBtn} ${className}`}
     >
       <Image
-        src="/google_logo.svg"  // без /public
+        src="/google_logo.svg"
         alt="Google"
-        width={24}
-        height={24}
+        width={18}
+        height={18}
         className={css.icon}
       />
       <span className={css.text}>{text}</span>

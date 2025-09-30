@@ -1,38 +1,45 @@
 .googleBtn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    /* відстань між іконкою і текстом */
-    width: 100%;
-    max-width: 480px;
-    /* адаптивна ширина */
-    height: 46px;
-    padding: 0 24px;
-    border: none;
-    border-radius: 100px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 480px;
+  height: 46px;
+  padding: 0 24px;
+  border: none;
+  border-bottom: 4px solid var(--opacity-neutral-darkest-15);
+  border-radius: 100px;
+  background: var(--opacity-neutral-darkest-5);
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    box-shadow 0.2s;
 }
 
 .googleBtn:hover {
-    background-color: #f5f5f5;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .icon {
-    display: block;
+  display: block;
+  margin-bottom: 5px;
 }
 
 .text {
-    display: inline-block;
-    font-family: var(--font-family);
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 160%;
-        color: var(--color-scheme-text);
+  display: inline-block;
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  color: var(--color-scheme-text);
+}
+
+@media screen and (min-width: 1440px) {
+  .icon {
+    margin-bottom: 3px;
+  }
 }

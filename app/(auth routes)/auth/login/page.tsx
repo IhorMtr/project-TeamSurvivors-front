@@ -151,8 +151,7 @@ export default function LoginForm() {
               >
                 {isSubmitting ? 'Завантаження...' : 'Увійти'}
               </button>
-<GoogleLoginButton text="Увійти через Google" />
-
+              <GoogleLoginButton text="Увійти через Google" />
 
               <p className={css.registerLink}>
                 Немає аккаунту?{' '}
@@ -161,7 +160,6 @@ export default function LoginForm() {
                 </Link>
               </p>
             </Form>
-           
           </div>
         )}
       </Formik>
