@@ -18,6 +18,8 @@
     --diary-details-height: 727px;
     --emotion-font-size: 16px;
     max-height: 100vh;
+    max-width: 1440px;
+    /* margin: 0 auto; */
   }
 }
 
