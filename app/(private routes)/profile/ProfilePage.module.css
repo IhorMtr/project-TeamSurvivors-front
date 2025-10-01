@@ -2,13 +2,6 @@
   max-width: 375px;
   margin: 0 auto;
 }
-.container {
-  width: 100%;
-  margin: 0 auto;
-  padding: 20px;
-  box-sizing: border-box;
-  position: relative;
-}
 
 .profile-section {
   background: white;
