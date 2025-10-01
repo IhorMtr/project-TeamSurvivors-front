@@ -20,7 +20,7 @@
   flex-direction: column;
   gap: 16px;
   /* background-color: #fff4f6; */
-  /* background-color: var(--color-pastel-pink-lighter); */
+  background-color: var(--color-pastel-pink-lighter);
   padding: 24px;
   border-radius: 32px;
   width: var(--diary-list-width, auto);
