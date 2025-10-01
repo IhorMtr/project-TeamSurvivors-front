@@ -4,6 +4,8 @@
   padding: 16px 20px;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
+  max-width: 375px;
 }
 
 .button {
@@ -24,5 +26,12 @@
 @media only screen and (min-width: 768px) {
   .wrapper {
     padding: 16px 32px;
+    max-width: 768px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .wrapper {
+    max-width: 1440px;
   }
 }

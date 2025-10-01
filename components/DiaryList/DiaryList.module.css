@@ -1,3 +1,7 @@
+.wrapper {
+  background-color: var(--color-pastel-pink-lighter);
+}
+
 .icon {
   fill: var(--color-scheme-text);
 }
@@ -19,10 +23,11 @@
   background-color: var(--color-pastel-pink-lighter);
   padding: 24px;
   border-radius: 32px;
-
   width: var(--diary-list-width, auto);
   height: var(--diary-list-height, 100vh);
   overflow-y: auto;
+  margin: 0 auto;
+  max-width: 375px;
 }
 .listHeader {
   display: flex;
@@ -44,7 +49,9 @@
 }
 
 .diarySection {
-  padding: 0 20px;
+  /* padding: 0 20px; */
+  max-width: 375px;
+  margin: 0 auto;
 }
 
 .listPlaceholder {
@@ -54,11 +61,18 @@
 }
 
 @media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
   .diarySection {
-    padding: 0 32px;
+    /* padding: 0 32px; */
+    max-width: 768px;
   }
 }
 @media (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+  }
   .diarySection {
     padding: 0;
   }

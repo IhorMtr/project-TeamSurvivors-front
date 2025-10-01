@@ -1,3 +1,7 @@
+.container {
+  margin: 0 auto;
+  max-width: 375px;
+}
 .avatarBlock {
   display: flex;
   flex-direction: column;
@@ -67,6 +71,11 @@
 }
 
 @media only screen and (min-width: 768px) {
+  .container {
+    max-width: 768px;
+    padding-left: 32px;
+    padding-right: 32px;
+  }
   .avatarBlock {
     display: flex;
     flex-direction: row;
@@ -121,6 +130,9 @@
 }
 
 @media only screen and (min-width: 1440px) {
+  .container {
+    max-width: 1440px;
+  }
   .avatarBlock {
     display: flex;
     flex-direction: row;
@@ -134,12 +146,6 @@
   .avatarImageWrap {
     margin-bottom: 0;
     flex-shrink: 0;
-  }
-
-  .avatarImage,
-  .avatarPlaceholder {
-    width: 150px;
-    height: 150px;
   }
 
   .userInfo {
@@ -161,12 +167,11 @@
   .userEmail {
     font-size: 16px;
     text-align: left;
-    margin-bottom: 20px;
   }
 
   .uploadButton {
     width: 280px;
-    height: 48px;
+    height: 42px;
     font-size: 16px;
     padding: 12px 20px;
     margin-top: 0;

@@ -1,4 +1,5 @@
 .container {
+  display: flex;
   background-color: white;
   margin-bottom: 24px;
   min-width: 320px;
@@ -6,6 +7,7 @@
   margin: 0 auto;
   box-sizing: border-box;
   position: relative;
+  flex-direction: column;
 }
 
 .title {
@@ -28,7 +30,6 @@
   font-size: 14px;
   font-weight: 400;
   color: #333;
-  margin-bottom: 8px;
   font-family: 'Lato', sans-serif;
   line-height: 1.5;
   color: #000;
@@ -109,11 +110,11 @@
   display: flex;
   flex-direction: row;
   gap: 12px;
-  margin-top: 32px;
   padding: 0 20px;
   padding: 24px 0px 0px;
   width: 335px;
   height: 62px;
+  align-self: center;
 }
 
 .cancelButton,
@@ -166,10 +167,9 @@
     max-width: 768px;
     padding: 0;
     margin: 0 auto;
-  }
-
-  .form {
-    gap: 28px;
+    display: block;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 
   .fieldGroup {
@@ -178,7 +178,6 @@
 
   .label {
     font-size: 16px;
-    margin-bottom: 10px;
   }
 
   .input,
@@ -222,7 +221,6 @@
   }
 
   .form {
-    gap: 32px;
     max-width: 580px;
   }
 
@@ -232,7 +230,6 @@
 
   .label {
     font-size: 16px;
-    margin-bottom: 12px;
   }
 
   .input,

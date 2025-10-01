@@ -1,11 +1,30 @@
-.titleDashboard {
-  font-size: 24px;
-  text-align: left;
-  margin-left: 32px;
+.container {
+  max-width: 375px;
+  margin: 0 auto;
 }
 
-@media (min-width: 1440px) {
+.titleDashboard {
+  text-align: center;
+  font-size: 24px;
+}
+
+@media screen and (min-width: 768px) {
+  .titleDashboard {
+    text-align: left;
+    margin-left: 32px;
+  }
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
   .titleDashboard {
     font-size: 32px;
+  }
+
+  .container {
+    max-width: 1440px;
+    margin: 0;
   }
 }
