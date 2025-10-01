@@ -71,7 +71,7 @@
 
 @media (min-width: 1440px) {
   .container {
-    margin-right: 0 !important;
+    margin-right: 32px !important;
     margin-left: 0;
     --emotion-font-size: 14px;
     max-height: 100%;
