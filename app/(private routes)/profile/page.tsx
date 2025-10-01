@@ -52,20 +52,22 @@ export default function ProfilePage() {
 
   return (
     <section className={styles['profile-section']}>
-      <div className={styles['profile-card']}>
-        <ProfileAvatar
-          user={userData}
-          isUploading={uploadAvatarMutation.isPending}
-          onAvatarChange={file => uploadAvatarMutation.mutate(file)}
-        />
-        <ProfileEditForm
-          initialValues={initialValues}
-          isSubmitting={updateUserMutation.isPending}
-          onSubmit={(values: ProfileFormData) =>
-            updateUserMutation.mutate(values)
-          }
-          onCancel={() => updateUserMutation.reset()}
-        />
+      <div className={styles.container}>
+        <div className={styles['profile-card']}>
+          <ProfileAvatar
+            user={userData}
+            isUploading={uploadAvatarMutation.isPending}
+            onAvatarChange={file => uploadAvatarMutation.mutate(file)}
+          />
+          <ProfileEditForm
+            initialValues={initialValues}
+            isSubmitting={updateUserMutation.isPending}
+            onSubmit={(values: ProfileFormData) =>
+              updateUserMutation.mutate(values)
+            }
+            onCancel={() => updateUserMutation.reset()}
+          />
+        </div>
       </div>
     </section>
   );

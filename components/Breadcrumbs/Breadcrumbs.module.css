@@ -14,7 +14,7 @@
   flex-direction: row;
   margin: 0;
   padding: 0;
-  padding-left: 12px;
+  padding-left: 20px;
 }
 
 .icon {
@@ -50,7 +50,7 @@
 
 @media only screen and (min-width: 768px) {
   .list {
-    padding-left: 8px;
+    padding-left: 32px;
   }
 
   .container {

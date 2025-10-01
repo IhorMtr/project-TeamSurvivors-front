@@ -78,9 +78,7 @@ export default function LayoutClient({ children }: LayoutClientProps) {
           )}
 
           <main className={css.container}>
-            <section className={css.section}>
-              <Breadcrumbs />
-            </section>
+            <Breadcrumbs />
             {children}
           </main>
         </div>
