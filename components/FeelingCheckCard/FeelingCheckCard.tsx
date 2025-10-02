@@ -9,9 +9,20 @@ const FeelingCheckCard = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
-  const onCreateDiary = () => {
-    if (!isAuthenticated) router.push('/auth/login');
+  const handleOpenModal = () => {
+    if (!isAuthenticated) {
+      router.push('/auth/login');
+      return;
+    }
     setIsOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsOpen(false);
+  };
+
+  const handleSuccess = () => {
+    handleCloseModal();
   };
 
   return (
@@ -28,13 +39,20 @@ const FeelingCheckCard = () => {
           <button
             className={css.feelingCheckCardButton}
             type="button"
-            onClick={onCreateDiary}
+            onClick={handleOpenModal}
           >
             Зробити запис у щоденник
           </button>
         </div>
       </div>
-      <AddDiaryEntryModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+
+      <AddDiaryEntryModal
+        isOpen={isOpen}
+        onClose={handleCloseModal}
+        formProps={{
+          onSuccess: handleSuccess,
+        }}
+      />
     </>
   );
 };

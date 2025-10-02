@@ -68,7 +68,6 @@ export default function ProfileEditForm({
                 />
               </div>
 
-              {/* Modified Gender Field */}
               <div className={styles.fieldGroup}>
                 <label htmlFor="gender" className={styles.label}>
                   Стать дитини
@@ -92,7 +91,7 @@ export default function ProfileEditForm({
                             setGenderOpen(false);
                           }}
                         >
-                          <option value="" disabled hidden>
+                          <option value="unknown" disabled hidden>
                             Оберіть стать
                           </option>
                           <option value="boy">Хлопчик</option>
