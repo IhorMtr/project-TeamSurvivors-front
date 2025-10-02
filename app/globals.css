@@ -111,8 +111,12 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-    overflow: hidden !important;
   }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
 svg {
